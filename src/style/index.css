@@ -1,0 +1,19 @@
+@font-face {
+    font-family: 'Fontatica';
+    src: url('../fonts/Fontatica/Fontatica4F.woff2') format('woff2'), 
+         url('../fonts/Fontatica/Fontatica4F.woff') format('woff'), 
+         url('../fonts/Fontatica/Fontatica4F.ttf') format('truetype'),
+         url('../fonts/Fontatica/Fontatica4F.eot');        
+         
+  }
+
+
+body{
+    background-color: rgb(5, 10, 13);;
+}
+
+
+header{
+    display: flex;
+    justify-content: space-around;
+}

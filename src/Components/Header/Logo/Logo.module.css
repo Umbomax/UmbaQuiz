@@ -1,0 +1,31 @@
+
+.logoContainer{
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-size: 28px;
+    font-family: "Fontatica";
+    width: 150px;
+    height: 60px;
+    /* удалить позле разработки */
+    border: 1px solid green; 
+    
+}
+
+.logoIcon{
+
+    
+
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 2px solid white;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 22px;
+    font-family: 'Times New Roman', Times, serif;
+}

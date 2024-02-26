@@ -1,0 +1,58 @@
+
+.inputContainer{
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 400px;
+    box-sizing: border-box;
+
+    /* Удалить после разработки */
+   border: 1px solid green;
+}
+
+  .myInput {
+    box-sizing: border-box;
+    width: 400px;
+    height: 35px;
+    background: white;
+    padding-left: 45px;
+    border-radius: 20px;
+    position: absolute;
+    outline: none;
+  }
+  
+  .myBtn {
+
+    height: 20px;
+    width: 20px;
+    position: absolute;
+    left: 3%;
+    border: none;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    background-color: rgba(0, 0, 0, 0);
+  }
+  .myBtn:before, .myBtn:after{
+    content: "";
+    position: absolute;
+    display: block;
+         
+    }
+
+    .myBtn:before{
+        width: 10px;
+        height: 10px;
+        top: 0;
+        left: 0;
+        border: 2px solid black;
+        border-radius: 50%;
+    }
+    .myBtn:after{
+        width: 10px;
+        height: 3px;
+        background-color: black;
+        top: 12.5px;
+        left: 9.5px;
+        transform: rotate(45deg);
+    }
