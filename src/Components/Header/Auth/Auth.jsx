@@ -12,10 +12,7 @@ function MyModal({ visible, setVisible }) {
         setSelectedSlide(event.target.id);
     };
 
-    useEffect(() => {
-        // Выполняется при изменении selectedSlide
-        console.log(selectedSlide);
-    }, [selectedSlide]);
+
 
     if (visible) {
         rootClases.push(classes.active);
