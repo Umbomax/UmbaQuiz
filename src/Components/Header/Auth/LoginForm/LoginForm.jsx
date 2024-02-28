@@ -7,9 +7,7 @@ function LoginForm() {
     const [formData, setFormData] = useState({username:"", password:""})
 
     const login = async(e) =>{
-      e.preventDefault();
-
-      
+      e.preventDefault();  
 
       await fetch("http://localhost:3030/api/login",{
         method: 'POST',
@@ -18,7 +16,7 @@ function LoginForm() {
       }).then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
-        }
+        }        
         return response.json();
       })
       .then(data => {
@@ -30,6 +28,7 @@ function LoginForm() {
         // Обработка ошибок при выполнении запроса
         console.error('There was a problem with your fetch operation:', error);
       });
+      
     }
 
     return (

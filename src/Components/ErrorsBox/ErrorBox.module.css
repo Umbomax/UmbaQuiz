@@ -1,0 +1,11 @@
+.ErrorsBoxContainer{
+    position: fixed;
+    top: 10%;
+    right: 1%;
+    width: 330px;
+    height: 100vh;
+    overflow: hidden;
+    border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+}

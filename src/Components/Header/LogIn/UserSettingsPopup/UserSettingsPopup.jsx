@@ -1,7 +1,8 @@
 import React from "react";
 import clases from "./UserSettingsPopup.module.css";
-import MyButton from "../../UI/MyButton/MyButton";
+import MyButton from "../../../UI/MyButton/MyButton";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 function UserSettingsPopup({ popUp, setPopup }) {
     const navigate = useNavigate();
@@ -20,15 +21,7 @@ function UserSettingsPopup({ popUp, setPopup }) {
     }
 
     return popUp ? (
-        <div
-            className={rootClases.join(" ")}
-            onClick={() => {
-              
-                navigate("");
-                setPopup(prevPopup => !prevPopup); // Обновляем состояние синхронно
-                
-            }}
-        >
+        <div className={clases.root}>
             <div className={clases.popupContent} onClick={(e) => e.stopPropagation()}>
                 <MyButton
                     onClick={() => {
@@ -40,6 +33,15 @@ function UserSettingsPopup({ popUp, setPopup }) {
                 </MyButton>
                 <MyButton onClick={logOut}>Выйти</MyButton>
             </div>
+            <div
+                className={rootClases.join(" ")}
+                onClick={async (e) => {
+                    e.stopPropagation();
+                    // setPopup((prevPopup) => !prevPopup);
+                    console.log("Клик сработал ");
+                    setPopup(false);
+                }}
+            ></div>
         </div>
     ) : null;
 }

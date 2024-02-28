@@ -2,8 +2,9 @@ import React from "react";
 import classes from "./Auth.module.css";
 import { useEffect, useState } from "react";
 import LoginForm from "./LoginForm/LoginForm"
+import Registration from "./Registration/Registration"
 
-function MyModal({ visible, setVisible }) {
+function MyModal({ visible, setVisible, createError }) {
     const rootClases = [classes.myModal];
 
     const [selectedSlide, setSelectedSlide] = useState("login");
@@ -39,23 +40,7 @@ function MyModal({ visible, setVisible }) {
                 <div className={classes.formsWrapper}>
                     <div style={{ marginLeft: selectedSlide === "signup" ? "-100%" : "0" }} className={`${classes.formsContainer}`}>
                         <LoginForm ></LoginForm>
-                        <form className={`${classes.form}`} action="" method="post">
-                            <div className={classes.inputContainer}>
-                                <input className={classes.formInput} type="text" placeholder="Login" />
-                            </div>
-                            <div className={classes.inputContainer}>
-                                <input className={classes.formInput} type="text" placeholder="Password" />
-                            </div>
-                            <div className={classes.inputContainer}>
-                                <input className={classes.formInput} type="text" placeholder="Repit password" />
-                            </div>
-                            <div className={classes.inputContainer}>
-                                <input className={classes.formInput} type="text" placeholder="Email" />
-                            </div>
-                            <button className={classes.formBtn} type="button">
-                                Sign Up
-                            </button>
-                        </form>
+                        <Registration createError={createError}></Registration>
                     </div>
                 </div>
             </div>
