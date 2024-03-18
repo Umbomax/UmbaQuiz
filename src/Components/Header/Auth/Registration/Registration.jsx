@@ -13,6 +13,8 @@ function Registration({ createError }) {
         email: "",
     });
 
+//TODO: сделать массив ошибок и отправлять его, а не ошибку отдельно
+
     const checkValidationErrors = async() => {
         let valid = true;
         
