@@ -2,3 +2,24 @@
     background-color: #C08F70;
     height: 85vh;
 }
+.cardsContainer{
+    border: 1px solid #52df1a;
+    width: 100%;
+    height: auto;
+}
+.createQuiz{
+    border: 1px solid #1c1394;
+    width: 280px;
+    height: 300px;
+    margin: 10px;
+    background-color: beige;
+}
+
+/* Исправь потом этот ебаный костыль клоун */
+.createQuiz:after{
+    margin-left: 50px;    
+    content: "+";
+    font-size: 300px;
+    line-height: 300px;
+    text-align: center;
+}

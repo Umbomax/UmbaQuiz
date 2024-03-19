@@ -2,7 +2,8 @@ import Header from "./Components/Header/Header";
 import { useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Quizes from "./pages/Quizes/Quizes";
-import ErrorsBox from "./Components/ErrorsBox/ErrorBox";
+import CreateQuizPage from "./pages/CreateQuizPage/CreateQuizPage";
+import ErrorsBox from "./Components/ErrorsBox/StatusBox";
 
 import UserSettings from "./pages/UserSettings/UserSettings";
 
@@ -22,8 +23,7 @@ function App() {
 
     return (
         <BrowserRouter>
-            <ErrorsBox errors = {errors} removeError={removeError}>
-               
+            <ErrorsBox errors = {errors} removeError={removeError}>         
             </ErrorsBox>
             <div className="App">
                 <Header createError={createError}></Header>
@@ -31,6 +31,7 @@ function App() {
             <Routes>
                 <Route path="/userSettings" element={<UserSettings></UserSettings>}></Route>
                 <Route path="" element={<Quizes></Quizes>}></Route>
+                <Route path="/createQuiz" element={<CreateQuizPage></CreateQuizPage>}></Route>
             </Routes>
         </BrowserRouter>
     );

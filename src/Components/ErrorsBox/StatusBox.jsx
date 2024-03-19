@@ -1,8 +1,8 @@
 import React from "react";
-import classes from "./ErrorBox.module.css";
+import classes from "./StatusBox.module.css";
 import ErrorContent from "../ErrorContent/ErrorContent";
 
-function ErrorBox({ errors, removeError }) {
+function StatusBox({ errors, removeError }) {
     console.log(errors);
     console.log("Error box");
 
@@ -17,4 +17,4 @@ function ErrorBox({ errors, removeError }) {
     );
 }
 
-export default ErrorBox;
+export default StatusBox;
