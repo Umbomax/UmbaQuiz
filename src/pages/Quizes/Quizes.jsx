@@ -11,7 +11,7 @@ function Quizes() {
 
             {/* TODO if admin show create quiz box */}
             <div className={clases.createQuiz} onClick={(e)=> navigate("/createQuiz")}>
-
+                
             </div>              
             
         </section>

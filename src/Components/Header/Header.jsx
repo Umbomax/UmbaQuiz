@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 
 
 function Header({createError}) {
+    
     const [modal, setModal] = useState(false);
     const [popUp, setPopup] = useState(false);
 

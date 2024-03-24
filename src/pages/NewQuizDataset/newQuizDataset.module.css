@@ -1,0 +1,49 @@
+.carousel {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+}
+
+.carouselItem {
+    flex: 0 0 auto;
+    width: 100%;
+    display: none;
+}
+
+.carouselItem.active {
+    display: block;
+}
+
+.images {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.imageContainer {
+    width: calc(25% - 10px);
+    margin-right: 10px;
+    margin-bottom: 10px;
+    position: relative;
+}
+
+.imageContainer:last-child {
+    margin-right: 0;
+}
+
+.imageContainer input[type="file"] {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
