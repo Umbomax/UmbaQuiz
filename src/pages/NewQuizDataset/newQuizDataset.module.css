@@ -1,49 +1,33 @@
-.carousel {
+.carouser{
+    width: 1440px;
     display: flex;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-}
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    height: 48px;
+    border: 1px solid cyan;
 
-.carouselItem {
-    flex: 0 0 auto;
-    width: 100%;
-    display: none;
 }
-
-.carouselItem.active {
+.carouserItem{
     display: block;
+    width: 44px;
+    height: 18px;
+    background-color: black;
 }
-
-.images {
-    display: flex;
-    flex-wrap: wrap;
-    margin-bottom: 20px;
+.quizFormsContainer{
+    width: 1440px;
+    height: 980px;
+    border: 1px solid black;
 }
-
-.imageContainer {
-    width: calc(25% - 10px);
-    margin-right: 10px;
-    margin-bottom: 10px;
-    position: relative;
-}
-
-.imageContainer:last-child {
-    margin-right: 0;
-}
-
-.imageContainer input[type="file"] {
-    position: absolute;
+.quizForm{
     width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    opacity: 0;
-    cursor: pointer;
+    border: 1px solid darkred;
 }
-
-.image {
-    max-width: 100%;
-    height: auto;
-    border-radius: 5px;
-    border: 1px solid #ccc;
+.quizFormsContainer{
+    display: flex;
+   
+}
+.quizFormsWrapper{
+    width: 1440px;
+    overflow: hidden;
 }
