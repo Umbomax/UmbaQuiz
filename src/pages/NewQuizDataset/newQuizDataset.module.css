@@ -31,3 +31,16 @@
     width: 1440px;
     overflow: hidden;
 }
+.fileInput{
+    display: block;
+    width: 480px;
+    height: 330px;
+}
+.correctAnswer{
+    display: flex;
+    width: 480px;
+    height: 330px;
+    align-items: center;
+    justify-content: center;
+    
+}

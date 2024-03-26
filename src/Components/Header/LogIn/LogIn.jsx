@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 function LogIn({ popUp, setPopup, logIn }) {
     return (
         <div onClick={logIn} className={classes.logInContainer}>
-            <img src={UserIcon} alt="UserIcon" />
+            <img className={classes.img} src={UserIcon} alt="UserIcon" />
             <UserSettingsPopup popUp={popUp} setPopup={setPopup} />
         </div>
     );
