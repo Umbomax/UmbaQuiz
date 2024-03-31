@@ -16,17 +16,14 @@
 }
 .quizFormsContainer{
     width: 1440px;
-    height: 980px;
     border: 1px solid black;
+    display: flex;
 }
 .quizForm{
     width: 100%;
     border: 1px solid darkred;
 }
-.quizFormsContainer{
-    display: flex;
-   
-}
+
 .quizFormsWrapper{
     width: 1440px;
     overflow: hidden;
@@ -38,9 +35,19 @@
 }
 .correctAnswer{
     display: flex;
-    width: 480px;
+    width: 100%;
     height: 330px;
     align-items: center;
-    justify-content: center;
+    justify-content: center;    
+}
+.incorrectAnswers{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+}
+.inputWrapper{
+    margin: auto;
+    width: 500px;
     
 }

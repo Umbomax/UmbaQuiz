@@ -1,9 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import classes from './MyImageInput.module.css';
 
 function MyImageInput({ formData, options }) {
+
+  // Костыль ебаный пишу
+
+  if(!formData){
+    formData = new FormData();
+  }
+
+  // Костыль окончен
+
   const [drag, setDrag] = useState(false);
   const [imageSrc, setImageSrc] = useState(null);
+  const fileInputRef = useRef(null);
 
   function dragStartHandler(e) {
     e.preventDefault();
@@ -22,11 +32,16 @@ function MyImageInput({ formData, options }) {
     const file = e.dataTransfer.files[0];
     if (file && file.type.startsWith('image/')) {
       const reader = new FileReader();
-      reader.onload = function (event) {
-        setImageSrc(event.target.result);
+      reader.onload = () => {
+        const base64String = reader.result;
+        if (options) {
+          formData.append(`${options.num}.${options.type}`, file);
+        } else {
+          formData.append("quizHeadImahe", base64String);
+        }
+        setImageSrc(base64String); // Установка изображения в состояние компонента
       };
-      reader.readAsDataURL(file);
-      formData.append(`${options.num}.${options.type}`, file);
+      reader.readAsDataURL(file); // Преобразование изображения в строку base64
     }
 
     setDrag(false);
@@ -36,25 +51,34 @@ function MyImageInput({ formData, options }) {
     const file = e.target.files[0];
     if (file && file.type.startsWith('image/')) {
       const reader = new FileReader();
-      reader.onload = function (event) {
-        setImageSrc(event.target.result);
+      reader.onload = () => {
+        const base64String = reader.result;
+        if (options) {
+          formData.append(`${options.num}.${options.type}`, file);
+        } else {
+          formData.append("quizHeadImahe", base64String);
+        }
+        setImageSrc(base64String); // Установка изображения в состояние компонента
       };
-      reader.readAsDataURL(file);
-      formData.append(`${options.num}.${options.type}`, file);
+      reader.readAsDataURL(file); // Преобразование изображения в строку base64
     }
+  }
+
+  function handleImageClick() {
+    fileInputRef.current.click();
   }
 
   return (
     <div className={classes.inputWrapper}>
       <input
+        ref={fileInputRef}
         type="file"
         className={classes.input}
         onChange={handleInputChange}
-        multiple
         accept="image/*"
       />
       {imageSrc && (
-        <div className={classes.imagePreview}>
+        <div className={classes.imagePreview} onClick={handleImageClick}>
           <img src={imageSrc} alt="Uploaded" className={classes.image} />
         </div>
       )}
@@ -65,6 +89,7 @@ function MyImageInput({ formData, options }) {
           onDragEnter={dragStartHandler}
           onDragLeave={dragLeaveHandler}
           onDrop={onDropHandler}
+          onClick={handleImageClick}
         >
           Отпустите изображение, чтобы загрузить его
         </div>
@@ -74,6 +99,7 @@ function MyImageInput({ formData, options }) {
           onDragOver={dragStartHandler}
           onDragEnter={dragStartHandler}
           onDragLeave={dragLeaveHandler}
+          onClick={handleImageClick}
         >
           Перетащите изображение, чтобы загрузить его
         </div>

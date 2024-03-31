@@ -2,31 +2,56 @@ import React from "react";
 import classes from "./ModalCreateQuiz.module.css";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import MyImageInput from "../UI/MyImageInput/MyImageInput";
 
 function MyModal({ visible, setVisible, quizType }) {
-    console.log(quizType);
     const navigate = useNavigate();
     const rootClases = [classes.myModal];
-    const [formData, setFormData] = useState({ quizName: "", quizesCount: "", type: quizType });
-    console.log(formData);
+    // const [quizSettings, setQuizSettings] = useState({ quizName: "", quizesCount: "", type: quizType, quizHeadImage: "",});
+    const formData = new FormData();
+    formData.set("quizType", quizType);
+
     if (visible) {
         rootClases.push(classes.active);
     }
-    const newQuizForm = new FormData();
+
+    // setQuizSettings({ ...quizSettings, quizesCount: e.target.value })  На память мб пригодится
 
     return (
         <div className={rootClases.join(" ")} onClick={() => setVisible(false)}>
             <div className={classes.content} onClick={(e) => e.stopPropagation()}>
-                <input type="text" placeholder="Введите название викторины" onChange={(e) => setFormData({ ...formData, quizName: e.target.value })} />
-                <input type="number" placeholder="Введите количество вопросово" onChange={(e) => setFormData({ ...formData, quizesCount: e.target.value })} />
+                <div className={classes.textInpustWrapper}>
+                    <div className={classes.quizNameWrapper}>
+                        <div>Введите название викторины</div>
+                        <input className={classes.quizSelectInput} type="text" onChange={(e) => formData.set("quizName", e.target.value)} />
+                    </div>
+
+                    <div >
+                        <div>Введите количество вопросов</div>
+                        <input className={classes.quizSelectInput} type="number" onChange={(e) => formData.set("quizesCount", e.target.value)} />
+                    </div>
+                </div>
+
+                <div className={classes.headImage}>
+                    <div>Выберите изображение для отобрадения в списке викторин</div>
+                    <MyImageInput className={classes.imageWrapper} formData={formData}></MyImageInput>
+                </div>
+
                 <button
                     className={classes.submitBtn}
                     onClick={(e) => {
                         e.preventDefault();
 
-                        navigate("/newQuizDataset", { state: formData });
+                        const formDataObject = {};
+                        formData.forEach((value, key) => {
+                            formDataObject[key] = value;
+                        });
+
+                        navigate("/newQuizDataset", { state: formDataObject });
                     }}
-                />
+                >
+                    Продолжить
+                </button>
             </div>
         </div>
     );
