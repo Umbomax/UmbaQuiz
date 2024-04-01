@@ -37,7 +37,7 @@ function MyImageInput({ formData, options }) {
         if (options) {
           formData.append(`${options.num}.${options.type}`, file);
         } else {
-          formData.append("quizHeadImahe", base64String);
+          formData.append("quizHeadImage", base64String);
         }
         setImageSrc(base64String); // Установка изображения в состояние компонента
       };
@@ -56,7 +56,7 @@ function MyImageInput({ formData, options }) {
         if (options) {
           formData.append(`${options.num}.${options.type}`, file);
         } else {
-          formData.append("quizHeadImahe", base64String);
+          formData.append("quizHeadImage", base64String);
         }
         setImageSrc(base64String); // Установка изображения в состояние компонента
       };

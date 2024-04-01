@@ -12,8 +12,7 @@
     background-color: rgba(148, 138, 138, 0.15);
 }
 .myModal.active{
-    z-index: 1000;
-  
+    z-index: 1000;  
     display: flex;
     justify-content: center;
     align-items: center;

@@ -9,7 +9,7 @@ function NewQuizDataset() {
 
     const location = useLocation();
     // const { state } = location;
-    const quizNums = +location.state.quizesCount;
+    const quizNums = +location.state.quizQuestionsNumbers;
 // Получение данных из state
 const formDataObject = location.state;
 // Создание нового объекта FormData

@@ -28,7 +28,7 @@ function MyModal({ visible, setVisible, quizType }) {
 
                     <div >
                         <div>Введите количество вопросов</div>
-                        <input className={classes.quizSelectInput} type="number" onChange={(e) => formData.set("quizesCount", e.target.value)} />
+                        <input className={classes.quizSelectInput} type="number" onChange={(e) => formData.set("quizQuestionsNumbers", e.target.value)} />
                     </div>
                 </div>
 
