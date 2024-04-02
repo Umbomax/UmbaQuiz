@@ -1,13 +1,13 @@
 import React, { useState, useRef } from 'react';
 import classes from './MyImageInput.module.css';
 
-function MyImageInput({ formData, options }) {
-
+function MyImageInput({options, formData}) {
+  
   // Костыль ебаный пишу
 
-  if(!formData){
-    formData = new FormData();
-  }
+  // if(!formData){
+  //   formData = new FormData();
+  // }
 
   // Костыль окончен
 
@@ -26,6 +26,7 @@ function MyImageInput({ formData, options }) {
   }
 
   function onDropHandler(e) {
+    
     e.preventDefault();
     e.stopPropagation();
 

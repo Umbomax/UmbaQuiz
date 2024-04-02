@@ -1,33 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import classes from "./NewQuizDataset.module.css";
 import { useLocation } from "react-router-dom";
 import MyImageInput from "../../Components/UI/MyImageInput/MyImageInput";
 import MyInput from "../../Components/UI/MyInput/MyInput";
 import axios from 'axios';
+
 function NewQuizDataset() {
-    // const formData = new FormData();
-
     const location = useLocation();
-    // const { state } = location;
     const quizNums = +location.state.quizQuestionsNumbers;
-// Получение данных из state
-const formDataObject = location.state;
-// Создание нового объекта FormData
-const formData = new FormData();
-// Добавление данных из объекта в FormData
-for (const key in formDataObject) {
-    formData.append(key, formDataObject[key]);
-}
-    // formData.set("quizNums", quizNums);
-    // formData.set("quizType", state.type);
-    // formData.set("quizName", state.quizName);
-
-
     const [currentSlide, setCurrentSlide] = useState(0);
+    const [formData, setFormData] = useState(new FormData()); // Инициализация FormData здесь
 
-    const arr = Array(quizNums).fill(null); // Пустой массив длинной количества вопросов для созданий нужного числа форм
+    useEffect(() => {
+        const formDataObject = location.state;
+        const newFormData = new FormData(); // Создание нового объекта FormData
+        for (const key in formDataObject) {
+            newFormData.append(key, formDataObject[key]);
+        }
+        setFormData(newFormData); // Установка нового объекта FormData в состояние
+    }, [location.state]);
 
-    // Исходя из числа вопросов задаем ширину для форм
+    const arr = Array(quizNums).fill(null);
+
     const inlineStyle = {
         width: `${100 * quizNums}%`,
     };
@@ -36,7 +30,11 @@ for (const key in formDataObject) {
         transform: `translateX(${-100 * currentSlide}%)`,
     };
 
-
+    const setQuestion = (e, idx) => {
+        const updatedFormData = new FormData(formData); // Копирование текущего объекта FormData
+        updatedFormData.set(`${idx}.questionText`, e.target.value);
+        setFormData(updatedFormData);
+    };
 
     function sendFormData(e) {
         e.preventDefault();
@@ -46,22 +44,20 @@ for (const key in formDataObject) {
         }
         axios
             .post("http://localhost:3030/api/uploadQuiz", formData, {                       
-            headers: {
-                'Content-Type': 'multipart/form-data',
-            }
-        })
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                }
+            })
             .then((response) => {
                 if (!response.ok) {
                     throw new Error("Network response was not ok");
                 }
-                return response.json(); // Если сервер возвращает JSON, можете изменить метод на response.text() или response.blob()
+                return response.json(); 
             })
             .then((data) => {
-                // Обработка ответа от сервера, если необходимо
                 console.log("Сервер ответил:", data);
             })
             .catch((error) => {
-                // Обработка ошибок
                 console.error("There was a problem with your fetch operation:", error);
             });
     }
@@ -82,7 +78,7 @@ for (const key in formDataObject) {
                         <form style={activeSlide} key={idx} className={classes.quizForm}>
                             <h2>{`Форма номер ${idx + 1}`}</h2>
                             <div className={classes.inputWrapper}>
-                                <MyInput type="text" placeholder="Введите вопрос" onChange={(e) => formData.set(`${idx}.questionText`, e.target.value)} />
+                                <MyInput type="text" placeholder="Введите вопрос" formData={formData} idx={idx} onChange={(e) => setQuestion(e, idx)} />
                             </div>
 
                             <div className={classes.correctAnswer}>
@@ -113,4 +109,4 @@ for (const key in formDataObject) {
     );
 }
 
-export default NewQuizDataset;
+export default React.memo(NewQuizDataset);
