@@ -4,13 +4,15 @@
 }
 .cardsContainer{
     border: 1px solid #52df1a;
-    width: 100%;
-    height: auto;
-    display: flex;
+    
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 30px;
+    justify-items: center
 }
 .createQuiz{
     border: 1px solid #1c1394;
-    width: 280px;
+    width: 300px;
     height: 300px;
     margin: 10px;
     background-color: beige;
@@ -25,12 +27,15 @@
     text-align: center;
 }
 .quizCard{
-    width: 480px;
-    height: 330px;
+    width: 420px;
+    height: 310px;
+    text-align: center;
+    background-color: beige;
 }
 .quizHeadImg{
     display: block;
-    width: 480px;
-    height: 330px;
+    margin: auto;
+    width: 330px;
+    height: 210px;
     object-fit: cover;
 }

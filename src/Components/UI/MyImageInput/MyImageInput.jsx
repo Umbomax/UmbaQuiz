@@ -1,15 +1,9 @@
 import React, { useState, useRef } from 'react';
 import classes from './MyImageInput.module.css';
+import Resizer from 'react-image-file-resizer';
 
-function MyImageInput({options, formData}) {
+function MyImageInput({setHeadImage, questionIndex, answerIndex}) {
   
-  // Костыль ебаный пишу
-
-  // if(!formData){
-  //   formData = new FormData();
-  // }
-
-  // Костыль окончен
 
   const [drag, setDrag] = useState(false);
   const [imageSrc, setImageSrc] = useState(null);
@@ -32,17 +26,33 @@ function MyImageInput({options, formData}) {
 
     const file = e.dataTransfer.files[0];
     if (file && file.type.startsWith('image/')) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        const base64String = reader.result;
-        if (options) {
-          formData.append(`${options.num}.${options.type}`, file);
-        } else {
-          formData.append("quizHeadImage", base64String);
-        }
-        setImageSrc(base64String); // Установка изображения в состояние компонента
-      };
-      reader.readAsDataURL(file); // Преобразование изображения в строку base64
+      Resizer.imageFileResizer(
+        file,
+        430, // новая ширина изображения
+        270, // новая высота изображения
+        'JPEG', // формат изображения (JPEG, PNG, WEBP)
+        70, // качество изображения (0-100)
+        0, // вращение изображения
+        (uri) => {
+          setHeadImage(uri, questionIndex, answerIndex);
+          setImageSrc(uri);
+          const imageSizeInBytes = uri.length * 0.75; // Переводим длину строки base64 в байты
+
+          // Переводим размер изображения в мегабайты
+          const imageSizeInMB = imageSizeInBytes / (1024 * 1024);
+  
+          console.log('Размер изображения в мегабайтах:', imageSizeInMB);
+        },
+        'base64' // тип вывода ('base64', 'blob', 'file')
+      );
+      // const reader = new FileReader();
+      // reader.onload = () => {
+      //   const base64String = reader.result;
+      //   setHeadImage(base64String)
+       
+      //   setImageSrc(base64String); // Установка изображения в состояние компонента
+      // };
+      // reader.readAsDataURL(file); // Преобразование изображения в строку base64
     }
 
     setDrag(false);
@@ -51,19 +61,34 @@ function MyImageInput({options, formData}) {
   function handleInputChange(e) {
     const file = e.target.files[0];
     if (file && file.type.startsWith('image/')) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        const base64String = reader.result;
-        if (options) {
-          formData.append(`${options.num}.${options.type}`, file);
-        } else {
-          formData.append("quizHeadImage", base64String);
-        }
-        setImageSrc(base64String); // Установка изображения в состояние компонента
-      };
-      reader.readAsDataURL(file); // Преобразование изображения в строку base64
+      Resizer.imageFileResizer(
+        file,
+        430, // новая ширина изображения
+        270, // новая высота изображения
+        'JPEG', // формат изображения (JPEG, PNG, WEBP)
+        70, // качество изображения (0-100)
+        0, // вращение изображения
+        (uri) => {
+          setHeadImage(uri, questionIndex, answerIndex);
+          setImageSrc(uri);
+        },
+        'base64' // тип вывода ('base64', 'blob', 'file')
+      );
     }
   }
+  // function handleInputChange(e) {
+  //   const file = e.target.files[0];
+  //   if (file && file.type.startsWith('image/')) {
+  //     const reader = new FileReader();
+  //     reader.onload = () => {
+  //       const base64String = reader.result;
+  //       setHeadImage(base64String, questionIndex, answerIndex)
+
+  //       setImageSrc(base64String); // Установка изображения в состояние компонента
+  //     };
+  //     reader.readAsDataURL(file); // Преобразование изображения в строку base64
+  //   }
+  // }
 
   function handleImageClick() {
     fileInputRef.current.click();

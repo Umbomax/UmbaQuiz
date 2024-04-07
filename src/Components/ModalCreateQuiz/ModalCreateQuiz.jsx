@@ -4,18 +4,28 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import MyImageInput from "../UI/MyImageInput/MyImageInput";
 
-function MyModal({ visible, setVisible, quizType }) {
+function MyModal({ visible, setVisible, quizType, ...props }) {
     const navigate = useNavigate();
+    
+
+    const [quizSettings, setQuizSettings] = useState({ quizName: "", quizesCount: "", type: quizType, quizHeadImage: "",});
+    useEffect(() => {
+        
+        setQuizSettings(prevSettings => ({
+            ...prevSettings,
+            type: quizType
+        }));
+    }, [quizType]);
+    console.log(quizSettings)
     const rootClases = [classes.myModal];
-    // const [quizSettings, setQuizSettings] = useState({ quizName: "", quizesCount: "", type: quizType, quizHeadImage: "",});
-    const formData = new FormData();
-    formData.set("quizType", quizType);
 
     if (visible) {
         rootClases.push(classes.active);
     }
 
-    // setQuizSettings({ ...quizSettings, quizesCount: e.target.value })  На память мб пригодится
+    function setHeadImage(base64string){
+        setQuizSettings({ ...quizSettings, quizHeadImage: base64string })
+    }
 
     return (
         <div className={rootClases.join(" ")} onClick={() => setVisible(false)}>
@@ -23,31 +33,26 @@ function MyModal({ visible, setVisible, quizType }) {
                 <div className={classes.textInpustWrapper}>
                     <div className={classes.quizNameWrapper}>
                         <div>Введите название викторины</div>
-                        <input className={classes.quizSelectInput} type="text" onChange={(e) => formData.set("quizName", e.target.value)} />
+                        <input className={classes.quizSelectInput} type="text" onChange={(e) => setQuizSettings({ ...quizSettings, quizName: e.target.value })} />
                     </div>
 
                     <div >
                         <div>Введите количество вопросов</div>
-                        <input className={classes.quizSelectInput} type="number" onChange={(e) => formData.set("quizQuestionsNumbers", e.target.value)} />
+                        <input className={classes.quizSelectInput} type="number" onChange={(e) => setQuizSettings({ ...quizSettings, quizesCount: e.target.value })} />
                     </div>
                 </div>
 
                 <div className={classes.headImage}>
                     <div>Выберите изображение для отобрадения в списке викторин</div>
-                    <MyImageInput className={classes.imageWrapper} formData={formData}></MyImageInput>
+                    <MyImageInput className={classes.imageWrapper} setHeadImage={setHeadImage}></MyImageInput>
                 </div>
 
                 <button
                     className={classes.submitBtn}
                     onClick={(e) => {
-                        e.preventDefault();
+                        e.preventDefault();                       
 
-                        const formDataObject = {};
-                        formData.forEach((value, key) => {
-                            formDataObject[key] = value;
-                        });
-
-                        navigate("/newQuizDataset", { state: formDataObject });
+                        navigate("/newQuizDataset", { state: quizSettings });
                     }}
                 >
                     Продолжить

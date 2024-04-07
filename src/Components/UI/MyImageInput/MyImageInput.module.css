@@ -4,8 +4,8 @@
   
   .startDrop,
   .dropArea {
-    width: 480px;
-    height: 330px;
+    width: 430px;
+    height: 270px;
     border: 2px dashed #aaa;
     display: flex;
     justify-content: center;
@@ -15,15 +15,15 @@
   
   .imagePreview {
     position: absolute;        
-    width: 480px;
-    height: 330px;
+    width: 430px;
+    height: 270px;
     display: flex;
     justify-content: center;
   }
   
   .image {
-    width: 480px;
-    height: 330px;
+    width: 430px;
+    height: 270px;
     object-fit: cover;
   }
   .inputWrapper{
@@ -31,6 +31,6 @@
 
   }
   .inputWrapper{
-    width: 480px;
-    height: 330px;
+    width: 430px;
+    height: 270px;
   }
