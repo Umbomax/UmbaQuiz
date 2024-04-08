@@ -31,7 +31,7 @@ function MyImageInput({setHeadImage, questionIndex, answerIndex}) {
         430, // новая ширина изображения
         270, // новая высота изображения
         'JPEG', // формат изображения (JPEG, PNG, WEBP)
-        70, // качество изображения (0-100)
+        100, // качество изображения (0-100)
         0, // вращение изображения
         (uri) => {
           setHeadImage(uri, questionIndex, answerIndex);

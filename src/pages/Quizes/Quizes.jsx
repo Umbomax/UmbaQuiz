@@ -25,9 +25,9 @@ function Quizes() {
         <div className={clases.root}>
             <SearchQuizInput></SearchQuizInput>
             <section className={clases.cardsContainer}>
-                {quizes.map((quiz) => (
+                {quizes.map((quiz,idx) => (
                     <div
-                        key={quiz.id}
+                        key={idx}
                         className={clases.quizCard}
                         onClick={()=>{
                             navigate("/quizGame", {state: quiz})

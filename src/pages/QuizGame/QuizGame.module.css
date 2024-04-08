@@ -1,0 +1,36 @@
+.quizItem{
+    width: 100%;
+
+    overflow: hidden;
+}
+.quizItemsContainer{
+    display: flex;
+    
+    
+}
+.quizItemsWrapper{
+    width: 1440px;
+    overflow: hidden;
+}
+.answersContainer{
+    margin: auto;
+    display: grid;
+    justify-items: center;
+    justify-content: center;
+    gap: 90px;
+    grid-template-columns: repeat(2, 30%);
+}
+.answer{
+    width: 430px;
+    height: 270px;
+}
+.answer>img{
+    display: block;
+    width: 430px;
+    height: 270px;
+}
+.questionText{
+    font-size: 40px;
+    text-align: center;
+    margin: 20px 0 40px 0;
+}
