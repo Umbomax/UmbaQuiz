@@ -1,36 +1,78 @@
 .quizItem{
     width: 100%;
-
     overflow: hidden;
 }
 .quizItemsContainer{
-    display: flex;
-    
+    display: flex;    
     
 }
 .quizItemsWrapper{
     width: 1440px;
     overflow: hidden;
+    box-sizing: border-box;
 }
 .answersContainer{
     margin: auto;
+    padding: 20px;
     display: grid;
     justify-items: center;
     justify-content: center;
-    gap: 90px;
-    grid-template-columns: repeat(2, 30%);
+    row-gap: 30px;
+    column-gap: 80px;
+    grid-template-columns: repeat(2, 40%);
 }
 .answer{
-    width: 430px;
+    width: 440px;
     height: 270px;
 }
 .answer>img{
     display: block;
-    width: 430px;
+    width: 440px;
     height: 270px;
+}
+.answer:hover{
+    transition: all 0.5s ease;
+    transform: scale(1.1);
 }
 .questionText{
     font-size: 40px;
     text-align: center;
-    margin: 20px 0 40px 0;
+    margin: 10px 0 10px 0;
 }
+.carouser{
+    
+    position: relative;
+    width: 1440px;
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    height: 30px;
+    
+
+}
+.carouserItem{
+   
+    display: block;
+    width: 45px;
+    height: 20px;
+    background-color: black;
+}
+.activeCarousel{
+    
+    position: absolute;
+    width: 70px;
+    height: 30px;
+    border: 2px solid salmon;
+    transition: all 0.35s ease;
+}
+
+.correct{
+    border: 7px solid lightgreen;
+    background-color: green;
+}
+.incorrect{
+    border: 7px solid rgb(220, 72, 72);
+    background-color: red;
+}
+/* 8 elems 360 */

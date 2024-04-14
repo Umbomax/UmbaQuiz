@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import classes from "./NewQuizDataset.module.css";
 import { useLocation } from "react-router-dom";
 import MyImageInput from "../../Components/UI/MyImageInput/MyImageInput";
-import MyInput from "../../Components/UI/MyInput/MyInput";
 import axios from "axios";
 
 function NewQuizDataset() {
