@@ -76,3 +76,19 @@
     background-color: red;
 }
 /* 8 elems 360 */
+.controlsContainer{
+    width: 1440px;
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    gap: 60px;
+}
+.controlsContainer>button{
+    width: 150px;
+    height: 60px;
+    background-color: rgb(169, 154, 236);
+    border: 3px solid black;
+    border-radius: 20px;
+    font-size: 17px;
+    
+}

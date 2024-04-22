@@ -38,7 +38,7 @@ function QuizResultsModal({ visible, setVisible, questionsCount, correctAnsersCo
                     <h2>{resultPhrase}</h2>
                     <div className={classes.controlButtonsContainer}>
                         <button onClick={()=> setVisible(false)}>Просмотреть ответы</button>
-                        <button onClick={()=> navigate("")}>На главную</button>
+                        <button onClick={()=> navigate("/")}>На главную</button>
                     </div>
                 </div>
             </div>
