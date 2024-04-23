@@ -13,7 +13,7 @@ function NewQuizDataset() {
     const [quizData, setquizData] = useState({ quizName: location.state.quizName, quizesCount: location.state.quizesCount, type: location.state.type, quizHeadImage: location.state.quizHeadImage }); // Инициализация FormData здесь
 
     const [quizQuestions, setQuizQuestions] = useState([]);
-
+    // создание массива для фанных викторины, исходя из значения количесва вопросов
     useEffect(() => {
         const initialQuestions = Array.from({ length: quizNums }, () => ({
             question: "",
