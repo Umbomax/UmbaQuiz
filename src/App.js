@@ -5,6 +5,7 @@ import Quizes from "./pages/Quizes/Quizes";
 import CreateQuizPage from "./pages/CreateQuizPage/CreateQuizPage";
 
 import QuizGame from "./pages/QuizGame/QuizGame.jsx";
+import About from "./pages/About/About.jsx";
 
 import NewQuizDataset from "./pages/NewQuizDataset/NewQuizDataset";
 import ErrorsBox from "./Components/ErrorsBox/StatusBox";
@@ -31,6 +32,7 @@ function App() {
             <Routes>
                 <Route path="/userSettings" element={<UserSettings></UserSettings>}></Route>
                 <Route path="/" element={<Quizes></Quizes>}></Route>
+                <Route path="/about" element={<About></About>}></Route>
                 <Route path="/createQuiz" element={<CreateQuizPage></CreateQuizPage>}></Route>
                 <Route path="/newQuizDataset" element={<NewQuizDataset></NewQuizDataset>}></Route>
                 <Route path="/quizGame" element={<QuizGame></QuizGame>}></Route>
