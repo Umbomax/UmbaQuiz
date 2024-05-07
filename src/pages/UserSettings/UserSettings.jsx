@@ -1,49 +1,67 @@
 import React from "react";
 import axios from 'axios';
-import {useState } from "react";
+import {useState, useEffect } from "react";
 import clases from "./UserSettings.module.css"
 function UserSettings() {
 
-        const [selectedFile, setSelectedFile] = useState(null);
+        const [users, setUsers] = useState([])
 
-        const handleFileChange = (event) => {
-            setSelectedFile(event.target.files[0]);
-            console.log("working")
-            
-        };
-
-        const handleUpload = () => {
-            if (selectedFile) {
-                const token = localStorage.getItem('token')
-                const formData = new FormData();
-                console.log(selectedFile)
-                formData.append("image", selectedFile);
-                console.log(formData.get('image')); // Проверяем, что файл добавлен в FormData
-                axios
-                    .post("http://localhost:3030/api/uploadFile", formData, {
-                        headers: {
-                            "Content-Type": "multipart/form-data",
-                        },
-                    })
-                    .then((response) => {
-                        console.log("File uploaded successfully:", response);
-                        // Добавьте здесь логику обработки успешной загрузки
-                    })
-                    .catch((error) => {
-                        console.error("Error uploading file:", error);
-                        // Добавьте здесь логику обработки ошибки загрузки
-                    });
-            } else {
-                console.error("No file selected");
-                // Добавьте здесь логику для случая, когда файл не выбран
+        useEffect(() => {
+            async function fetchQuizes() {
+                try {
+                    const response = await axios.get("http://localhost:3030/api/users");
+                    
+                    setUsers(response.data);
+                    console.log(users);
+                } catch (error) {
+                    console.error("Error fetching users:", error);                
+                }
             }
-        }
+    
+            fetchQuizes();
+        }, []);
         return (
-            <div >
-                <h2 className={clases.test}>Upload Image</h2>
-                <input type="file" onChange={handleFileChange} multiple accept="image/*" />
-                <button onClick={handleUpload}>Upload</button>
-            </div>
+            < >
+                <div className={clases.userinfoWrapper}>
+                    {/* TODO вынести infoContainer в отдельный компонент */}
+                    <div className={clases.infoContainer}>
+                        <div className={clases.left}>
+                            <div className={clases.fieldName}>Имя пользователя</div>
+                            <div className={clases.name}></div>
+                        </div>
+                        <div className={clases.right}>
+                            <button>Редактировать</button>
+                        </div>
+                    </div>
+                    <div className={clases.infoContainer}>
+                        <div className={clases.left}>
+                            <div className={clases.fieldName}>Эл. почта</div>
+                            <div className={clases.name}></div>
+                        </div>
+                        <div className={clases.right}>
+                            <button>Редактировать</button>
+                        </div>
+                    </div>
+                    <div className={clases.infoContainer}>
+                        <div className={clases.left}>
+                            <div className={clases.fieldName}>Тип пользователя</div>
+                        </div>
+                        <div className={clases.right}>
+                            <div>User</div>
+                        </div>
+                    </div>
+
+                </div>
+                <div className={clases.allUsers}>
+                    {users.map((user,idx)=>(
+                        <div key={idx} className={clases.userInfo}>
+                            <div>{user._id}</div>
+                            <div>{user.username}</div>
+                            <div>{user.email}</div>
+                        </div>
+                    ))}
+                </div>
+            </>
         );
     
 }

@@ -35,7 +35,12 @@ function LoginForm() {
       <>
         <form className={classes.form} action="" method="get">
             <div className={classes.inputContainer}>
-                <MyInput className={classes.formInput} type="text" placeholder="Username" value={formData.username} onChange={(e) => setFormData({ ...formData, username: e.target.value })}/>
+                <MyInput 
+                className={classes.formInput} 
+                type="text" 
+                placeholder="Username" 
+                value={formData.username} 
+                onChange={(e) => setFormData({ ...formData, username: e.target.value })}/>
             </div>
             <div className={classes.inputContainer}>
                 <MyInput className={classes.formInput} type="password" placeholder="Password" value={formData.password} onChange={(e) => setFormData({ ...formData, password: e.target.value })}/>

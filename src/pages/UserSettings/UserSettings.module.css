@@ -5,3 +5,9 @@
     height: 300px;
     color: blueviolet;
 }
+.userInfo{
+    display: flex;
+}
+.userInfo>div{
+    border: 1px solid violet;
+}
