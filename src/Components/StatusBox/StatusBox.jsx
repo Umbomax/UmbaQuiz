@@ -1,6 +1,6 @@
 import React from "react";
 import classes from "./StatusBox.module.css";
-import ErrorContent from "../ErrorContent/ErrorContent";
+import StatusContent from "../StatusContent/StatusContent";
 
 function StatusBox({ errors, removeError }) {
     console.log(errors);
@@ -11,7 +11,7 @@ function StatusBox({ errors, removeError }) {
           
           
             {errors.map((error) =>
-            (<ErrorContent key={error.id} error={error} removeError={removeError} />)
+            (<StatusContent key={error.id} error={error} removeError={removeError} />)
             )}
         </div>
     );

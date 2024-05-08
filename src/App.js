@@ -8,7 +8,7 @@ import QuizGame from "./pages/QuizGame/QuizGame.jsx";
 import About from "./pages/About/About.jsx";
 
 import NewQuizDataset from "./pages/NewQuizDataset/NewQuizDataset";
-import ErrorsBox from "./Components/ErrorsBox/StatusBox";
+import StatusBox from "./Components/StatusBox/StatusBox";
 
 import UserSettings from "./pages/UserSettings/UserSettings";
 
@@ -16,7 +16,8 @@ function App() {
     const [errors, setErrors] = useState([]);
 
     const createError = (newError) => {
-        setErrors([...errors, newError]);
+        console.log(newError)
+        setErrors([...errors, ...newError]);
     };
 
     const removeError = (error) => {
@@ -25,7 +26,7 @@ function App() {
 
     return (
         <BrowserRouter>
-            <ErrorsBox errors={errors} removeError={removeError}></ErrorsBox>
+            <StatusBox errors={errors} removeError={removeError}></StatusBox>
             <div className="App">
                 <Header createError={createError}></Header>
             </div>

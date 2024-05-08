@@ -9,6 +9,7 @@
     font-family: "Fontatica";
     width: 150px;
     height: 60px;
+    user-select: none;
     /* удалить позле разработки */
     border: 1px solid green; 
     

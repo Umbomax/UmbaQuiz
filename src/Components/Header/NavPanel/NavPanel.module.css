@@ -1,0 +1,17 @@
+.navContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+.navItem{
+    height: 40px;
+    font-size: 22px;
+    line-height: 40px;
+    user-select: none;
+}
+.navItem:hover{
+    text-decoration: underline;
+    transform: scale(1.1);
+    cursor: pointer;
+}

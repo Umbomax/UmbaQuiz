@@ -4,7 +4,7 @@ import LogIn from "./LogIn/LogIn";
 import classNames from "./Header.module.css";
 import Auth from "./Auth/Auth";
 import { useEffect, useState } from "react";
-
+import NavPanel from "./NavPanel/NavPanel"
 
 
 function Header({createError}) {
@@ -31,6 +31,7 @@ function Header({createError}) {
     return (
         <header>
             <Logo></Logo>
+            <NavPanel></NavPanel>
             <LogIn
                 logIn={logIn}
                 popUp={popUp} 

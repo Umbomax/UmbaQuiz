@@ -8,18 +8,45 @@ function NewQuizDataset() {
     const location = useLocation();
     const quizNums = +location.state.quizesCount;
     const [currentSlide, setCurrentSlide] = useState(0);
-    
+
+    // 1q4img  1q1img   1q4textanswer   1q1textanswer  
 
     const [quizData, setquizData] = useState({ quizName: location.state.quizName, quizesCount: location.state.quizesCount, type: location.state.type, quizHeadImage: location.state.quizHeadImage }); // Инициализация FormData здесь
 
     const [quizQuestions, setQuizQuestions] = useState([]);
     // создание массива для фанных викторины, исходя из значения количесва вопросов
+
+    // if(quizData.type=="1q1img"||quizData.type=="1q1textanswer") для удобства, потом удалить
+
+// если все поля заполнены функция вернет true
+    function checkValidForm(idx) {
+        const { question, answer, wrongAnswers } = quizQuestions[idx];
+    
+        // Проверка на пустые поля
+        return (
+            question.trim() && 
+            answer.trim() && 
+            (!wrongAnswers || wrongAnswers.every(wrongAnswer => wrongAnswer.trim()))
+        );
+    }
+
     useEffect(() => {
-        const initialQuestions = Array.from({ length: quizNums }, () => ({
-            question: "",
-            answer: "",
-            wrongAnswers: ["", "", ""],
-        }));
+        const initialQuestions = Array.from({ length: quizNums }, () => {
+            if (quizData.type == "1q1img" || quizData.type == "1q1textanswer") {
+                return (
+                    {
+                        question: "",
+                        answer: "",
+                    })
+            } else {
+                return (
+                    {
+                        question: "",
+                        answer: "",
+                        wrongAnswers: ["", "", ""],
+                    })
+            }
+        });
         setQuizQuestions(initialQuestions);
     }, [quizNums]);
     // Функция для обновления элемента массива по индексу
@@ -47,7 +74,7 @@ function NewQuizDataset() {
             wrongAnswers: updatedWrongAnswers,
         });
     };
-
+// Стиль для форм 
     const inlineStyle = {
         width: `${100 * quizNums}%`,
     };
@@ -62,7 +89,7 @@ function NewQuizDataset() {
         const dataToSend = { ...quizData };
         dataToSend.questions = quizQuestions;
         console.log(dataToSend);
-       
+
         axios
             .post("http://localhost:3030/api/uploadQuiz", JSON.stringify(dataToSend), {
                 headers: {
@@ -97,15 +124,19 @@ function NewQuizDataset() {
                             </div>
 
                             <div className={classes.correctAnswer}>
+                                <h3>Правильный ответ</h3>
                                 <MyImageInput className={classes.fileInput} type="file" placeholder="Правильный ответ" questionIndex={idx} setHeadImage={handleCorrectImagenChange} />
                             </div>
-                            <div className={classes.incorrectAnswersWrapper}>
-                                <div className={classes.incorrectAnswers}>
-                                    <MyImageInput type="file" placeholder="НеПравильный ответ" questionIndex={idx} answerIndex={0} setHeadImage={handleWrongAnswerChange} />
-                                    <MyImageInput type="file" placeholder="НеПравильный ответ" questionIndex={idx} answerIndex={1} setHeadImage={handleWrongAnswerChange} />
-                                    <MyImageInput type="file" placeholder="НеПравильный ответ" questionIndex={idx} answerIndex={2} setHeadImage={handleWrongAnswerChange} />
+                            {(quizData.type === "1q4img" || quizData.type === "1q4textanswer") && (
+                                <div className={classes.incorrectAnswersWrapper}>
+                                    <h3>Неправильные ответы</h3>
+                                    <div className={classes.incorrectAnswers}>
+                                        <MyImageInput type="file" placeholder="НеПравильный ответ" questionIndex={idx} answerIndex={0} setHeadImage={handleWrongAnswerChange} />
+                                        <MyImageInput type="file" placeholder="НеПравильный ответ" questionIndex={idx} answerIndex={1} setHeadImage={handleWrongAnswerChange} />
+                                        <MyImageInput type="file" placeholder="НеПравильный ответ" questionIndex={idx} answerIndex={2} setHeadImage={handleWrongAnswerChange} />
+                                    </div>
                                 </div>
-                            </div>
+                            )}
                         </form>
                     ))}
                 </div>
