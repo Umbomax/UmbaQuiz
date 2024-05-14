@@ -1,7 +1,8 @@
 header{
+    margin-top: 10px;
     display: flex;
     justify-content: space-around;
-    border: 1px solid green;
     box-sizing: border-box;
     margin-bottom: 25px;
+    background-color: #ff7f50;
 }

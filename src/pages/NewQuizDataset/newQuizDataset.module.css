@@ -12,7 +12,10 @@
     display: block;
     width: 44px;
     height: 18px;
-    background-color: black;
+    
+}
+.carouserItem.green {
+    background-color: green;
 }
 .quizFormsContainer{
     width: 1440px;

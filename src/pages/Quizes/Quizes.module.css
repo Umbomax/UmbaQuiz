@@ -1,10 +1,8 @@
 .root{
-    background-color: #C08F70;
+    background-color: #ff7f50;
     height: 85vh;
 }
-.cardsContainer{
-    border: 1px solid #52df1a;
-    
+.cardsContainer{       
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 30px;
@@ -15,7 +13,7 @@
     width: 300px;
     height: 300px;
     margin: 10px;
-    background-color: beige;
+    background-color: #a8a8a8 ;
 }
 
 /* Исправь потом этот ебаный костыль клоун */
@@ -30,7 +28,7 @@
     width: 420px;
     height: 310px;
     text-align: center;
-    background-color: beige;
+    background-color: #a8a8a8;
 }
 .quizHeadImg{
     display: block;

@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 function UserSettingsPopup({ popUp, setPopup }) {
     const navigate = useNavigate();
 
-    console.log("We are in Popup");
+   
 
     const logOut = () => {
         localStorage.clear();
@@ -37,8 +37,8 @@ function UserSettingsPopup({ popUp, setPopup }) {
                 className={rootClases.join(" ")}
                 onClick={async (e) => {
                     e.stopPropagation();
-                    // setPopup((prevPopup) => !prevPopup);
-                    console.log("Клик сработал ");
+  
+                    
                     setPopup(false);
                 }}
             ></div>

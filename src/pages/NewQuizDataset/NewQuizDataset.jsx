@@ -9,47 +9,33 @@ function NewQuizDataset() {
     const quizNums = +location.state.quizesCount;
     const [currentSlide, setCurrentSlide] = useState(0);
 
-    // 1q4img  1q1img   1q4textanswer   1q1textanswer  
-
-    const [quizData, setquizData] = useState({ quizName: location.state.quizName, quizesCount: location.state.quizesCount, type: location.state.type, quizHeadImage: location.state.quizHeadImage }); // Инициализация FormData здесь
+    const [quizData, setquizData] = useState({ 
+        quizName: location.state.quizName, 
+        quizesCount: location.state.quizesCount, 
+        type: location.state.type, 
+        quizHeadImage: location.state.quizHeadImage 
+    });
 
     const [quizQuestions, setQuizQuestions] = useState([]);
-    // создание массива для фанных викторины, исходя из значения количесва вопросов
-
-    // if(quizData.type=="1q1img"||quizData.type=="1q1textanswer") для удобства, потом удалить
-
-// если все поля заполнены функция вернет true
-    function checkValidForm(idx) {
-        const { question, answer, wrongAnswers } = quizQuestions[idx];
-    
-        // Проверка на пустые поля
-        return (
-            question.trim() && 
-            answer.trim() && 
-            (!wrongAnswers || wrongAnswers.every(wrongAnswer => wrongAnswer.trim()))
-        );
-    }
 
     useEffect(() => {
         const initialQuestions = Array.from({ length: quizNums }, () => {
-            if (quizData.type == "1q1img" || quizData.type == "1q1textanswer") {
-                return (
-                    {
-                        question: "",
-                        answer: "",
-                    })
+            if (quizData.type === "1q1img" || quizData.type === "1q1textanswer") {
+                return {
+                    question: "",
+                    answer: "",
+                };
             } else {
-                return (
-                    {
-                        question: "",
-                        answer: "",
-                        wrongAnswers: ["", "", ""],
-                    })
+                return {
+                    question: "",
+                    answer: "",
+                    wrongAnswers: ["", "", ""],
+                };
             }
         });
         setQuizQuestions(initialQuestions);
-    }, [quizNums]);
-    // Функция для обновления элемента массива по индексу
+    }, [quizNums, quizData.type]);
+
     const updateQuizData = (index, updatedItem) => {
         setQuizQuestions((prevState) => {
             const newState = [...prevState];
@@ -74,7 +60,7 @@ function NewQuizDataset() {
             wrongAnswers: updatedWrongAnswers,
         });
     };
-// Стиль для форм 
+
     const inlineStyle = {
         width: `${100 * quizNums}%`,
     };
@@ -83,32 +69,60 @@ function NewQuizDataset() {
         transform: `translateX(${-100 * currentSlide}%)`,
     };
 
+    function checkValidForm(index) {
+        const q = quizQuestions[index];
+        if (!q.question.trim() || !q.answer.trim()) {
+            return false;
+        }
+        if (quizData.type === "1q4img" || quizData.type === "1q4textanswer") {
+            return q.wrongAnswers.every(wrongAnswer => wrongAnswer.trim());
+        }
+        return true;
+    }
+
     function sendFormData(e) {
         e.preventDefault();
 
-        const dataToSend = { ...quizData };
-        dataToSend.questions = quizQuestions;
-        console.log(dataToSend);
+        const invalidForms = quizQuestions.map((q, idx) => {
+            if (!q.question.trim() || !q.answer.trim()) {
+                return idx + 1;
+            }
+            if ((quizData.type === "1q4img" || quizData.type === "1q4textanswer") && !q.wrongAnswers.every(wrongAnswer => wrongAnswer.trim())) {
+                return idx + 1;
+            }
+            return null;
+        }).filter(x => x !== null);
 
-        axios
-            .post("http://localhost:3030/api/uploadQuiz", JSON.stringify(dataToSend), {
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            })
-            .then(response => {
-                console.log("Сервер ответил:", response.data);
-            })
-            .catch((error) => {
-                console.error("There was a problem with your fetch operation:", error);
-            });
+        if (invalidForms.length > 0) {
+            alert(`Не заполнены следующие формы: ${invalidForms.join(', ')}`);
+        } else {
+            const dataToSend = { ...quizData, questions: quizQuestions };
+            console.log(dataToSend);
+
+            axios
+                .post("http://localhost:3030/api/uploadQuiz", JSON.stringify(dataToSend), {
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                })
+                .then(response => {
+                    console.log("Сервер ответил:", response.data);
+                })
+                .catch((error) => {
+                    console.error("There was a problem with your fetch operation:", error);
+                });
+        }
     }
 
     return (
         <div>
             <div className={classes.carouser}>
                 {quizQuestions.map((el, idx) => (
-                    <div key={idx} className={classes.carouserItem} onClick={(e) => setCurrentSlide(+idx)}>
+                    <div 
+                        key={idx} 
+                        className={`${classes.carouserItem} ${checkValidForm(idx) ? classes.green : ''}`} 
+                        onClick={() => setCurrentSlide(idx)}
+                    >
                         {idx + 1}
                     </div>
                 ))}
@@ -120,20 +134,49 @@ function NewQuizDataset() {
                         <form style={activeSlide} key={idx} className={classes.quizForm}>
                             <h2>{`Форма номер ${idx + 1}`}</h2>
                             <div className={classes.inputWrapper}>
-                                <input type="text" placeholder="Введите вопрос" onChange={(e) => handleQuestionChange(e.target.value, idx)} />
+                                <input 
+                                    type="text" 
+                                    placeholder="Введите вопрос" 
+                                    onChange={(e) => handleQuestionChange(e.target.value, idx)} 
+                                    value={quizQuestions[idx].question}
+                                />
                             </div>
 
                             <div className={classes.correctAnswer}>
                                 <h3>Правильный ответ</h3>
-                                <MyImageInput className={classes.fileInput} type="file" placeholder="Правильный ответ" questionIndex={idx} setHeadImage={handleCorrectImagenChange} />
+                                <MyImageInput 
+                                    className={classes.fileInput} 
+                                    type="file" 
+                                    placeholder="Правильный ответ" 
+                                    questionIndex={idx} 
+                                    setHeadImage={handleCorrectImagenChange} 
+                                />
                             </div>
                             {(quizData.type === "1q4img" || quizData.type === "1q4textanswer") && (
                                 <div className={classes.incorrectAnswersWrapper}>
                                     <h3>Неправильные ответы</h3>
                                     <div className={classes.incorrectAnswers}>
-                                        <MyImageInput type="file" placeholder="НеПравильный ответ" questionIndex={idx} answerIndex={0} setHeadImage={handleWrongAnswerChange} />
-                                        <MyImageInput type="file" placeholder="НеПравильный ответ" questionIndex={idx} answerIndex={1} setHeadImage={handleWrongAnswerChange} />
-                                        <MyImageInput type="file" placeholder="НеПравильный ответ" questionIndex={idx} answerIndex={2} setHeadImage={handleWrongAnswerChange} />
+                                        <MyImageInput 
+                                            type="file" 
+                                            placeholder="НеПравильный ответ" 
+                                            questionIndex={idx} 
+                                            answerIndex={0} 
+                                            setHeadImage={handleWrongAnswerChange} 
+                                        />
+                                        <MyImageInput 
+                                            type="file" 
+                                            placeholder="НеПравильный ответ" 
+                                            questionIndex={idx} 
+                                            answerIndex={1} 
+                                            setHeadImage={handleWrongAnswerChange} 
+                                        />
+                                        <MyImageInput 
+                                            type="file" 
+                                            placeholder="НеПравильный ответ" 
+                                            questionIndex={idx} 
+                                            answerIndex={2} 
+                                            setHeadImage={handleWrongAnswerChange} 
+                                        />
                                     </div>
                                 </div>
                             )}
