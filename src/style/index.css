@@ -14,4 +14,6 @@ body{
     margin: auto;
 }
 
-
+.mainContentBackground{
+    background-color: #ebc9bd;
+}
