@@ -9,7 +9,7 @@ function UserSettings() {
         useEffect(() => {
             async function fetchQuizes() {
                 try {
-                    const response = await axios.get("http://localhost:3030/api/users");
+                    const response = await axios.get("https://umbaquizserver-production.up.railway.app/api/users");
                     
                     setUsers(response.data);
                     console.log(users);

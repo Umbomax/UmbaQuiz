@@ -100,7 +100,7 @@ function NewQuizDataset() {
             console.log(dataToSend);
 
             axios
-                .post("http://localhost:3030/api/uploadQuiz", JSON.stringify(dataToSend), {
+                .post("https://umbaquizserver-production.up.railway.app/api/uploadQuiz", JSON.stringify(dataToSend), {
                     headers: {
                         "Content-Type": "application/json",
                     },

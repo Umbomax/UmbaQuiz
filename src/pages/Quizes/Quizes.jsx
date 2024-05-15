@@ -12,7 +12,7 @@ function Quizes() {
     useEffect(() => {
         async function fetchQuizes() {
             try {
-                const response = await axios.get("http://localhost:3030/api/getQuizes");
+                const response = await axios.get("https://umbaquizserver-production.up.railway.app/api/getQuizes");
                 setQuizes(response.data);
                 
             } catch (error) {

@@ -68,7 +68,7 @@ function Registration({ createError }) {
         let validationPassed = checkValidationErrors();
         if (validationPassed) {
             try {
-                const response = await fetch("http://localhost:3030/api/registration", {
+                const response = await fetch("https://umbaquizserver-production.up.railway.app/api/registration", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(formData),

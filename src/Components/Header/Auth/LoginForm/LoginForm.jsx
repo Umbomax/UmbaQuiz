@@ -8,8 +8,9 @@ function LoginForm() {
 
     const login = async(e) =>{
       e.preventDefault();  
-
-      await fetch("http://localhost:3030/api/login",{
+      // http://localhost:3030/api/login
+      
+      await fetch("https://umbaquizserver-production.up.railway.app/api/login",{
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)
