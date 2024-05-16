@@ -1,10 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import Logo from "./Logo/Logo";
 import LogIn from "./LogIn/LogIn";
-import classNames from "./Header.module.css";
-import Auth from "./Auth/Auth";
-import { useEffect, useState } from "react";
 import NavPanel from "./NavPanel/NavPanel";
+import Auth from "./Auth/Auth";
+import classNames from "./Header.module.css";
 
 function Header({ createError }) {
     const [modal, setModal] = useState(false);
@@ -13,8 +12,10 @@ function Header({ createError }) {
     const chooseRoute = () => {
         const token = localStorage.getItem("token");
         if (token) {
+            console.log("Token found, setting popup to true");
             setPopup(true);
         } else {
+            console.log("No token, setting modal to true");
             setModal(true);
         }
     };
@@ -25,12 +26,11 @@ function Header({ createError }) {
     };
 
     return (
-        <header>
-            <Logo></Logo>
-            <NavPanel></NavPanel>
-            <LogIn logIn={logIn} popUp={popUp} setPopup={setPopup}></LogIn>
-
-            <Auth visible={modal} setVisible={setModal} createError={createError}></Auth>
+        <header className={classNames.header}>
+            <Logo />
+            <NavPanel />
+            <LogIn logIn={logIn} popUp={popUp} setPopup={setPopup} />
+            <Auth visible={modal} setVisible={setModal} createError={createError} />
         </header>
     );
 }

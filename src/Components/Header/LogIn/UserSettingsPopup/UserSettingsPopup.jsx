@@ -1,49 +1,44 @@
-import React from "react";
-import clases from "./UserSettingsPopup.module.css";
-import MyButton from "../../../UI/MyButton/MyButton";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import MyButton from "../../../UI/MyButton/MyButton";
+import classes from "./UserSettingsPopup.module.css";
 
 function UserSettingsPopup({ popUp, setPopup }) {
     const navigate = useNavigate();
 
-   
+    useEffect(() => {
+        const handleBodyClick = () => {
+            setPopup(false);
+        };
+
+        if (popUp) {
+            document.body.addEventListener("click", handleBodyClick);
+        } else {
+            document.body.removeEventListener("click", handleBodyClick);
+        }
+
+        return () => {
+            document.body.removeEventListener("click", handleBodyClick);
+        };
+    }, [popUp, setPopup]);
 
     const logOut = () => {
         localStorage.clear();
-        navigate("");
+        navigate("/");
         setPopup(false);
     };
 
-    const rootClases = [clases.popup];
-    if (popUp) {
-        rootClases.push(clases.active);
-    }
-
-    return popUp ? (
-        <div className={clases.root}>
-            <div className={clases.popupContent} onClick={(e) => e.stopPropagation()}>
-                <MyButton
-                    onClick={() => {
-                        navigate("/userSettings");
-                        setPopup(false);
-                    }}
-                >
-                    Профиль
-                </MyButton>
+    return (
+        <div className={`${classes.popup} ${popUp ? classes.active : ""}`} onClick={() => setPopup(false)}>
+            <div className={classes.popupContent} onClick={(e) => e.stopPropagation()}>
+                <MyButton onClick={() => {
+                    navigate("/userSettings");
+                    setPopup(false);
+                }}>Профиль</MyButton>
                 <MyButton onClick={logOut}>Выйти</MyButton>
             </div>
-            <div
-                className={rootClases.join(" ")}
-                onClick={async (e) => {
-                    e.stopPropagation();
-  
-                    
-                    setPopup(false);
-                }}
-            ></div>
         </div>
-    ) : null;
+    );
 }
 
 export default UserSettingsPopup;

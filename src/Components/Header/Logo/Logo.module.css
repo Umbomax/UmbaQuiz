@@ -1,6 +1,6 @@
 
 .logoContainer{
-    color: rgb(0, 0, 0);
+    color: #ecf0f1;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -22,8 +22,8 @@
     width: 32px;
     height: 32px;
     border-radius: 50%;
-    border: 2px solid rgb(0, 0, 0);
-    color: rgb(0, 0, 0);
+    border: 2px solid #ecf0f1;
+    color: #ecf0f1;
     display: flex;
     justify-content: center;
     align-items: center;

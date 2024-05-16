@@ -1,30 +1,39 @@
 .popup {
-    display: none;  
-    width: 100vw;
-    height: 100vh;
-    top: 0;
-    bottom: 0;
+    display: none;
+    position: absolute;
+    top: 60px; /* Смещение вниз относительно LogIn контейнера */
     right: 0;
-    left: 0;
-   
-    position: fixed;
-    z-index: 1;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
 }
 
 .popup.active {
-    display: block;
+    display: flex;
 }
-.root{
-    position: relative;
-}
+
 .popupContent {
-    z-index: 10;
-    padding-top: 3px;
-    margin-bottom: 22px;  
-    width: 150px;
-    height: 50px;
+    background-color: #ffffff;
+    border: 1px solid #dcdcdc;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 10010;
     display: flex;
     flex-direction: column;
-    background-color: #617A9D;
-    position: relative;
+}
+
+.popupContent button {
+    margin-top: 10px;
+    background-color: #3498db;
+    color: #ecf0f1;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.popupContent button:hover {
+    background-color: #2ecc71;
 }

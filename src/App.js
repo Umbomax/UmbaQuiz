@@ -31,8 +31,8 @@ function App() {
             <div className="App">
                 <Header createError={createError}></Header>
             </div>
-           
-            <Routes>
+           <div className="mainContentBackground">
+           <Routes>
                 <Route path="/userSettings" element={<UserSettings></UserSettings>}></Route>
                 <Route path="/" element={<Quizes></Quizes>}></Route>
                 <Route path="/about" element={<About></About>}></Route>
@@ -40,6 +40,8 @@ function App() {
                 <Route path="/newQuizDataset" element={<NewQuizDataset></NewQuizDataset>}></Route>
                 <Route path="/quizGame" element={<QuizGame></QuizGame>}></Route>
             </Routes>
+           </div>
+            
             <Footer></Footer>
         </BrowserRouter>
     );
