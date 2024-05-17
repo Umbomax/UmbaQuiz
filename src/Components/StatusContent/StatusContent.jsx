@@ -5,7 +5,7 @@ function StatusContent({ error, removeError }) {
     console.log(`Rendering StatusContent for error ID: ${error.id}`);
 
     return (
-        <div className={classes.container}>
+        <div className={`${classes.container} ${error.status === "ok" ? classes.ok : ""}`}>
             <button
                 className={classes.btn}
                 onClick={(e) => {

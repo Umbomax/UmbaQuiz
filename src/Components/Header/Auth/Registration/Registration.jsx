@@ -3,7 +3,7 @@ import classes from "./Registration.module.css";
 import MyInput from "../../../UI/MyInput/MyInput";
 import { isEmail, isFill } from "../../../../Scripts/validation";
 
-function Registration({ createError }) {
+function Registration({ createError, onRegisterSuccess }) {
     const [formData, setFormData] = useState({
         username: "",
         password: "",
@@ -15,56 +15,47 @@ function Registration({ createError }) {
 
     useEffect(() => {
         if (errors.length > 0) {
-            console.log("Sending errors:", errors); // Лог для отладки
             createError(errors);
             setErrors([]);
         }
     }, [errors, createError]);
 
-    const pushStatus = (text) => {
+    const pushStatus = (text, status) => {
         const generateUniqueId = () => Date.now() + Math.floor(Math.random() * 1000);
-
         let newError;
         do {
             newError = {
                 id: generateUniqueId(),
                 errorText: text,
+                status: status,
             };
         } while (errors.some(error => error.id === newError.id));
-
-        console.log("Pushing new error:", newError); // Лог для отладки
         setErrors(prevErrors => [...prevErrors, newError]);
     };
 
     const checkValidationErrors = () => {
         let valid = true;
-
         if (!isFill(formData.username)) {
-            pushStatus("Поле Username не должно быть пустым");
+            pushStatus("Поле Username не должно быть пустым", "error");
             valid = false;
         }
-
         if (!isFill(formData.password)) {
-            pushStatus("Поле Password не должно быть пустым");
+            pushStatus("Поле Password не должно быть пустым", "error");
             valid = false;
         }
-
         if (formData.password !== formData.repeatedPassword) {
-            pushStatus("Пароли не совпадают");
+            pushStatus("Пароли не совпадают", "error");
             valid = false;
         }
-
         if (!isEmail(formData.email)) {
-            pushStatus("Введите корректный email");
+            pushStatus("Введите корректный email", "error");
             valid = false;
         }
-
         return valid;
     };
 
     async function sendUserData(e) {
         e.preventDefault();
-    
         let validationPassed = checkValidationErrors();
         if (validationPassed) {
             try {
@@ -73,22 +64,17 @@ function Registration({ createError }) {
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(formData),
                 });
-    
                 if (!response.ok) {
                     throw new Error("Network response was not ok");
                 }
-    
                 const data = await response.json();
-                console.log("Registration success response:", data); // Лог для отладки
-                pushStatus("Регистрация прошла успешно");
+                pushStatus("Регистрация прошла успешно", "ok");
+                onRegisterSuccess();
             } catch (error) {
-                console.error("Error during registration:", error); // Лог для отладки
-                pushStatus(`Что-то пошло не так ${error}`);
+                pushStatus(`Что-то пошло не так ${error}`, "error");
             }
         }
     }
-    
-    
 
     return (
         <form className={classes.form} action="" method="post">
@@ -103,7 +89,7 @@ function Registration({ createError }) {
             <div className={classes.inputContainer}>
                 <MyInput
                     className={classes.formInput}
-                    type="text"
+                    type="password"
                     placeholder="Password"
                     onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                 />
@@ -111,7 +97,7 @@ function Registration({ createError }) {
             <div className={classes.inputContainer}>
                 <MyInput
                     className={classes.formInput}
-                    type="text"
+                    type="password"
                     placeholder="Repeat password"
                     onChange={(e) => setFormData({ ...formData, repeatedPassword: e.target.value })}
                 />
@@ -119,7 +105,7 @@ function Registration({ createError }) {
             <div className={classes.inputContainer}>
                 <MyInput
                     className={classes.formInput}
-                    type="text"
+                    type="email"
                     placeholder="Email"
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 />

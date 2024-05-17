@@ -16,7 +16,6 @@
     background-color: var(--card-background, #ecf0f1);
 }
 
-/* Исправь потом этот ебаный костыль клоун */
 .createQuiz:after{
     margin-left: 50px;    
     content: "+";
@@ -59,4 +58,20 @@ box-shadow: -2px -45px 63px -55px rgba(0, 0, 0, 0.38) inset;
     width: 94%;
     height: 70%;
     object-fit: cover;
+}
+.skeletonCard {
+    background-color: #e0e0e0;
+    animation: skeleton-loading 1s infinite linear;
+}
+
+@keyframes skeleton-loading {
+    0% {
+        background-color: #e0e0e0;
+    }
+    50% {
+        background-color: #a09c9c;
+    }
+    100% {
+        background-color: #e0e0e0;
+    }
 }

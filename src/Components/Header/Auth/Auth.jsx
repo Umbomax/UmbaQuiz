@@ -1,23 +1,28 @@
 import React from "react";
+import { useState } from "react";
 import classes from "./Auth.module.css";
-import { useEffect, useState } from "react";
-import LoginForm from "./LoginForm/LoginForm"
-import Registration from "./Registration/Registration"
+import LoginForm from "./LoginForm/LoginForm";
+import Registration from "./Registration/Registration";
 
 function MyModal({ visible, setVisible, createError }) {
     const rootClases = [classes.myModal];
-
     const [selectedSlide, setSelectedSlide] = useState("login");
 
     const handleSlideChange = (event) => {
         setSelectedSlide(event.target.id);
     };
 
-
-
     if (visible) {
         rootClases.push(classes.active);
     }
+
+    const handleRegisterSuccess = () => {
+        setSelectedSlide("login");
+    };
+
+    const handleLoginSuccess = () => {
+        setVisible(false);
+    };
 
     return (
         <div className={rootClases.join(" ")} onClick={() => setVisible(false)}>
@@ -39,8 +44,8 @@ function MyModal({ visible, setVisible, createError }) {
                 </div>
                 <div className={classes.formsWrapper}>
                     <div style={{ marginLeft: selectedSlide === "signup" ? "-100%" : "0" }} className={`${classes.formsContainer}`}>
-                        <LoginForm ></LoginForm>
-                        <Registration createError={createError}></Registration>
+                        <LoginForm createError={createError} onSuccess={handleLoginSuccess}></LoginForm>
+                        <Registration createError={createError} onRegisterSuccess={handleRegisterSuccess}></Registration>
                     </div>
                 </div>
             </div>
