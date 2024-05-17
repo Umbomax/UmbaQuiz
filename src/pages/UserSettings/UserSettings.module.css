@@ -11,3 +11,28 @@
 .userInfo>div{
     border: 1px solid violet;
 }
+.theme{
+    color: var(--main-text);
+    width: 200px;
+    height: 70px;
+    margin: 20px;
+    }
+.themeImage{
+    width: 200px;
+    height: 50px;
+}
+    .modernTheme{
+        background: -webkit-linear-gradient(left, #2c3e50, #ecf0f1, #ffffff);;
+    }
+    .pastelTheme{
+        background: -webkit-linear-gradient(left, #35495e, #f7f9fc, #ffffff);;
+    }
+    .darkTheme{
+        background: -webkit-linear-gradient(left, #1a1a1a, #333333, #2c3e50);;
+    }
+    .brightTheme{
+        background: -webkit-linear-gradient(left, #ff5733, #f0f0f0, #ffffff);;
+    }
+    .calmTheme{
+        background: -webkit-linear-gradient(left, #3b3b3b, #e8e8e8, #ffffff);;
+    }

@@ -13,7 +13,7 @@
     width: 300px;
     height: 300px;
     margin: 10px;
-    background-color: #f7f9fc;
+    background-color: var(--card-background, #ecf0f1);
 }
 
 /* Исправь потом этот ебаный костыль клоун */
@@ -23,7 +23,7 @@
     font-size: 300px;
     line-height: 300px;
     text-align: center;
-    color:  #91c7b1;
+    color:  var(--card-header, #3498db);
 }
 
 .notFound{
@@ -38,9 +38,9 @@
     
 
     text-align: center;
-    background-color: #f7f9fc;
-    border: 4px solid #d3dce6;
-    color: #2c3e50;
+    background-color: var(--card-background, #ffffff);
+    border: 4px solid var(--card-border, #dcdcdc);
+    color: var(--card-text, #2c3e50);
     border-radius: 15px;
 }
 .quizCard>h2{

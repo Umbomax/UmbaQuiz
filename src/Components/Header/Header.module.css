@@ -4,5 +4,5 @@ header{
     justify-content: space-around;
     box-sizing: border-box;
     margin-bottom: 10px;
-    color: #ecf0f1;
+    color: var(--header-text, #ecf0f1)
 }
