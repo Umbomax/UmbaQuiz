@@ -1,8 +1,35 @@
-.footerContainer{
+/* Footer.module.css */
+.footer {
+    background-color: #333;
+    color: var(--header-text, #ecf0f1);
+    padding: 10px 0;
+    text-align: center;
+  }
+  
+  .footerContainer {
     height: 60px;
-    margin: 10px 0;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
+  }
+  
+  .githubLink {
     color: var(--header-text, #ecf0f1);
-}
+    text-decoration: none;
+  }
+  
+  .githubLink:hover {
+    color: #1e90ff;
+  }
+  
+  @media (max-width: 600px) {
+    .footerContainer {
+      flex-direction: column;
+      height: auto;
+    }
+  
+    .footerContainer div {
+      margin: 5px 0;
+    }
+  }
+  
