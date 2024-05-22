@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import SearchQuizInput from "./SearchQuizInput/SearchQuizInput";
-import clases from "./Quizes.module.css";
+import classes from "./Quizes.module.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -42,30 +42,30 @@ function Quizes() {
 
     return (
         <div className="mainContentBackground">
-            <div className={clases.root}>
+            <div className={classes.root}>
                 <SearchQuizInput value={searchTerm} onChange={handleSearch} />
-                <section className={clases.cardsContainer}>
+                <section className={classes.cardsContainer}>
                     {isLoading ? (
                         Array.from({ length: 3 }).map((_, idx) => (
-                            <div key={idx} className={`${clases.quizCard} ${clases.skeletonCard}`}></div>
+                            <div key={idx} className={`${classes.quizCard} ${classes.skeletonCard}`}></div>
                         ))
                     ) : (
                         filteredQuizes.length > 0 ? (
                             filteredQuizes.map((quiz, idx) => (
                                 <div
                                     key={idx}
-                                    className={clases.quizCard}
+                                    className={classes.quizCard}
                                     onClick={() => navigate("/quizGame", { state: quiz })}
                                 >
                                     <h2>{quiz.quizName}</h2>
-                                    <img src={quiz.quizHeadImage} className={clases.quizHeadImg} alt={quiz.quizName} />
+                                    <img src={quiz.quizHeadImage} className={classes.quizHeadImg} alt={quiz.quizName} />
                                 </div>
                             ))
                         ) : (
-                            <div className={clases.notFound}>No quizzes found.</div>
+                            <div className={classes.notFound}>No quizzes found.</div>
                         )
                     )}
-                    <div className={clases.createQuiz} onClick={() => navigate("/createQuiz")}></div>
+                    <div className={classes.createQuiz} onClick={() => navigate("/createQuiz")}></div>
                 </section>
             </div>
         </div>

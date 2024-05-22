@@ -1,5 +1,5 @@
-
-.logoContainer{
+/* Logo.module.css */
+.logoContainer {
     color: var(--header-text, #ecf0f1);
     display: flex;
     align-items: center;
@@ -10,15 +10,9 @@
     width: 150px;
     height: 60px;
     user-select: none;
-    
-    
-    
 }
 
-.logoIcon{
-
-    
-
+.logoIcon {
     width: 32px;
     height: 32px;
     border-radius: 50%;
@@ -29,5 +23,18 @@
     align-items: center;
     font-size: 21px;
     font-family: 'Times New Roman', Times, serif;
-   
+}
+
+@media (max-width: 768px) {
+    .logoContainer {
+        font-size: 24px;
+        width: 120px;
+        height: 50px;
+    }
+
+    .logoIcon {
+        width: 28px;
+        height: 28px;
+        font-size: 18px;
+    }
 }

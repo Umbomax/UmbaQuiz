@@ -1,8 +1,17 @@
-header{
+.header {
     margin-top: 10px;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
+    align-items: center;
     box-sizing: border-box;
     margin-bottom: 10px;
-    color: var(--header-text, #ecf0f1)
+    color: var(--header-text, #ecf0f1);
+    padding: 0 20px;
+}
+
+@media (max-width: 768px) {
+    .header {
+        flex-direction: column;
+        align-items: center;
+    }
 }

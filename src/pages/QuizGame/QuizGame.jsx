@@ -7,7 +7,7 @@ function QuizGame(props) {
     const location = useLocation();
     const [questions, setQuestions] = useState([]);
     const [currentSlide, setCurrentSlide] = useState(0);
-    const [correctAnsersCount, setCorrectAnsersCount] = useState(0);
+    const [correctAnswersCount, setCorrectAnswersCount] = useState(0);
     const [answersStatus, setAnswersStatus] = useState([]);
     const [answers, setAnswers] = useState([]);
     const [gameEnd, setGameEnd] = useState(false);
@@ -24,13 +24,10 @@ function QuizGame(props) {
         setAnswers(generatedAnswers);
     }, [location.state]);
 
-
-
     function setCarouserActive() {
-        const isOdd = questions.length % 2 === 0;
-        const STEP_LENGTH = 65; // Ширина блока + gap
-        let startPos = isOdd ? 32.5 - STEP_LENGTH * (questions.length / 2) : 0 - STEP_LENGTH * Math.round(questions.length / 2);
-        return startPos + 65 * currentSlide;
+        const STEP_LENGTH = 55; // Ширина блока + gap
+        const startPos = -STEP_LENGTH * Math.floor(questions.length / 2);
+        return startPos + STEP_LENGTH * currentSlide;
     }
 
     const activeCarouselBlock = {
@@ -47,12 +44,12 @@ function QuizGame(props) {
 
     function nextSlide(e) {
         e.preventDefault();
-        currentSlide === questions.length - 1 ? setCurrentSlide(0) : setCurrentSlide(currentSlide + 1);
+        setCurrentSlide((prev) => (prev === questions.length - 1 ? 0 : prev + 1));
     }
 
     function prevSlide(e) {
         e.preventDefault();
-        currentSlide === 0 ? setCurrentSlide(questions.length - 1) : setCurrentSlide(currentSlide - 1);
+        setCurrentSlide((prev) => (prev === 0 ? questions.length - 1 : prev - 1));
     }
 
     function checkAnswer(answer, questionIdx, answerIdx) {
@@ -60,10 +57,9 @@ function QuizGame(props) {
             return;
         }
         const isCorrect = answer === questions[questionIdx].answer;
-        const newAnswersStatus = [...answersStatus]; // Создаем копию массива
+        const newAnswersStatus = [...answersStatus];
         const correctAnswerIdx = answers[questionIdx].findIndex((ans) => ans === questions[questionIdx].answer);
         newAnswersStatus[questionIdx] = {
-            // Обновляем элемент массива по индексу idx
             selectedAnswerIdx: answerIdx,
             correctAnswerIdx: correctAnswerIdx,
             isCorrect: isCorrect,
@@ -72,11 +68,9 @@ function QuizGame(props) {
         setAnswersStatus(newAnswersStatus);
         const nullIndex = newAnswersStatus.findIndex((status) => status === null);
         
-        // проверяем статус окончания игры
-        // console.log(newAnswersStatus)
         if (nullIndex === -1) {
-            setGameEnd(true)
-            setCorrectAnsersCount(
+            setGameEnd(true);
+            setCorrectAnswersCount(
                 newAnswersStatus.reduce((acc, obj) => {
                     return obj.isCorrect ? acc + 1 : acc;
                 }, 0)
@@ -88,7 +82,7 @@ function QuizGame(props) {
 
     return (
         <>
-            <QuizResultsModal visible={modal} setVisible={setModal} questionsCount={questions.length} correctAnsersCount={correctAnsersCount}></QuizResultsModal>
+            <QuizResultsModal visible={modal} setVisible={setModal} questionsCount={questions.length} correctAnswersCount={correctAnswersCount}></QuizResultsModal>
             <div className={classes.carouser}>
                 {questions.map((el, idx) => (
                     <div key={idx} className={classes.carouserItem} onClick={() => setCurrentSlide(idx)}>
@@ -118,7 +112,7 @@ function QuizGame(props) {
                                         }`}
                                         onClick={() => checkAnswer(answer, idx, answerIdx)}
                                     >
-                                        <img src={answer} alt="Вариант ответа" />
+                                        <img src={answer} alt="answer" />
                                     </div>
                                 ))}
                             </div>
@@ -126,10 +120,10 @@ function QuizGame(props) {
                     ))}
                 </div>
             </div>
+
             <div className={classes.controlsContainer}>
-                <button onClick={(e) => prevSlide(e)}>Предыдущий</button>
-                {gameEnd?(<button onClick={(e) => setModal(true)}>Показать результат</button>):null}
-                <button onClick={(e) => nextSlide(e)}>Следующий</button>
+                <button onClick={prevSlide}>Previous</button>
+                <button onClick={nextSlide}>Next</button>
             </div>
         </>
     );
