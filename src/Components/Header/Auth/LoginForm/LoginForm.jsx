@@ -1,13 +1,16 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext} from "react";
+import { useNavigate } from 'react-router-dom';
 import classes from "./LoginForm.module.css";
 import MyInput from "../../../UI/MyInput/MyInput";
 import { isFill } from "../../../../Scripts/validation";
+import { AuthContext } from '../../../../context/AuthContext';
 
 function LoginForm({ createError, onSuccess }) {
     const [formData, setFormData] = useState({ username: "", password: "" });
     const [errors, setErrors] = useState([]);
-
+    const { logIn } = useContext(AuthContext);
+    const navigate = useNavigate();
     const pushStatus = (text, status) => {
         const generateUniqueId = () => Date.now() + Math.floor(Math.random() * 1000);
         let newError;
@@ -37,6 +40,29 @@ function LoginForm({ createError, onSuccess }) {
         }
     }, [errors, createError]);
 
+    // const handleSubmit = async (e) => {
+    //     e.preventDefault();
+    //     if (checkValidationErrors()){
+
+    //     }
+    //     try {
+    //         const res = await axios.post('/api/auth/login', { email, password });
+    //         const { token, username } = res.data;
+    //         localStorage.setItem('token', token);
+    //         localStorage.setItem('username', username);
+
+    //         logIn(username);
+
+    //         if (onSuccess) {
+    //             onSuccess(username);
+    //         }
+
+    //         navigate('/');
+    //     } catch (error) {
+    //         createError('Invalid credentials');
+    //     }
+    // };
+
     const login = async (e) => {
         e.preventDefault();
         if (checkValidationErrors()) {
@@ -50,11 +76,14 @@ function LoginForm({ createError, onSuccess }) {
                     throw new Error('Network response was not ok');
                 }
                 const data = await response.json();
-                localStorage.setItem('UserName', data.username);
+                localStorage.setItem('username', data.username);
                 localStorage.setItem('token', data.token);
                 localStorage.setItem('roles', JSON.stringify(data.roles));
-                createError([{ id: Date.now(), errorText: "Успешный вход", status: "ok" }]);
-                onSuccess();
+                createError([{ id: Date.now(), errorText: "Успешный вход", status: "ok" }])
+            if (onSuccess) {
+                onSuccess(data.username);
+            }
+            navigate('/');
             } catch (error) {
                 pushStatus('There was a problem with your fetch operation: ' + error.message, "error");
             }

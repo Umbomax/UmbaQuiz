@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Quizes from "./pages/Quizes/Quizes";
 import CreateQuizPage from "./pages/CreateQuizPage/CreateQuizPage";
-
+import { AuthProvider } from './context/AuthContext.jsx';
 import QuizGame from "./pages/QuizGame/QuizGame.jsx";
 import About from "./pages/About/About.jsx";
 
@@ -27,6 +27,7 @@ function App() {
 
     return (
         <BrowserRouter>
+        <AuthProvider>
             <StatusBox errors={errors} removeError={removeError}></StatusBox>
             <div className="App">
                 <Header createError={createError}></Header>
@@ -43,6 +44,7 @@ function App() {
            </div>
             
             <Footer></Footer>
+            </AuthProvider>
         </BrowserRouter>
     );
 }

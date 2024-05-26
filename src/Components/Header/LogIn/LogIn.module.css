@@ -1,15 +1,50 @@
-.logInContainer{
-    width: 60px;
-    height: 60px;
-   display: flex;
-   align-items: center;
-   justify-content: center;
-    
+
+.logInContainer {
+    display: flex;
+    align-items: center;
+}
+
+.userSection {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
 }
 
 .img {
-    display: block;
-    width: 50px;
-    height: 50px;
-    filter: invert(1)
+    width: 40px;
+    height: 40px;
+   
+    margin-right: 10px;
+    
+}
+.img path {
+    fill: var(--header-text);
+  }
+
+.username {
+    font-size: 26px;
+    margin-right: 10px;
+}
+
+.arrowDown {
+    font-size: 20px;
+}
+
+.loginButton {
+    background-color: var(--card-background);
+    color: var(--card-text);
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+.loginButton:hover {
+    transform: scale(1.03);
+    transition: all 0.2s ease;
+    -webkit-box-shadow: -2px -25px 63px -55px rgba(0, 0, 0, 0.38) inset;
+    -moz-box-shadow: -2px -25px 63px -55px rgba(0, 0, 0, 0.38) inset;
+    box-shadow: -2px -25px 63px -55px rgba(0, 0, 0, 0.38) inset;
 }

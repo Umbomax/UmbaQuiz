@@ -1,39 +1,24 @@
 .popup {
-    display: none;
     position: absolute;
-    top: 60px; /* Смещение вниз относительно LogIn контейнера */
+    top: 100%;
     right: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 1000;
-    align-items: center;
-    justify-content: center;
+    background-color: white;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    width: 200px;
+    display: none;
 }
 
 .popup.active {
-    display: flex;
+    display: block;
 }
 
 .popupContent {
-    background-color: #ffffff;
-    border: 1px solid #dcdcdc;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    z-index: 10010;
     display: flex;
     flex-direction: column;
+    padding: 10px;
 }
 
 .popupContent button {
-    margin-top: 10px;
-    background-color: #3498db;
-    color: #ecf0f1;
-    border: none;
-    padding: 10px;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.popupContent button:hover {
-    background-color: #2ecc71;
+    margin: 5px 0;
 }

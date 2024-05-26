@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import MyButton from "../../../UI/MyButton/MyButton";
-import classes from "./UserSettingsPopup.module.css";
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import MyButton from '../../../UI/MyButton/MyButton';
+import classes from './UserSettingsPopup.module.css';
 
-function UserSettingsPopup({ popUp, setPopup }) {
+function UserSettingsPopup({ popUp, setPopup, logOut }) {
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -12,30 +12,27 @@ function UserSettingsPopup({ popUp, setPopup }) {
         };
 
         if (popUp) {
-            document.body.addEventListener("click", handleBodyClick);
+            document.body.addEventListener('click', handleBodyClick);
         } else {
-            document.body.removeEventListener("click", handleBodyClick);
+            document.body.removeEventListener('click', handleBodyClick);
         }
 
         return () => {
-            document.body.removeEventListener("click", handleBodyClick);
+            document.body.removeEventListener('click', handleBodyClick);
         };
     }, [popUp, setPopup]);
 
-    const logOut = () => {
-        localStorage.clear();
-        navigate("/");
-        setPopup(false);
-    };
-
     return (
-        <div className={`${classes.popup} ${popUp ? classes.active : ""}`} onClick={() => setPopup(false)}>
+        <div className={`${classes.popup} ${popUp ? classes.active : ''}`} onClick={() => setPopup(false)}>
             <div className={classes.popupContent} onClick={(e) => e.stopPropagation()}>
                 <MyButton onClick={() => {
-                    navigate("/userSettings");
+                    navigate('/userSettings');
                     setPopup(false);
                 }}>Профиль</MyButton>
-                <MyButton onClick={logOut}>Выйти</MyButton>
+                <MyButton onClick={() => {
+                    logOut();
+                    setPopup(false);
+                }}>Выйти</MyButton>
             </div>
         </div>
     );
