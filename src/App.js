@@ -28,7 +28,7 @@ function App() {
     return (
         <BrowserRouter>
         <AuthProvider>
-            <StatusBox errors={errors} removeError={removeError}></StatusBox>
+            
             <div className="App">
                 <Header createError={createError}></Header>
             </div>
@@ -44,6 +44,7 @@ function App() {
            </div>
             
             <Footer></Footer>
+            <StatusBox errors={errors} removeError={removeError}></StatusBox>
             </AuthProvider>
         </BrowserRouter>
     );

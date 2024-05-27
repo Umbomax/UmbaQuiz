@@ -23,11 +23,13 @@
   }
 
 .username {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-size: 26px;
     margin-right: 10px;
 }
 
 .arrowDown {
+    padding-top: 10px;
     font-size: 20px;
 }
 

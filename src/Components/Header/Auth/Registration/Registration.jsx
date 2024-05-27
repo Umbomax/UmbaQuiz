@@ -77,7 +77,7 @@ function Registration({ createError, onRegisterSuccess }) {
     }
 
     return (
-        <form className={classes.form} action="" method="post">
+        <form className={classes.form} onSubmit={sendUserData}>
             <div className={classes.inputContainer}>
                 <MyInput
                     className={classes.formInput}
@@ -110,7 +110,7 @@ function Registration({ createError, onRegisterSuccess }) {
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 />
             </div>
-            <button className={classes.formBtn} onClick={sendUserData} type="button">
+            <button className={classes.formBtn} type="submit">
                 Sign Up
             </button>
         </form>

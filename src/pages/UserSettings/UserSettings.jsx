@@ -1,24 +1,49 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
-import clases from "./UserSettings.module.css";
-import { modern, pastel, dark, bright, calm } from '../../assets/themes'; // Убедитесь в правильном пути
-import { applyTheme, saveThemeToLocalStorage, loadThemeFromLocalStorage } from '../../Scripts/themeChanger';
+import ThemeSelection from '../../Components/ThemeSelection/ThemeSelection';
+import MyQuizzes from '../../Components/MyQuizzes/MyQuizzes'; 
+import QuizesHistory from '../../Components/QuizesHistory/QuizesHistory'; 
+import AllUsers from '../../Components/AllUsers/AllUsers';
+import UserInfo from '../../Components/UserInfo/UserInfo'; 
+import { loadThemeFromLocalStorage, applyTheme } from '../../Scripts/themeChanger';
+import { modern, pastel, dark, bright, calm } from '../../assets/themes';
+import classes from "./UserSettings.module.css";
+import { jwtDecode } from 'jwt-decode';
+
+const TABS = {
+  SETTINGS: 'SETTINGS',
+  MY_QUIZZES: 'MY_QUIZZES',
+  HISTORY: 'HISTORY',
+  ALL_USERS: 'ALL_USERS'
+};
 
 function UserSettings() {
   const [users, setUsers] = useState([]);
+  const [currentTab, setCurrentTab] = useState(TABS.SETTINGS);
+  const [currentUser, setCurrentUser] = useState(null); // For current user's data
+
+  let userRole;
+  const token = localStorage.getItem('token');
+  if (token) {
+    const decoded = jwtDecode(token);
+    userRole = decoded.roles[0]; // Use the first role from the roles array
+  }
 
   useEffect(() => {
     async function fetchUsers() {
       try {
         const response = await axios.get("https://umbaquizserver-production.up.railway.app/api/users");
         setUsers(response.data);
+        // Assuming you have an API endpoint to get the current user's data
+        const currentUserResponse = await axios.get("https://umbaquizserver-production.up.railway.app/api/users/current");
+        setCurrentUser(currentUserResponse.data);
+       
       } catch (error) {
-        console.error("Error fetching users:", error);
+        console.error("Error fetching users or current user data:", error);
       }
     }
     fetchUsers();
 
-    // Загрузите и примените сохраненную тему при загрузке компонента
     const savedTheme = loadThemeFromLocalStorage();
     if (savedTheme) {
       switch (savedTheme) {
@@ -43,79 +68,47 @@ function UserSettings() {
     }
   }, []);
 
-  const handleThemeChange = (theme, themeName) => {
-    applyTheme(theme);
-    saveThemeToLocalStorage(themeName);
+  const renderTabContent = () => {
+    switch (currentTab) {
+      case TABS.SETTINGS:
+        return (
+          <>
+            <ThemeSelection />
+            {currentUser && <UserInfo user={currentUser} setUser={setCurrentUser} />}
+          </>
+        );
+      case TABS.MY_QUIZZES:
+        return userRole !== 'USER' ? <MyQuizzes /> : null;
+      case TABS.HISTORY:
+        return userRole !== 'USER' ? <QuizesHistory /> : null;
+      case TABS.ALL_USERS:
+        return userRole === 'SUPERADMIN' ? <AllUsers users={users} setUsers={setUsers} /> : null;
+      default:
+        return (
+          <>
+            <ThemeSelection />
+            {currentUser && <UserInfo user={currentUser} setUser={setCurrentUser} />}
+          </>
+        );
+    }
   };
 
   return (
-    < >
-      <div className={clases.chooseThemeWrapper}>
-        <div className={clases.chooseThemeContainer}>
-          <h3>Выберите тему</h3>
-          <div className={clases.chooseTheme}>
-            <div className={clases.theme} onClick={() => handleThemeChange(modern, 'modern')}>
-              <h4>Современный и яркий</h4>
-              <div className={`${clases.themeImage} ${clases.modernTheme}`}></div>
-            </div>
-            <div className={clases.theme} onClick={() => handleThemeChange(pastel, 'pastel')}>
-              <h4>Пастельные тона</h4>
-              <div className={`${clases.themeImage} ${clases.pastelTheme}`}></div>
-            </div>
-            <div className={clases.theme} onClick={() => handleThemeChange(dark, 'dark')}>
-              <h4>Темная тема</h4>
-              <div className={`${clases.themeImage} ${clases.darkTheme}`}></div>
-            </div>
-            <div className={clases.theme} onClick={() => handleThemeChange(bright, 'bright')}>
-              <h4>Яркая и контрастная</h4>
-              <div className={`${clases.themeImage} ${clases.brightTheme}`}></div>
-            </div>
-            <div className={clases.theme} onClick={() => handleThemeChange(calm, 'calm')}>
-              <h4>Спокойная и профессиональная</h4>
-              <div className={`${clases.themeImage} ${clases.calmTheme}`}></div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className={clases.userinfoWrapper}>
-        {/* TODO вынести infoContainer в отдельный компонент */}
-        <div className={clases.infoContainer}>
-          <div className={clases.left}>
-            <div className={clases.fieldName}>Имя пользователя</div>
-            <div className={clases.name}></div>
-          </div>
-          <div className={clases.right}>
-            <button>Редактировать</button>
-          </div>
-        </div>
-        <div className={clases.infoContainer}>
-          <div className={clases.left}>
-            <div className={clases.fieldName}>Эл. почта</div>
-            <div className={clases.name}></div>
-          </div>
-          <div className={clases.right}>
-            <button>Редактировать</button>
-          </div>
-        </div>
-        <div className={clases.infoContainer}>
-          <div className={clases.left}>
-            <div className={clases.fieldName}>Тип пользователя</div>
-          </div>
-          <div className={clases.right}>
-            <div>User</div>
-          </div>
-        </div>
-      </div>
-      <div className={clases.allUsers}>
-        {users.map((user, idx) => (
-          <div key={idx} className={clases.userInfo}>
-            <div>{user._id}</div>
-            <div>{user.username}</div>
-            <div>{user.email}</div>
-          </div>
-        ))}
-      </div>
-    </>
+    <div>
+      <nav className={classes.nav}>
+        <button onClick={() => setCurrentTab(TABS.SETTINGS)}>Настройки</button>
+        {(userRole === 'ADMIN' || userRole === 'SUPERADMIN') && (
+          <>
+            <button onClick={() => setCurrentTab(TABS.MY_QUIZZES)}>Мои викторины</button>
+            <button onClick={() => setCurrentTab(TABS.HISTORY)}>История</button>
+          </>
+        )}
+        {userRole === 'SUPERADMIN' && (
+          <button onClick={() => setCurrentTab(TABS.ALL_USERS)}>Все пользователи</button>
+        )}
+      </nav>
+      {renderTabContent()}
+    </div>
   );
 }
 

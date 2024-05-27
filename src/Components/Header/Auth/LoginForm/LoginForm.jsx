@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect, useContext} from "react";
+import { useState, useEffect, useContext } from "react";
 import { useNavigate } from 'react-router-dom';
 import classes from "./LoginForm.module.css";
 import MyInput from "../../../UI/MyInput/MyInput";
@@ -11,11 +11,13 @@ function LoginForm({ createError, onSuccess }) {
     const [errors, setErrors] = useState([]);
     const { logIn } = useContext(AuthContext);
     const navigate = useNavigate();
+
     const pushStatus = (text, status) => {
         const generateUniqueId = () => Date.now() + Math.floor(Math.random() * 1000);
         let newError;
         do {
             newError = { id: generateUniqueId(), errorText: text, status: status };
+        // eslint-disable-next-line no-loop-func
         } while (errors.some(error => error.id === newError.id));
         setErrors(prevErrors => [...prevErrors, newError]);
     };
@@ -40,29 +42,6 @@ function LoginForm({ createError, onSuccess }) {
         }
     }, [errors, createError]);
 
-    // const handleSubmit = async (e) => {
-    //     e.preventDefault();
-    //     if (checkValidationErrors()){
-
-    //     }
-    //     try {
-    //         const res = await axios.post('/api/auth/login', { email, password });
-    //         const { token, username } = res.data;
-    //         localStorage.setItem('token', token);
-    //         localStorage.setItem('username', username);
-
-    //         logIn(username);
-
-    //         if (onSuccess) {
-    //             onSuccess(username);
-    //         }
-
-    //         navigate('/');
-    //     } catch (error) {
-    //         createError('Invalid credentials');
-    //     }
-    // };
-
     const login = async (e) => {
         e.preventDefault();
         if (checkValidationErrors()) {
@@ -80,10 +59,11 @@ function LoginForm({ createError, onSuccess }) {
                 localStorage.setItem('token', data.token);
                 localStorage.setItem('roles', JSON.stringify(data.roles));
                 createError([{ id: Date.now(), errorText: "Успешный вход", status: "ok" }])
-            if (onSuccess) {
-                onSuccess(data.username);
-            }
-            navigate('/');
+                logIn(data.username);
+                if (onSuccess) {
+                    onSuccess(data.username);
+                }
+                navigate('/');
             } catch (error) {
                 pushStatus('There was a problem with your fetch operation: ' + error.message, "error");
             }
@@ -91,7 +71,7 @@ function LoginForm({ createError, onSuccess }) {
     };
 
     return (
-        <form className={classes.form} action="" method="get">
+        <form className={classes.form} onSubmit={login}>
             <div className={classes.inputContainer}>
                 <MyInput
                     className={classes.formInput}
@@ -110,7 +90,7 @@ function LoginForm({ createError, onSuccess }) {
                     onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                 />
             </div>
-            <button className={classes.formBtn} type="button" onClick={login}>
+            <button className={classes.formBtn} type="submit">
                 Log In
             </button>
         </form>
