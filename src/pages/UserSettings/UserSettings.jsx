@@ -8,7 +8,7 @@ import UserInfo from '../../Components/UserInfo/UserInfo';
 import { loadThemeFromLocalStorage, applyTheme } from '../../Scripts/themeChanger';
 import { modern, pastel, dark, bright, calm } from '../../assets/themes';
 import classes from "./UserSettings.module.css";
-import { jwtDecode } from 'jwt-decode';
+import {jwtDecode} from 'jwt-decode';
 
 const TABS = {
   SETTINGS: 'SETTINGS',
@@ -20,13 +20,15 @@ const TABS = {
 function UserSettings() {
   const [users, setUsers] = useState([]);
   const [currentTab, setCurrentTab] = useState(TABS.SETTINGS);
-  const [currentUser, setCurrentUser] = useState(null); // For current user's data
+  const [currentUser, setCurrentUser] = useState(null);
 
-  let userRole;
   const token = localStorage.getItem('token');
+  let userRole, userId;
+
   if (token) {
     const decoded = jwtDecode(token);
-    userRole = decoded.roles[0]; // Use the first role from the roles array
+    userRole = decoded.roles[0];
+    userId = decoded.id;
   }
 
   useEffect(() => {
@@ -34,14 +36,14 @@ function UserSettings() {
       try {
         const response = await axios.get("https://umbaquizserver-production.up.railway.app/api/users");
         setUsers(response.data);
-        // Assuming you have an API endpoint to get the current user's data
-        const currentUserResponse = await axios.get("https://umbaquizserver-production.up.railway.app/api/users/current");
+
+        const currentUserResponse = await axios.post("https://umbaquizserver-production.up.railway.app/api/getUser", { user_id: userId });
         setCurrentUser(currentUserResponse.data);
-       
       } catch (error) {
-        console.error("Error fetching users or current user data:", error);
+        console.error("Ошибка при получении пользователей или данных текущего пользователя:", error);
       }
     }
+
     fetchUsers();
 
     const savedTheme = loadThemeFromLocalStorage();
@@ -66,7 +68,7 @@ function UserSettings() {
           applyTheme(modern);
       }
     }
-  }, []);
+  }, [userId]);
 
   const renderTabContent = () => {
     switch (currentTab) {
