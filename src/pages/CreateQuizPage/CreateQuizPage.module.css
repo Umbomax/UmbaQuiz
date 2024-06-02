@@ -6,6 +6,7 @@
     align-items: center;
     background-color: var(--main-background);
 }
+
 .card {
     flex-grow: 1;
     width: 100%;
@@ -19,14 +20,17 @@
     align-items: center;
     padding: 20px;
 }
+
 .card:hover {
     flex-grow: 4.3;
     background-color: var(--card-header);
 }
+
 .description {
     color: var(--main-text);
     text-align: center;
 }
+
 @media (min-width: 768px) {
     .chooseType {
         flex-direction: row;

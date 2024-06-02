@@ -34,12 +34,12 @@ function App() {
             </div>
            <div className="mainContentBackground">
            <Routes>
-                <Route path="/userSettings" element={<UserSettings></UserSettings>}></Route>
-                <Route path="/" element={<Quizes></Quizes>}></Route>
-                <Route path="/about" element={<About></About>}></Route>
-                <Route path="/createQuiz" element={<CreateQuizPage></CreateQuizPage>}></Route>
-                <Route path="/newQuizDataset" element={<NewQuizDataset></NewQuizDataset>}></Route>
-                <Route path="/quizGame" element={<QuizGame></QuizGame>}></Route>
+                <Route path="/userSettings" element={<UserSettings createError={createError}></UserSettings>}></Route>
+                <Route path="/" element={<Quizes createError={createError}></Quizes>}></Route>
+                <Route path="/about" element={<About createError={createError}></About>}></Route>
+                <Route path="/createQuiz" element={<CreateQuizPage createError={createError}></CreateQuizPage>}></Route>
+                <Route path="/newQuizDataset" element={<NewQuizDataset createError={createError}></NewQuizDataset>}></Route>
+                <Route path="/quizGame" element={<QuizGame createError={createError}></QuizGame>}></Route>
             </Routes>
            </div>
             
