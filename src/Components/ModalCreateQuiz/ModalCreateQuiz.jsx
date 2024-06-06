@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {jwtDecode} from "jwt-decode";
 import MyImageInput from "../UI/MyImageInput/MyImageInput";
@@ -29,11 +29,22 @@ function ModalCreateQuiz({ visible, setVisible, quizType, createError }) {
     }, []);
 
     useEffect(() => {
+        const savedQuizSettings = localStorage.getItem('quizSettings');
+        if (savedQuizSettings) {
+            setQuizSettings(JSON.parse(savedQuizSettings));
+        }
+    }, []);
+
+    useEffect(() => {
         setQuizSettings(prevSettings => ({
             ...prevSettings,
             type: quizType
         }));
     }, [quizType]);
+
+    useEffect(() => {
+        localStorage.setItem('quizSettings', JSON.stringify(quizSettings));
+    }, [quizSettings]);
 
     const rootClasses = [classes.myModal];
     if (visible) {

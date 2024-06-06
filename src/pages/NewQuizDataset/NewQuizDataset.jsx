@@ -9,11 +9,18 @@ function NewQuizDataset() {
     const quizNums = +location.state.quizesCount;
     const [currentSlide, setCurrentSlide] = useState(0);
 
-    const [quizData, setquizData] = useState({ 
-        quizName: location.state.quizName, 
-        quizesCount: location.state.quizesCount, 
-        type: location.state.type, 
-        quizHeadImage: location.state.quizHeadImage 
+    const [quizData, setQuizData] = useState({
+        quizName: location.state.quizName,
+        quizesCount: location.state.quizesCount,
+        type: location.state.type,
+        quizHeadImage: location.state.quizHeadImage,
+        isPrivate: location.state.isPrivate,
+        description: location.state.description,
+        isTimed: location.state.isTimed,
+        quizTime: location.state.quizTime,
+        forRegisteredUsers: location.state.forRegisteredUsers,
+        isLimitedAttempts: location.state.isLimitedAttempts,
+        attemptsCount: location.state.attemptsCount
     });
 
     const [quizQuestions, setQuizQuestions] = useState([]);
@@ -48,7 +55,7 @@ function NewQuizDataset() {
         updateQuizData(index, { ...quizQuestions[index], question: newValue });
     };
 
-    const handleCorrectImagenChange = (newValue, index) => {
+    const handleCorrectImageChange = (newValue, index) => {
         updateQuizData(index, { ...quizQuestions[index], answer: newValue });
     };
 
@@ -149,7 +156,7 @@ function NewQuizDataset() {
                                     type="file" 
                                     placeholder="Правильный ответ" 
                                     questionIndex={idx} 
-                                    setHeadImage={handleCorrectImagenChange} 
+                                    setHeadImage={handleCorrectImageChange} 
                                 />
                             </div>
                             {(quizData.type === "1q4img" || quizData.type === "1q4textanswer") && (

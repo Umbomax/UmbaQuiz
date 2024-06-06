@@ -1,10 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import classes from "./CreateQuizPage.module.css";
 import ModalCreateQuiz from "../../Components/ModalCreateQuiz/ModalCreateQuiz";
 
-function CreateQuizPage({createError}) {
+function CreateQuizPage({ createError }) {
     const [modal, setModal] = useState(false);
     const [quizType, setQuizType] = useState("");
+
+    useEffect(() => {
+        const savedModalState = localStorage.getItem('modalState');
+        const savedQuizType = localStorage.getItem('quizType');
+        if (savedModalState) {
+            setModal(JSON.parse(savedModalState));
+        }
+        if (savedQuizType) {
+            setQuizType(savedQuizType);
+        }
+    }, []);
+
+    useEffect(() => {
+        localStorage.setItem('modalState', JSON.stringify(modal));
+        localStorage.setItem('quizType', quizType);
+    }, [modal, quizType]);
 
     return (
         <div className={classes.chooseType}>

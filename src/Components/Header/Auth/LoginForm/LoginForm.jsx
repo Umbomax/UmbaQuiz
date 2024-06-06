@@ -1,5 +1,4 @@
-import React from "react";
-import { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from 'react-router-dom';
 import classes from "./LoginForm.module.css";
 import MyInput from "../../../UI/MyInput/MyInput";
@@ -17,7 +16,6 @@ function LoginForm({ createError, onSuccess }) {
         let newError;
         do {
             newError = { id: generateUniqueId(), errorText: text, status: status };
-        // eslint-disable-next-line no-loop-func
         } while (errors.some(error => error.id === newError.id));
         setErrors(prevErrors => [...prevErrors, newError]);
     };
@@ -65,6 +63,7 @@ function LoginForm({ createError, onSuccess }) {
                 }
                 navigate('/');
             } catch (error) {
+                console.error('Fetch error:', error);
                 pushStatus('There was a problem with your fetch operation: ' + error.message, "error");
             }
         }
