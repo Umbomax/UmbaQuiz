@@ -11,16 +11,16 @@ function NewQuizDataset() {
 
     const [quizData, setQuizData] = useState({
         quizName: location.state.quizName,
-        quizesCount: location.state.quizesCount,
+        quizesCount: location.state.quizesCount || 0,
         type: location.state.type,
-        quizHeadImage: location.state.quizHeadImage,
-        isPrivate: location.state.isPrivate,
-        description: location.state.description,
-        isTimed: location.state.isTimed,
-        quizTime: location.state.quizTime,
-        forRegisteredUsers: location.state.forRegisteredUsers,
-        isLimitedAttempts: location.state.isLimitedAttempts,
-        attemptsCount: location.state.attemptsCount
+        quizHeadImage: location.state.quizHeadImage || "noHeadImage",
+        isPrivate: location.state.isPrivate || false,
+        description: location.state.description || "",
+        isTimed: location.state.isTimed || false,
+        quizTime: location.state.quizTime || 0,
+        forRegisteredUsers: location.state.forRegisteredUsers || false,
+        isLimitedAttempts: location.state.isLimitedAttempts || false,
+        attemptsCount: location.state.attemptsCount || 0
     });
 
     const [quizQuestions, setQuizQuestions] = useState([]);
@@ -31,12 +31,14 @@ function NewQuizDataset() {
                 return {
                     question: "",
                     answer: "",
+                    questionImage: ""
                 };
             } else {
                 return {
                     question: "",
                     answer: "",
                     wrongAnswers: ["", "", ""],
+                    questionImage: ""
                 };
             }
         });
@@ -55,7 +57,11 @@ function NewQuizDataset() {
         updateQuizData(index, { ...quizQuestions[index], question: newValue });
     };
 
-    const handleCorrectImageChange = (newValue, index) => {
+    const handleQuestionImageChange = (newValue, index) => {
+        updateQuizData(index, { ...quizQuestions[index], questionImage: newValue });
+    };
+
+    const handleCorrectAnswerChange = (newValue, index) => {
         updateQuizData(index, { ...quizQuestions[index], answer: newValue });
     };
 
@@ -148,42 +154,89 @@ function NewQuizDataset() {
                                     value={quizQuestions[idx].question}
                                 />
                             </div>
+                            
+                            {(quizData.type === "1q4textanswer" || quizData.type === "1q1textanswer") && (
+                                <div className={classes.questionImage}>
+                                    <h3>Выберите изображение для вопроса</h3>
+                                    <MyImageInput 
+                                        className={classes.fileInput} 
+                                        type="file" 
+                                        placeholder="Изображение вопроса" 
+                                        questionIndex={idx} 
+                                        setHeadImage={handleQuestionImageChange} 
+                                    />
+                                </div>
+                            )}
 
                             <div className={classes.correctAnswer}>
                                 <h3>Правильный ответ</h3>
-                                <MyImageInput 
-                                    className={classes.fileInput} 
-                                    type="file" 
-                                    placeholder="Правильный ответ" 
-                                    questionIndex={idx} 
-                                    setHeadImage={handleCorrectImageChange} 
-                                />
+                                {(quizData.type === "1q1textanswer" || quizData.type === "1q4textanswer") ? (
+                                    <input 
+                                        type="text" 
+                                        placeholder="Правильный ответ" 
+                                        onChange={(e) => handleCorrectAnswerChange(e.target.value, idx)} 
+                                        value={quizQuestions[idx].answer}
+                                    />
+                                ) : (
+                                    <MyImageInput 
+                                        className={classes.fileInput} 
+                                        type="file" 
+                                        placeholder="Правильный ответ" 
+                                        questionIndex={idx} 
+                                        setHeadImage={handleCorrectAnswerChange} 
+                                    />
+                                )}
                             </div>
                             {(quizData.type === "1q4img" || quizData.type === "1q4textanswer") && (
                                 <div className={classes.incorrectAnswersWrapper}>
                                     <h3>Неправильные ответы</h3>
                                     <div className={classes.incorrectAnswers}>
-                                        <MyImageInput 
-                                            type="file" 
-                                            placeholder="НеПравильный ответ" 
-                                            questionIndex={idx} 
-                                            answerIndex={0} 
-                                            setHeadImage={handleWrongAnswerChange} 
-                                        />
-                                        <MyImageInput 
-                                            type="file" 
-                                            placeholder="НеПравильный ответ" 
-                                            questionIndex={idx} 
-                                            answerIndex={1} 
-                                            setHeadImage={handleWrongAnswerChange} 
-                                        />
-                                        <MyImageInput 
-                                            type="file" 
-                                            placeholder="НеПравильный ответ" 
-                                            questionIndex={idx} 
-                                            answerIndex={2} 
-                                            setHeadImage={handleWrongAnswerChange} 
-                                        />
+                                        {(quizData.type === "1q4textanswer") ? (
+                                            <>
+                                                <input 
+                                                    type="text" 
+                                                    placeholder="Неправильный ответ" 
+                                                    onChange={(e) => handleWrongAnswerChange(e.target.value, idx, 0)} 
+                                                    value={quizQuestions[idx].wrongAnswers[0]}
+                                                />
+                                                <input 
+                                                    type="text" 
+                                                    placeholder="Неправильный ответ" 
+                                                    onChange={(e) => handleWrongAnswerChange(e.target.value, idx, 1)} 
+                                                    value={quizQuestions[idx].wrongAnswers[1]}
+                                                />
+                                                <input 
+                                                    type="text" 
+                                                    placeholder="Неправильный ответ" 
+                                                    onChange={(e) => handleWrongAnswerChange(e.target.value, idx, 2)} 
+                                                    value={quizQuestions[idx].wrongAnswers[2]}
+                                                />
+                                            </>
+                                        ) : (
+                                            <>
+                                                <MyImageInput 
+                                                    type="file" 
+                                                    placeholder="Неправильный ответ" 
+                                                    questionIndex={idx} 
+                                                    answerIndex={0} 
+                                                    setHeadImage={handleWrongAnswerChange} 
+                                                />
+                                                <MyImageInput 
+                                                    type="file" 
+                                                    placeholder="Неправильный ответ" 
+                                                    questionIndex={idx} 
+                                                    answerIndex={1} 
+                                                    setHeadImage={handleWrongAnswerChange} 
+                                                />
+                                                <MyImageInput 
+                                                    type="file" 
+                                                    placeholder="Неправильный ответ" 
+                                                    questionIndex={idx} 
+                                                    answerIndex={2} 
+                                                    setHeadImage={handleWrongAnswerChange} 
+                                                />
+                                            </>
+                                        )}
                                     </div>
                                 </div>
                             )}

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {jwtDecode} from "jwt-decode";
+import {jwtDecode} from "jwt-decode"; // Убедитесь, что импортируете jwtDecode корректно
 import MyImageInput from "../UI/MyImageInput/MyImageInput";
 import classes from "./ModalCreateQuiz.module.css";
 
@@ -16,8 +16,10 @@ function ModalCreateQuiz({ visible, setVisible, quizType, createError }) {
         isPrivate: false,
         description: "",
         isTimed: false,
-        quizTime: "",
-        forRegisteredUsers: false
+        quizTime: "0",
+        forRegisteredUsers: false,
+        isLimitedAttempts: false,
+        attemptsCount: ""
     });
 
     useEffect(() => {
@@ -29,22 +31,11 @@ function ModalCreateQuiz({ visible, setVisible, quizType, createError }) {
     }, []);
 
     useEffect(() => {
-        const savedQuizSettings = localStorage.getItem('quizSettings');
-        if (savedQuizSettings) {
-            setQuizSettings(JSON.parse(savedQuizSettings));
-        }
-    }, []);
-
-    useEffect(() => {
         setQuizSettings(prevSettings => ({
             ...prevSettings,
             type: quizType
         }));
     }, [quizType]);
-
-    useEffect(() => {
-        localStorage.setItem('quizSettings', JSON.stringify(quizSettings));
-    }, [quizSettings]);
 
     const rootClasses = [classes.myModal];
     if (visible) {
@@ -87,6 +78,13 @@ function ModalCreateQuiz({ visible, setVisible, quizType, createError }) {
             pushStatus("Максимальная длина описания - 400 символов", "error");
             valid = false;
         }
+        if (quizSettings.isLimitedAttempts) {
+            const attempts = parseInt(quizSettings.attemptsCount);
+            if (isNaN(attempts) || attempts <= 0 || attempts >= 100) {
+                pushStatus("Число попыток должно быть больше 0 и меньше 100", "error");
+                valid = false;
+            }
+        }
         return valid;
     };
 
@@ -108,7 +106,7 @@ function ModalCreateQuiz({ visible, setVisible, quizType, createError }) {
     return (
         <div className={rootClasses.join(" ")} onClick={() => setVisible(false)}>
             <div className={classes.content} onClick={(e) => e.stopPropagation()}>
-                <button className={classes.closeButton} onClick={() => setVisible(false)}>Х</button>
+                <button className={classes.closeButton} onClick={() => setVisible(false)}>x</button>
                 <div className={classes.textInputWrapper}>
                     <div className={classes.quizNameWrapper}>
                         <div>Введите название викторины</div>
@@ -179,6 +177,30 @@ function ModalCreateQuiz({ visible, setVisible, quizType, createError }) {
                     />
                     <label htmlFor="forRegisteredUsers">Только для зарегистрированных пользователей</label>
                 </div>
+                {quizSettings.forRegisteredUsers && (
+                    <div className={classes.checkboxWrapper}>
+                        <input
+                            type="checkbox"
+                            id="isLimitedAttempts"
+                            checked={quizSettings.isLimitedAttempts}
+                            onChange={(e) => setQuizSettings({ ...quizSettings, isLimitedAttempts: e.target.checked })}
+                        />
+                        <label htmlFor="isLimitedAttempts">Ограниченное число попыток</label>
+                    </div>
+                )}
+                {quizSettings.forRegisteredUsers && quizSettings.isLimitedAttempts && (
+                    <div className={classes.textInputWrapper}>
+                        <div>
+                            <div>Введите число попыток</div>
+                            <input
+                                className={classes.quizSelectInput}
+                                type="number"
+                                value={quizSettings.attemptsCount}
+                                onChange={(e) => setQuizSettings({ ...quizSettings, attemptsCount: e.target.value })}
+                            />
+                        </div>
+                    </div>
+                )}
                 <div className={classes.headImage}>
                     <div>Выберите изображение для отображения в списке викторин</div>
                     <MyImageInput className={classes.imageWrapper} setHeadImage={setHeadImage} />
