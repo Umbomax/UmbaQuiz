@@ -16,7 +16,7 @@ function QuizGame(props) {
     useEffect(() => {
         const fetchedQuestions = location.state?.questions || [];
         setQuestions(fetchedQuestions);
-
+        console.log(location.state)
         const initialAnswersStatus = new Array(fetchedQuestions.length).fill(null);
         setAnswersStatus(initialAnswersStatus);
 
@@ -98,23 +98,46 @@ function QuizGame(props) {
                         <div style={activeSlide} key={idx} className={classes.quizItem}>
                             <h1 className={classes.questionText}>{question.question}</h1>
                             <div className={classes.answersContainer}>
-                                {answers[idx].map((answer, answerIdx) => (
-                                    <div
-                                        key={answerIdx}
-                                        className={`${classes.answer} ${
-                                            answersStatus[idx]?.isCorrect === false && answerIdx === answersStatus[idx].correctAnswerIdx
-                                                ? classes.correct
-                                                : answersStatus[idx]?.isCorrect === false && answerIdx === answersStatus[idx].selectedAnswerIdx
-                                                ? classes.incorrect
-                                                : answersStatus[idx]?.isCorrect === true && answerIdx === answersStatus[idx].selectedAnswerIdx
-                                                ? classes.correct
-                                                : ""
-                                        }`}
-                                        onClick={() => checkAnswer(answer, idx, answerIdx)}
-                                    >
-                                        <img src={answer} alt="answer" />
+                                {question.questionImage && <img src={question.questionImage} alt="question" className={classes.questionImage} />}
+                                {location.state.type === "1q4textanswer" || location.state.type === "1q1textanswer" ? (
+                                    <div className={classes.textAnswers}>
+                                        {answers[idx].map((answer, answerIdx) => (
+                                            <div
+                                                key={answerIdx}
+                                                className={`${classes.answer} ${
+                                                    answersStatus[idx]?.isCorrect === false && answerIdx === answersStatus[idx].correctAnswerIdx
+                                                        ? classes.correct
+                                                        : answersStatus[idx]?.isCorrect === false && answerIdx === answersStatus[idx].selectedAnswerIdx
+                                                        ? classes.incorrect
+                                                        : answersStatus[idx]?.isCorrect === true && answerIdx === answersStatus[idx].selectedAnswerIdx
+                                                        ? classes.correct
+                                                        : ""
+                                                }`}
+                                                onClick={() => checkAnswer(answer, idx, answerIdx)}
+                                            >
+                                                {answer}
+                                            </div>
+                                        ))}
                                     </div>
-                                ))}
+                                ) : (
+                                    answers[idx].map((answer, answerIdx) => (
+                                        <div
+                                            key={answerIdx}
+                                            className={`${classes.answer} ${
+                                                answersStatus[idx]?.isCorrect === false && answerIdx === answersStatus[idx].correctAnswerIdx
+                                                    ? classes.correct
+                                                    : answersStatus[idx]?.isCorrect === false && answerIdx === answersStatus[idx].selectedAnswerIdx
+                                                    ? classes.incorrect
+                                                    : answersStatus[idx]?.isCorrect === true && answerIdx === answersStatus[idx].selectedAnswerIdx
+                                                    ? classes.correct
+                                                    : ""
+                                            }`}
+                                            onClick={() => checkAnswer(answer, idx, answerIdx)}
+                                        >
+                                            <img src={answer} alt="answer" />
+                                        </div>
+                                    ))
+                                )}
                             </div>
                         </div>
                     ))}
