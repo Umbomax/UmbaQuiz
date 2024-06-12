@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import classes from "./QuizGame.module.css";
 import QuizResultsModal from "../../Components/QuizResultsModal/QuizResultsModal";
+import Timer from "../../Components/Timer/Timer";
+import noImage from '../../assets/images/no_image.jpg'; 
 
 function QuizGame(props) {
     const location = useLocation();
@@ -53,7 +55,7 @@ function QuizGame(props) {
     }
 
     function checkAnswer(answer, questionIdx, answerIdx) {
-        if (answersStatus[questionIdx] !== null) {
+        if (gameEnd || answersStatus[questionIdx] !== null) {
             return;
         }
         const isCorrect = answer === questions[questionIdx].answer;
@@ -69,15 +71,23 @@ function QuizGame(props) {
         const nullIndex = newAnswersStatus.findIndex((status) => status === null);
         
         if (nullIndex === -1) {
-            setGameEnd(true);
-            setCorrectAnswersCount(
-                newAnswersStatus.reduce((acc, obj) => {
-                    return obj.isCorrect ? acc + 1 : acc;
-                }, 0)
-            );
-
-            setTimeout(() => setModal(true), 1000);
+            endGame(newAnswersStatus);
         }
+    }
+
+    function endGame(finalAnswersStatus) {
+        setGameEnd(true);
+        const filteredStatus = finalAnswersStatus.filter(status => status !== null);
+        setCorrectAnswersCount(
+            filteredStatus.reduce((acc, obj) => {
+                return obj.isCorrect ? acc + 1 : acc;
+            }, 0)
+        );
+        setTimeout(() => setModal(true), 1000);
+    }
+
+    function handleTimeEnd() {
+        endGame(answersStatus);
     }
 
     return (
@@ -98,7 +108,11 @@ function QuizGame(props) {
                         <div style={activeSlide} key={idx} className={classes.quizItem}>
                             <h1 className={classes.questionText}>{question.question}</h1>
                             <div className={classes.answersContainer}>
-                                {question.questionImage && <img src={question.questionImage} alt="question" className={classes.questionImage} />}
+                                <img 
+                                    src={question.questionImage || noImage} // Используем импортированное изображение
+                                    alt="question" 
+                                    className={classes.questionImage} 
+                                />
                                 {location.state.type === "1q4textanswer" || location.state.type === "1q1textanswer" ? (
                                     <div className={classes.textAnswers}>
                                         {answers[idx].map((answer, answerIdx) => (
@@ -146,6 +160,8 @@ function QuizGame(props) {
 
             <div className={classes.controlsContainer}>
                 <button onClick={prevSlide}>Previous</button>
+                {location.state.isTimed && !gameEnd && <Timer quizTime={location.state.quizTime} onTimeEnd={handleTimeEnd} />}
+                {gameEnd && <button onClick={() => setModal(true)}>Return to Results</button>}
                 <button onClick={nextSlide}>Next</button>
             </div>
         </>

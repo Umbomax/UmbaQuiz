@@ -22,11 +22,19 @@
     grid-template-columns: repeat(2, 45%);
 }
 .answer {
+    margin-bottom: 50px;
     border: 2px solid black;
     width: 100%;
-    max-width: 300px;
-    height: 200px;
+    max-width: 900px;
+    min-width: 600px;
+    height: 100px;
     transition: transform 0.3s ease;
+    font-size: 22px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    
+    text-align: center;
 }
 .answer > img {
     display: block;
