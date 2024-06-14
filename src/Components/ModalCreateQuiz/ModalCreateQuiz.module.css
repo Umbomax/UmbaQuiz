@@ -32,15 +32,26 @@
     padding: 20px;
 }
 
-.closeButton {
+button.closeButton {
+    padding: 0px 6px;
+    
     position: absolute;
     top: 10px;
     right: 10px;
     background: none;
-    border: none;
+    border: 1px solid transparent;
     font-size: 24px;
     cursor: pointer;
     color: var(--main-text);
+    background-color: none;
+    z-index: 11100;
+}
+button.closeButton:hover{
+    padding: 0px 6px;
+    /* transform: scale(1.05); */
+    background-color: transparent;
+    border: 1px solid gray;
+    border-radius: 4px;
 }
 
 .submitBtn {
