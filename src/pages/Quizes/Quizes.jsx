@@ -115,12 +115,14 @@ function Quizes() {
                             <div className={classes.notFound}>No quizzes found.</div>
                         )
                     )}
-                    <div className={classes.createQuiz} onClick={() => navigate("/createQuiz")}></div>
+                   
                 </section>
                 {isModalOpen && (
                     <ModalStartQuiz onClose={closeQuizModal}>
                         <h2>{selectedQuiz.quizName}</h2>
                         <p>{selectedQuiz.quizDescription}</p>
+                        {/* eslint-disable-next-line jsx-a11y/alt-text */}
+                        <img className={classes.quizHeadImg} src={selectedQuiz.quizHeadImage}></img>
                         <button onClick={handleStartQuiz}>Начать</button>
                     </ModalStartQuiz>
                 )}

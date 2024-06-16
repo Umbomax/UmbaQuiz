@@ -30,11 +30,15 @@ function Header({ createError }) {
         setIsNavOpen(!isNavOpen);
     };
 
+    const closeNav = () => {
+        setIsNavOpen(false);
+    };
+
     return (
         <header className={classNames.header}>
-            <Logo />
-            <BurgerMenu onClick={toggleNav} />
-            <NavPanel isOpen={isNavOpen} toggleNav={toggleNav} />
+            <BurgerMenu className={classNames.burgerMenu} onClick={toggleNav} />
+            <Logo className={classNames.logo}/>
+            <NavPanel isOpen={isNavOpen} toggleNav={toggleNav} closeNav={closeNav} />
             <LogIn 
                 isLoggedIn={isLoggedIn} 
                 username={username} 

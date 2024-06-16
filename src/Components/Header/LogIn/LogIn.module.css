@@ -12,8 +12,8 @@
 }
 
 .img {
-    width: 40px;
-    height: 40px;
+    width: 32px;
+    height: 32px;
    
     margin-right: 10px;
     
@@ -22,15 +22,14 @@
     fill: var(--header-text);
   }
 
-.username {
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-size: 26px;
+.username {    
+    font-size: 22px;
     margin-right: 10px;
 }
 
 .arrowDown {
-    padding-top: 10px;
-    font-size: 20px;
+    padding-top: 3px;
+    font-size: 16px;
 }
 
 .loginButton {

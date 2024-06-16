@@ -24,6 +24,7 @@ body{
 }
 
 .mainContentBackground{
-    background-color: var(--main-background, #ecf0f1);
-    min-height: 83vh;
+    padding: 10px;
+    background-color: var(--main-background, #227388);
+    min-height: 81vh;
 }

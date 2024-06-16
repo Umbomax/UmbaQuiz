@@ -96,7 +96,7 @@ function UserSettings() {
   };
 
   return (
-    <div>
+    <div className="mainContentBackground">
       <nav className={classes.nav}>
         <button onClick={() => setCurrentTab(TABS.SETTINGS)}>Настройки</button>
         {(userRole === 'ADMIN' || userRole === 'SUPERADMIN') && (

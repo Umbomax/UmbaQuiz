@@ -8,12 +8,12 @@ function Footer() {
     <div className={classes.footer}>
       <div className={classes.footerContainer}>
         <div>2024</div>
-        <div>Made by Ilia Turovchik</div>
+        <div className={classes.author}>Made by <br/> Ilia Turovchik</div>
         <div className={classes.socialLinks}>
           <a href="https://github.com/Umbomax" target="_blank" rel="noopener noreferrer" className={classes.githubLink}>
             <FontAwesomeIcon icon={faGithub} size="2x" />
           </a>
-          <a href="https://linkedin.com/in/iliaturovchik" target="_blank" rel="noopener noreferrer" className={classes.linkedinLink}>
+          <a href="https://www.linkedin.com/in/umbomax/" target="_blank" rel="noopener noreferrer" className={classes.linkedinLink}>
             <FontAwesomeIcon icon={faLinkedin} size="2x" />
           </a>
         </div>

@@ -27,17 +27,14 @@
   color: #1e90ff;
 }
 
-@media (max-width: 600px) {
-  .footerContainer {
-    flex-direction: column;
-    height: auto;
-  }
+@media (max-width: 768px) {
 
-  .footerContainer div {
-    margin: 5px 0;
+  .footerContainer{
+    height: 50px;
+    margin: 10px;
+    padding: 0;
   }
-
-  .socialLinks {
-    gap: 10px;
+  .author{
+    width: 33%;
   }
 }
