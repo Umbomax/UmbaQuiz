@@ -1,16 +1,18 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
-import axios from "axios";
-import {jwtDecode} from "jwt-decode";  // Импортируем jwtDecode
-import ModalStartQuiz from "../../Components/ModalStartQuiz/ModalStartQuiz";
-import SearchQuizInput from "./SearchQuizInput/SearchQuizInput";
-import classes from "./Quizes.module.css";
+import React, { useState, useEffect, useContext } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
+import axios from 'axios';
+import {jwtDecode} from 'jwt-decode';
+import ModalStartQuiz from '../../Components/ModalStartQuiz/ModalStartQuiz';
+import SearchQuizInput from './SearchQuizInput/SearchQuizInput';
+import classes from './Quizes.module.css';
+import { AuthContext } from '../../context/AuthContext';
 
 function Quizes() {
     const navigate = useNavigate();
     const location = useLocation();
+    const { isLoggedIn } = useContext(AuthContext);
     const [quizes, setQuizes] = useState([]);
-    const [searchTerm, setSearchTerm] = useState("");
+    const [searchTerm, setSearchTerm] = useState('');
     const [filteredQuizes, setFilteredQuizes] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [selectedQuiz, setSelectedQuiz] = useState(null);
@@ -20,19 +22,20 @@ function Quizes() {
     useEffect(() => {
         checkUserAuthentication();
         fetchQuizes();
-    }, []);
+    }, [isLoggedIn]); // Add isLoggedIn as a dependency to re-fetch quizzes on login/logout
 
     useEffect(() => {
         const queryParams = new URLSearchParams(location.search);
         const quizId = queryParams.get('quizId');
         if (quizId) {
-            const quiz = quizes.find(q => q._id === quizId);
+            const quiz = quizes.find
             if (quiz) {
                 setSelectedQuiz(quiz);
                 setIsModalOpen(true);
             }
         }
     }, [location, quizes]);
+
 
     const checkUserAuthentication = () => {
         const token = localStorage.getItem('token');
@@ -60,7 +63,7 @@ function Quizes() {
         const term = event.target.value;
         setSearchTerm(term);
         if (term) {
-            const filtered = quizes.filter(quiz =>
+            const filtered = quizes.filter((quiz) =>
                 quiz.quizName.toLowerCase().includes(term.toLowerCase())
             );
             setFilteredQuizes(filtered);
