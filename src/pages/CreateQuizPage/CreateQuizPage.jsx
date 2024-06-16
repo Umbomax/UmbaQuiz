@@ -4,6 +4,7 @@ import ModalCreateQuiz from "../../Components/ModalCreateQuiz/ModalCreateQuiz";
 
 function CreateQuizPage({ createError }) {
     const [modal, setModal] = useState(false);
+    const [title, setTitle] = useState("");
     const [quizType, setQuizType] = useState("");
 
     useEffect(() => {
@@ -24,13 +25,14 @@ function CreateQuizPage({ createError }) {
 
     return (
         <div className={classes.chooseType}>
-            <ModalCreateQuiz visible={modal} setVisible={setModal} quizType={quizType} createError={createError} />
+            <ModalCreateQuiz visible={modal} setVisible={setModal} quizType={quizType} createError={createError} title={title} />
             <div
                 className={classes.card}
                 datatype="1q4img"
                 onClick={() => {
                     setModal(true);
                     setQuizType("1q4img");
+                    setTitle('На вопрос 4 изображения')
                 }}
             >
                 <h3>На вопрос 4 изображения</h3>
@@ -42,6 +44,7 @@ function CreateQuizPage({ createError }) {
                 onClick={() => {
                     setModal(true);
                     setQuizType("1q1img");
+                    setTitle('На вопрос 1 изображение')
                 }}>
                 <h3>На вопрос 1 изображение</h3>
                 <p className={classes.description}>
@@ -53,6 +56,7 @@ function CreateQuizPage({ createError }) {
                 onClick={() => {
                     setModal(true);
                     setQuizType("1q4textanswer");
+                    setTitle('На вопрос 4 текстовых ответа')
                 }}>
                 <h3>На вопрос 4 текстовых ответа</h3>
                 <p className={classes.description}>
@@ -64,6 +68,7 @@ function CreateQuizPage({ createError }) {
                 onClick={() => {
                     setModal(true);
                     setQuizType("1q1textanswer");
+                    setTitle('На вопрос 1 текстовый ответ')
                 }}>
                 <h3>На вопрос 1 текстовый ответ</h3>
                 <p className={classes.description}>

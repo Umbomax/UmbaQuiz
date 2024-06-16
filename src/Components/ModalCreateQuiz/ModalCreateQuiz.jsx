@@ -4,7 +4,7 @@ import {jwtDecode} from "jwt-decode"; // Убедитесь, что импорт
 import MyImageInput from "../UI/MyImageInput/MyImageInput";
 import classes from "./ModalCreateQuiz.module.css";
 
-function ModalCreateQuiz({ visible, setVisible, quizType, createError }) {
+function ModalCreateQuiz({ visible, setVisible, quizType, createError, title }) {
     const navigate = useNavigate();
     const [userId, setUserId] = useState(null);
     const [errors, setErrors] = useState([]);
@@ -106,7 +106,12 @@ function ModalCreateQuiz({ visible, setVisible, quizType, createError }) {
     return (
         <div className={rootClasses.join(" ")} onClick={() => setVisible(false)}>
             <div className={classes.content} onClick={(e) => e.stopPropagation()}>
-                <button className={classes.closeButton} onClick={() => setVisible(false)}>x</button>
+                <div className={classes.title}>
+                    <h2>{title}</h2>
+                    <button className={classes.closeButton} onClick={() => setVisible(false)}>x</button>
+                    
+                </div>
+                <hr className={classes.separator}/>
                 <div className={classes.textInputWrapper}>
                     <div className={classes.quizNameWrapper}>
                         <div>Введите название викторины</div>

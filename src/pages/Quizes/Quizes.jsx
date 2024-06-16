@@ -22,13 +22,13 @@ function Quizes() {
     useEffect(() => {
         checkUserAuthentication();
         fetchQuizes();
-    }, [isLoggedIn]); // Add isLoggedIn as a dependency to re-fetch quizzes on login/logout
+    }, [isLoggedIn]); 
 
     useEffect(() => {
         const queryParams = new URLSearchParams(location.search);
         const quizId = queryParams.get('quizId');
-        if (quizId) {
-            const quiz = quizes.find
+        if (quizId && quizes) {
+            const quiz = quizes.find(quiz => quiz._id === quizId);
             if (quiz) {
                 setSelectedQuiz(quiz);
                 setIsModalOpen(true);
@@ -94,7 +94,7 @@ function Quizes() {
     };
 
     return (
-        <div className="mainContentBackground">
+        <div >
             <div className={classes.root}>
                 <SearchQuizInput value={searchTerm} onChange={handleSearch} />
                 <section className={classes.cardsContainer}>
