@@ -214,7 +214,7 @@ function ModalCreateQuiz({ visible, setVisible, quizType, createError, title }) 
                     className={classes.submitBtn}
                     onClick={handleSubmit}
                 >
-                    Продолжить
+                    Создать шаблон
                 </button>
             </div>
         </div>

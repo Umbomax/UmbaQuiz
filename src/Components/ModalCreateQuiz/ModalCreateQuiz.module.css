@@ -126,6 +126,10 @@ button.closeButton:hover{
 }
 
 @media (max-width: 600px) {
+    .content{
+        height: 100%;
+        overflow: scroll;
+    }
     .textInputWrapper{
         flex-direction: column;
     }
