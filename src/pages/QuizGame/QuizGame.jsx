@@ -4,6 +4,7 @@ import classes from "./QuizGame.module.css";
 import QuizResultsModal from "../../Components/QuizResultsModal/QuizResultsModal";
 import Timer from "../../Components/Timer/Timer";
 import noImage from '../../assets/images/no_image.jpg'; 
+import Carousel from "../../Components/Carousel/Carousel";
 
 function QuizGame(props) {
     const location = useLocation();
@@ -85,6 +86,9 @@ function QuizGame(props) {
         );
         setTimeout(() => setModal(true), 1000);
     }
+    function checkValidForm() {
+        return true;
+    }
 
     function handleTimeEnd() {
         endGame(answersStatus);
@@ -93,14 +97,14 @@ function QuizGame(props) {
     return (
         <>
             <QuizResultsModal visible={modal} setVisible={setModal} questionsCount={questions.length} correctAnswersCount={correctAnswersCount}></QuizResultsModal>
-            <div className={classes.carouser}>
-                {questions.map((el, idx) => (
-                    <div key={idx} className={classes.carouserItem} onClick={() => setCurrentSlide(idx)}>
-                        {idx + 1}
-                    </div>
-                ))}
-                <div style={activeCarouselBlock} className={classes.activeCarousel}></div>
-            </div>
+            <Carousel
+                items={questions}
+                currentSlide={currentSlide}
+                setCurrentSlide={setCurrentSlide}
+                checkValidForm={checkValidForm}
+                isQuizGame={true}
+                answersStatus={answersStatus}
+            />
 
             <div className={classes.quizItemsWrapper}>
                 <div style={inlineStyle} className={classes.quizItemsContainer}>

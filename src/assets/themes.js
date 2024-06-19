@@ -1,59 +1,109 @@
 const modern = {
-    '--header-background': '#2c3e50',
-    '--header-text': '#ecf0f1',
-    '--main-background': '#ecf0f1',
-    '--main-text': '#2c3e50',
-    '--card-background': '#ffffff',
-    '--card-border': '#dcdcdc',
-    '--card-text': '#2c3e50',
-    '--card-header': '#3498db',
-  };
-  
+  '--header-background': '#2c3e50',
+  '--header-text': '#ecf0f1',
+  '--main-background': '#ecf0f1',
+  '--main-text': '#2c3e50',
+  '--card-background': '#ffffff',
+  '--card-border': '#dcdcdc',
+  '--card-text': '#2c3e50',
+  '--card-header': '#3498db',
+  '--button-background': '#3498db',
+  '--button-text': '#ffffff',
+  '--button-hover-background': '#2980b9',
+  '--modal-background': '#ffffff',
+  '--modal-text': '#2c3e50',
+  '--popup-background': '#ecf0f1',
+  '--popup-text': '#2c3e50',
+};
 
-  const pastel = {
-    '--header-background': '#35495e ',
-    '--header-text': '#dce1e6 ',
-    '--main-background': '#f7f9fc ',
-    '--main-text': '#2c3e50 ',
-    '--card-background': '#ffffff',
-    '--card-border': '#d3dce6 ',
-    '--card-text': '#2c3e50',
-    '--card-header': '#4aa3df',
-  };
+const pastel = {
+  '--header-background': '#b3cde0',
+  '--header-text': '#2c3e50',
+  '--main-background': '#f7f9fc',
+  '--main-text': '#2c3e50',
+  '--card-background': '#ffffff',
+  '--card-border': '#b3cde0',
+  '--card-text': '#2c3e50',
+  '--card-header': '#7bb3d3',
+  '--button-background': '#7bb3d3',
+  '--button-text': '#ffffff',
+  '--button-hover-background': '#669bb0',
+  '--modal-background': '#ffffff',
+  '--modal-text': '#2c3e50',
+  '--popup-background': '#f7f9fc',
+  '--popup-text': '#2c3e50',
+};
 
+const dark = {
+  '--header-background': '#1a1a1a',
+  '--header-text': '#f5f5f5',
+  '--main-background': '#333333',
+  '--main-text': '#f5f5f5',
+  '--card-background': '#2c3e50',
+  '--card-border': '#34495e',
+  '--card-text': '#ecf0f1',
+  '--card-header': '#3498db',
+  '--button-background': '#3498db',
+  '--button-text': '#ffffff',
+  '--button-hover-background': '#2980b9',
+  '--modal-background': '#2c3e50',
+  '--modal-text': '#ecf0f1',
+  '--popup-background': '#333333',
+  '--popup-text': '#f5f5f5',
+};
 
-  const dark = {
-    '--header-background': '#1a1a1a  ',
-    '--header-text': '#f5f5f5  ',
-    '--main-background': '#333333  ',
-    '--main-text': '#f5f5f5 ',
-    '--card-background': '#2c3e50 ',
-    '--card-border': '#34495e',
-    '--card-text': '#ecf0f1',
-    '--card-header': '#3498db',
-  };
+const bright = {
+  '--header-background': '#ff5733',
+  '--header-text': '#ffffff',
+  '--main-background': '#f0f0f0',
+  '--main-text': '#333333',
+  '--card-background': '#ffffff',
+  '--card-border': '#cccccc',
+  '--card-text': '#333333',
+  '--card-header': '#ff5733',
+  '--button-background': '#ff5733',
+  '--button-text': '#ffffff',
+  '--button-hover-background': '#e6451d',
+  '--modal-background': '#ffffff',
+  '--modal-text': '#333333',
+  '--popup-background': '#f0f0f0',
+  '--popup-text': '#333333',
+};
 
-  const bright = {
-    '--header-background': '#ff5733',
-    '--header-text': '#ffffff   ',
-    '--main-background': '#f0f0f0   ',
-    '--main-text': '#333333  ',
-    '--card-background': '#ffffff  ',
-    '--card-border': '#cccccc ',
-    '--card-text': '#333333 ',
-    '--card-header': '#ff5733 ',
-  };
+const calm = {
+  '--header-background': '#3b3b3b',
+  '--header-text': '#ffffff',
+  '--main-background': '#e8e8e8',
+  '--main-text': '#3b3b3b',
+  '--card-background': '#ffffff',
+  '--card-border': '#e0e0e0',
+  '--card-text': '#3b3b3b',
+  '--card-header': '#5a5a5a',
+  '--button-background': '#5a5a5a',
+  '--button-text': '#ffffff',
+  '--button-hover-background': '#464646',
+  '--modal-background': '#ffffff',
+  '--modal-text': '#3b3b3b',
+  '--popup-background': '#e8e8e8',
+  '--popup-text': '#3b3b3b',
+};
 
-  const calm = {
-    '--header-background': '#3b3b3b',
-    '--header-text': '#ffffff',
-    '--main-background': '#e8e8e8',
-    '--main-text': '#3b3b3b',
-    '--card-background': '#ffffff',
-    '--card-border': '#e0e0e0',
-    '--card-text': '#3b3b3b',
-    '--card-header': '#5a5a5a',
-  };
+const yellowBlack = {
+  '--header-background': '#ffca28',
+  '--header-text': '#000000',
+  '--main-background': '#1c1c1c',
+  '--main-text': '#ffc107',
+  '--card-background': '#2e2e2e',
+  '--card-border': '#ffca28',
+  '--card-text': '#ffc107',
+  '--card-header': '#ffca28',
+  '--button-background': '#ffc107',
+  '--button-text': '#000000',
+  '--button-hover-background': '#ffb300',
+  '--modal-background': '#2e2e2e',
+  '--modal-text': '#ffc107',
+  '--popup-background': '#1c1c1c',
+  '--popup-text': '#ffc107',
+};
 
-  
-  export { modern, pastel, dark, bright, calm};
+export { modern, pastel, dark, bright, calm, yellowBlack };

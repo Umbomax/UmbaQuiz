@@ -1,6 +1,6 @@
 import React from "react";
 import classes from "./ThemeSelection.module.css";
-import { modern, pastel, dark, bright, calm } from '../../assets/themes';
+import { modern, pastel, dark, bright, calm, yellowBlack } from '../../assets/themes';
 import { applyTheme, saveThemeToLocalStorage } from '../../Scripts/themeChanger';
 
 function ThemeSelection() {
@@ -33,6 +33,10 @@ function ThemeSelection() {
           <div className={classes.theme} onClick={() => handleThemeChange(calm, 'calm')}>
             <h4>Спокойная и профессиональная</h4>
             <div className={`${classes.themeImage} ${classes.calmTheme}`}></div>
+          </div>
+          <div className={classes.theme} onClick={() => handleThemeChange(yellowBlack, 'yellowBlack')}>
+            <h4>Желто-черная</h4>
+            <div className={`${classes.themeImage} ${classes.yellowBlack}`}></div>
           </div>
         </div>
       </div>

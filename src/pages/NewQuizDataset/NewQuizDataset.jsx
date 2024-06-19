@@ -3,6 +3,7 @@ import classes from "./NewQuizDataset.module.css";
 import { useLocation } from "react-router-dom";
 import MyImageInput from "../../Components/UI/MyImageInput/MyImageInput";
 import axios from "axios";
+import Carousel from "../../Components/Carousel/Carousel";
 
 function NewQuizDataset() {
     const location = useLocation();
@@ -139,17 +140,12 @@ function NewQuizDataset() {
 
     return (
         <div>
-            <div className={classes.carouser}>
-                {quizQuestions.map((el, idx) => (
-                    <div
-                        key={idx}
-                        className={`${classes.carouserItem} ${checkValidForm(idx) ? classes.green : ''}`}
-                        onClick={() => setCurrentSlide(idx)}
-                    >
-                        {idx + 1}
-                    </div>
-                ))}
-            </div>
+            <Carousel
+                items={quizQuestions}
+                currentSlide={currentSlide}
+                setCurrentSlide={setCurrentSlide}
+                checkValidForm={checkValidForm}
+            />
 
             <div className={classes.quizFormsWrapper}>
                 <div style={inlineStyle} className={classes.quizFormsContainer}>
