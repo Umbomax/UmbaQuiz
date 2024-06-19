@@ -74,6 +74,16 @@ function NewQuizDataset() {
         });
     };
 
+    const handleImageRemoval = (questionIndex, answerIndex = null) => {
+        if (answerIndex === null) {
+            updateQuizData(questionIndex, { ...quizQuestions[questionIndex], questionImage: "" });
+        } else {
+            const updatedWrongAnswers = [...quizQuestions[questionIndex].wrongAnswers];
+            updatedWrongAnswers[answerIndex] = "";
+            updateQuizData(questionIndex, { ...quizQuestions[questionIndex], wrongAnswers: updatedWrongAnswers });
+        }
+    };
+
     const inlineStyle = {
         width: `${100 * quizNums}%`,
     };
@@ -131,9 +141,9 @@ function NewQuizDataset() {
         <div>
             <div className={classes.carouser}>
                 {quizQuestions.map((el, idx) => (
-                    <div 
-                        key={idx} 
-                        className={`${classes.carouserItem} ${checkValidForm(idx) ? classes.green : ''}`} 
+                    <div
+                        key={idx}
+                        className={`${classes.carouserItem} ${checkValidForm(idx) ? classes.green : ''}`}
                         onClick={() => setCurrentSlide(idx)}
                     >
                         {idx + 1}
@@ -147,44 +157,50 @@ function NewQuizDataset() {
                         <form style={activeSlide} key={idx} className={classes.quizForm}>
                             <h2>{`Форма номер ${idx + 1}`}</h2>
                             <div className={classes.inputWrapper}>
-                                <input 
-                                    type="text" 
-                                    placeholder="Введите вопрос" 
-                                    onChange={(e) => handleQuestionChange(e.target.value, idx)} 
+                                <p>Введите текст вопроса</p>
+                                <input
+                                    type="text"
+                                    placeholder="Введите вопрос"
+                                    onChange={(e) => handleQuestionChange(e.target.value, idx)}
                                     value={quizQuestions[idx].question}
                                 />
                             </div>
-                            
+
                             {(quizData.type === "1q4textanswer" || quizData.type === "1q1textanswer") && (
                                 <div className={classes.questionImage}>
                                     <h3>Выберите изображение для вопроса</h3>
-                                    <MyImageInput 
-                                        className={classes.fileInput} 
-                                        type="file" 
-                                        placeholder="Изображение вопроса" 
-                                        questionIndex={idx} 
-                                        setHeadImage={handleQuestionImageChange} 
-                                    />
+                                    <div className="my-image-input__Wrapper">
+                                        <MyImageInput
+                                            className={classes.fileInput}
+                                            placeholder="Изображение вопроса"
+                                            questionIndex={idx}
+                                            setHeadImage={handleQuestionImageChange}
+                                            handleImageRemoval={handleImageRemoval}
+                                        />
+                                    </div>
                                 </div>
                             )}
 
                             <div className={classes.correctAnswer}>
                                 <h3>Правильный ответ</h3>
                                 {(quizData.type === "1q1textanswer" || quizData.type === "1q4textanswer") ? (
-                                    <input 
-                                        type="text" 
-                                        placeholder="Правильный ответ" 
-                                        onChange={(e) => handleCorrectAnswerChange(e.target.value, idx)} 
+                                    <input
+                                        className={classes.textAnswerInput}
+                                        type="text"
+                                        placeholder="Правильный ответ"
+                                        onChange={(e) => handleCorrectAnswerChange(e.target.value, idx)}
                                         value={quizQuestions[idx].answer}
                                     />
                                 ) : (
-                                    <MyImageInput 
-                                        className={classes.fileInput} 
-                                        type="file" 
-                                        placeholder="Правильный ответ" 
-                                        questionIndex={idx} 
-                                        setHeadImage={handleCorrectAnswerChange} 
-                                    />
+                                    <div className="my-image-input__Wrapper">
+                                        <MyImageInput
+                                            className={classes.fileInput}
+                                            placeholder="Правильный ответ"
+                                            questionIndex={idx}
+                                            setHeadImage={handleCorrectAnswerChange}
+                                            handleImageRemoval={handleImageRemoval}
+                                        />
+                                    </div>
                                 )}
                             </div>
                             {(quizData.type === "1q4img" || quizData.type === "1q4textanswer") && (
@@ -193,48 +209,54 @@ function NewQuizDataset() {
                                     <div className={classes.incorrectAnswers}>
                                         {(quizData.type === "1q4textanswer") ? (
                                             <>
-                                                <input 
-                                                    type="text" 
-                                                    placeholder="Неправильный ответ" 
-                                                    onChange={(e) => handleWrongAnswerChange(e.target.value, idx, 0)} 
+                                                <input
+                                                    className={classes.textAnswerInput}
+                                                    type="text"
+                                                    placeholder="Неправильный ответ"
+                                                    onChange={(e) => handleWrongAnswerChange(e.target.value, idx, 0)}
                                                     value={quizQuestions[idx].wrongAnswers[0]}
                                                 />
-                                                <input 
-                                                    type="text" 
-                                                    placeholder="Неправильный ответ" 
-                                                    onChange={(e) => handleWrongAnswerChange(e.target.value, idx, 1)} 
+                                                <input
+                                                    className={classes.textAnswerInput}
+                                                    type="text"
+                                                    placeholder="Неправильный ответ"
+                                                    onChange={(e) => handleWrongAnswerChange(e.target.value, idx, 1)}
                                                     value={quizQuestions[idx].wrongAnswers[1]}
                                                 />
-                                                <input 
-                                                    type="text" 
-                                                    placeholder="Неправильный ответ" 
-                                                    onChange={(e) => handleWrongAnswerChange(e.target.value, idx, 2)} 
+                                                <input
+                                                    className={classes.textAnswerInput}
+                                                    type="text"
+                                                    placeholder="Неправильный ответ"
+                                                    onChange={(e) => handleWrongAnswerChange(e.target.value, idx, 2)}
                                                     value={quizQuestions[idx].wrongAnswers[2]}
                                                 />
                                             </>
                                         ) : (
                                             <>
-                                                <MyImageInput 
-                                                    type="file" 
-                                                    placeholder="Неправильный ответ" 
-                                                    questionIndex={idx} 
-                                                    answerIndex={0} 
-                                                    setHeadImage={handleWrongAnswerChange} 
-                                                />
-                                                <MyImageInput 
-                                                    type="file" 
-                                                    placeholder="Неправильный ответ" 
-                                                    questionIndex={idx} 
-                                                    answerIndex={1} 
-                                                    setHeadImage={handleWrongAnswerChange} 
-                                                />
-                                                <MyImageInput 
-                                                    type="file" 
-                                                    placeholder="Неправильный ответ" 
-                                                    questionIndex={idx} 
-                                                    answerIndex={2} 
-                                                    setHeadImage={handleWrongAnswerChange} 
-                                                />
+                                                <div className="my-image-input__Wrapper"><MyImageInput
+                                                    placeholder="Неправильный ответ"
+                                                    questionIndex={idx}
+                                                    answerIndex={0}
+                                                    setHeadImage={handleWrongAnswerChange}
+                                                    handleImageRemoval={handleImageRemoval}
+                                                /></div>
+
+                                                <div className="my-image-input__Wrapper"><MyImageInput
+                                                    placeholder="Неправильный ответ"
+                                                    questionIndex={idx}
+                                                    answerIndex={1}
+                                                    setHeadImage={handleWrongAnswerChange}
+                                                    handleImageRemoval={handleImageRemoval}
+                                                /></div>
+
+                                                <div className="my-image-input__Wrapper"><MyImageInput
+                                                    placeholder="Неправильный ответ"
+                                                    questionIndex={idx}
+                                                    answerIndex={2}
+                                                    setHeadImage={handleWrongAnswerChange}
+                                                    handleImageRemoval={handleImageRemoval}
+                                                /></div>
+
                                             </>
                                         )}
                                     </div>

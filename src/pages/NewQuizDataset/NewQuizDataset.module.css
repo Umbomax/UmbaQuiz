@@ -4,8 +4,7 @@
     gap: 20px;
     justify-content: center;
     align-items: center;
-    height: 48px;
-    border: 1px solid cyan;
+    height: 48px; 
 
 }
 .carouserItem{
@@ -19,12 +18,10 @@
 }
 .quizFormsContainer{
     width: 1440px;
-    border: 1px solid black;
     display: flex;
 }
 .quizForm{
     width: 100%;
-    border: 1px solid darkred;
 }
 
 .quizFormsWrapper{
@@ -37,20 +34,65 @@
     height: 330px;
 }
 .correctAnswer{
+    margin: 10px 0;
     display: flex;
     width: 100%;
-    height: 330px;
+    height: auto;
     align-items: center;
     justify-content: center;    
 }
 .incorrectAnswers{
+    margin: 10px 0;
     display: flex;
     justify-content: space-around;
     align-items: center;
 
 }
+.correctAnswer>h3, .incorrectAnswers>h3{
+    margin: 10px 0;
+}
 .inputWrapper{
     margin: auto;
-    width: 500px;
-    
+    width: 100%;    
+}
+.inputWrapper>input{
+    margin: 10px 0;
+    height: 40px;
+    width: 100%;
+}
+.inputWrapper>p{
+    margin: 10px 0;
+    font-size: 18px;
+    font-weight: 700;
+}
+.myImageInputWrapper{
+    max-width: 480px;
+}
+.textAnswerInput{
+    margin: 10px 0;
+    width: 100%;
+    height: 50px;
+}
+.questionImage{
+    margin: 10px 0;
+}
+.questionImage>h3{
+    margin: 10px 0;
+}
+@media (max-width:1440px) {
+    .incorrectAnswers{
+        flex-direction: column;
+    }
+    .quizFormsWrapper{
+        width: 100%;
+    }
+    .carouser{
+        width: 100%;
+    }
+    .quizForm{
+        padding: 5px;
+    }
+    .correctAnswer{
+        flex-direction: column;
+    }
 }

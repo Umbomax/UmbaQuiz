@@ -1,12 +1,12 @@
 import React, { useState, useRef } from 'react';
-import classes from './MyImageInput.module.css';
 import Resizer from 'react-image-file-resizer';
+import { FaPencilAlt, FaTrashAlt } from 'react-icons/fa';
+import classes from './MyImageInput.module.css';
 
-function MyImageInput({setHeadImage, questionIndex, answerIndex}) {
-  
-
+function MyImageInput({ setHeadImage, questionIndex, answerIndex, handleImageRemoval }) {
   const [drag, setDrag] = useState(false);
   const [imageSrc, setImageSrc] = useState(null);
+  const [imageLink, setImageLink] = useState("");
   const fileInputRef = useRef(null);
 
   function dragStartHandler(e) {
@@ -20,7 +20,6 @@ function MyImageInput({setHeadImage, questionIndex, answerIndex}) {
   }
 
   function onDropHandler(e) {
-    
     e.preventDefault();
     e.stopPropagation();
 
@@ -28,31 +27,17 @@ function MyImageInput({setHeadImage, questionIndex, answerIndex}) {
     if (file && file.type.startsWith('image/')) {
       Resizer.imageFileResizer(
         file,
-        430, // новая ширина изображения
-        270, // новая высота изображения
-        'JPEG', // формат изображения (JPEG, PNG, WEBP)
-        100, // качество изображения (0-100)
-        0, // вращение изображения
+        430,
+        270,
+        'JPEG',
+        100,
+        0,
         (uri) => {
           setHeadImage(uri, questionIndex, answerIndex);
           setImageSrc(uri);
-          const imageSizeInBytes = uri.length * 0.75; // Переводим длину строки base64 в байты
-
-          // Переводим размер изображения в мегабайты
-          const imageSizeInMB = imageSizeInBytes / (1024 * 1024);
-  
-          console.log('Размер изображения в мегабайтах:', imageSizeInMB);
         },
-        'base64' // тип вывода ('base64', 'blob', 'file')
+        'base64'
       );
-      // const reader = new FileReader();
-      // reader.onload = () => {
-      //   const base64String = reader.result;
-      //   setHeadImage(base64String)
-       
-      //   setImageSrc(base64String); // Установка изображения в состояние компонента
-      // };
-      // reader.readAsDataURL(file); // Преобразование изображения в строку base64
     }
 
     setDrag(false);
@@ -63,35 +48,38 @@ function MyImageInput({setHeadImage, questionIndex, answerIndex}) {
     if (file && file.type.startsWith('image/')) {
       Resizer.imageFileResizer(
         file,
-        430, // новая ширина изображения
-        270, // новая высота изображения
-        'JPEG', // формат изображения (JPEG, PNG, WEBP)
-        70, // качество изображения (0-100)
-        0, // вращение изображения
+        430,
+        270,
+        'JPEG',
+        70,
+        0,
         (uri) => {
           setHeadImage(uri, questionIndex, answerIndex);
           setImageSrc(uri);
         },
-        'base64' // тип вывода ('base64', 'blob', 'file')
+        'base64'
       );
     }
   }
-  // function handleInputChange(e) {
-  //   const file = e.target.files[0];
-  //   if (file && file.type.startsWith('image/')) {
-  //     const reader = new FileReader();
-  //     reader.onload = () => {
-  //       const base64String = reader.result;
-  //       setHeadImage(base64String, questionIndex, answerIndex)
 
-  //       setImageSrc(base64String); // Установка изображения в состояние компонента
-  //     };
-  //     reader.readAsDataURL(file); // Преобразование изображения в строку base64
-  //   }
-  // }
-
-  function handleImageClick() {
+  function handleImageClick(e) {
+    e.stopPropagation()
     fileInputRef.current.click();
+  }
+
+  function handleImageLinkChange(e) {
+    setImageLink(e.target.value);
+  }
+
+  function handleImageLinkSubmit() {
+    setHeadImage(imageLink, questionIndex, answerIndex);
+    setImageSrc(imageLink);
+  }
+
+  function handleRemoveImage(e) {
+    e.stopPropagation();
+    setImageSrc(null);
+    handleImageRemoval(questionIndex, answerIndex);
   }
 
   return (
@@ -102,10 +90,15 @@ function MyImageInput({setHeadImage, questionIndex, answerIndex}) {
         className={classes.input}
         onChange={handleInputChange}
         accept="image/*"
+        style={{ display: 'none' }}
       />
       {imageSrc && (
         <div className={classes.imagePreview} onClick={handleImageClick}>
           <img src={imageSrc} alt="Uploaded" className={classes.image} />
+          <div className={classes.iconWrapper}>
+            <FaPencilAlt className={classes.icon} onClick={handleImageClick} />
+            <FaTrashAlt className={classes.icon} onClick={handleRemoveImage} />
+          </div>
         </div>
       )}
       {drag ? (
@@ -130,6 +123,17 @@ function MyImageInput({setHeadImage, questionIndex, answerIndex}) {
           Перетащите изображение, чтобы загрузить его
         </div>
       )}
+      <div className={classes.linkInputWrapper}>
+        <input
+          type="text"
+          placeholder="Вставьте ссылку на изображение"
+          value={imageLink}
+          onChange={handleImageLinkChange}
+        />
+        <button type="button" onClick={handleImageLinkSubmit}>
+          Загрузить
+        </button>
+      </div>
     </div>
   );
 }

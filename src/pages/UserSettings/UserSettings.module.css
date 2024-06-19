@@ -38,11 +38,12 @@
     }
     .nav {
         display: flex;
+        
         gap: 10px;
         margin-bottom: 20px;
       }
       
-      button {
+      .nav>button {
         padding: 10px 20px;
         border: none;
         background-color: #007bff;
@@ -50,7 +51,20 @@
         cursor: pointer;
       }
       
-      button:hover {
+      .nav>button:hover {
         background-color: #0056b3;
       }
       
+      @media  (max-width: 600px) {
+        .nav{
+            justify-content: space-between;
+        }
+        .nav>button{
+            width: 22%;
+            min-height: 30px;
+            font-size: 10px;
+            padding: 5px;
+            margin: 0;
+
+        }
+      }

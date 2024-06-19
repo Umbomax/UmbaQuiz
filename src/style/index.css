@@ -28,3 +28,7 @@ body{
     background-color: var(--main-background, #227388);
     min-height: 81vh;
 }
+.my-image-input__Wrapper{
+    max-width: 480px;
+    min-height: 300px;
+}

@@ -124,6 +124,9 @@ button.closeButton:hover{
     background-color: aqua;
     margin-bottom: 32px;
 }
+.headImage>h3{
+    font-size: 22px;
+}
 
 @media (max-width: 600px) {
     .content{

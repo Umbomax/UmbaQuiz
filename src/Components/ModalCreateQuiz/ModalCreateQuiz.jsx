@@ -46,6 +46,10 @@ function ModalCreateQuiz({ visible, setVisible, quizType, createError, title }) 
         setQuizSettings({ ...quizSettings, quizHeadImage: base64string });
     }
 
+    function handleImageRemoval(questionIndex, answerIndex = null) {
+        setQuizSettings({ ...quizSettings, quizHeadImage: "" });
+    }
+
     const pushStatus = (text, status) => {
         const generateUniqueId = () => Date.now() + Math.floor(Math.random() * 1000);
         let newError;
@@ -109,9 +113,8 @@ function ModalCreateQuiz({ visible, setVisible, quizType, createError, title }) 
                 <div className={classes.title}>
                     <h2>{title}</h2>
                     <button className={classes.closeButton} onClick={() => setVisible(false)}>x</button>
-                    
                 </div>
-                <hr className={classes.separator}/>
+                <hr className={classes.separator} />
                 <div className={classes.textInputWrapper}>
                     <div className={classes.quizNameWrapper}>
                         <div>Введите название викторины</div>
@@ -207,8 +210,14 @@ function ModalCreateQuiz({ visible, setVisible, quizType, createError, title }) 
                     </div>
                 )}
                 <div className={classes.headImage}>
-                    <div>Выберите изображение для отображения в списке викторин</div>
-                    <MyImageInput className={classes.imageWrapper} setHeadImage={setHeadImage} />
+                    <h3>Выберите изображение для отображения в списке викторин</h3>
+                    <div className="my-image-input__Wrapper">
+                        <MyImageInput
+                        className={classes.imageWrapper}
+                        setHeadImage={setHeadImage}
+                        handleImageRemoval={handleImageRemoval}
+                    /></div>
+                    
                 </div>
                 <button
                     className={classes.submitBtn}
