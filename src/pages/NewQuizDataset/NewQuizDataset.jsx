@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from "react";
 import classes from "./NewQuizDataset.module.css";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import MyImageInput from "../../Components/UI/MyImageInput/MyImageInput";
 import axios from "axios";
 import Carousel from "../../Components/Carousel/Carousel";
 
-function NewQuizDataset() {
+function NewQuizDataset({ createError }) {
     const location = useLocation();
     const quizNums = +location.state.quizesCount;
+    const navigate = useNavigate();
     const [currentSlide, setCurrentSlide] = useState(0);
-
+    const [errors, setErrors] = useState([]);
+    
     const [quizData, setQuizData] = useState({
         quizName: location.state.quizName,
         quizesCount: location.state.quizesCount || 0,
@@ -45,6 +47,22 @@ function NewQuizDataset() {
         });
         setQuizQuestions(initialQuestions);
     }, [quizNums, quizData.type]);
+
+    useEffect(() => {
+        if (errors.length > 0) {
+            createError(errors);
+            setErrors([]);
+        }
+    }, [errors, createError]);
+
+    const pushStatus = (text, status) => {
+        const generateUniqueId = () => Date.now() + Math.floor(Math.random() * 1000);
+        let newError;
+        do {
+            newError = { id: generateUniqueId(), errorText: text, status: status };
+        } while (errors.some(error => error.id === newError.id));
+        setErrors(prevErrors => [...prevErrors, newError]);
+    };
 
     const updateQuizData = (index, updatedItem) => {
         setQuizQuestions((prevState) => {
@@ -109,17 +127,17 @@ function NewQuizDataset() {
 
         const invalidForms = quizQuestions.map((q, idx) => {
             if (!q.question.trim() || !q.answer.trim()) {
+                pushStatus(`Форма номер ${idx + 1} не заполнена`, "error");
                 return idx + 1;
             }
             if ((quizData.type === "1q4img" || quizData.type === "1q4textanswer") && !q.wrongAnswers.every(wrongAnswer => wrongAnswer.trim())) {
+                pushStatus(`Форма номер ${idx + 1} не заполнена`, "error");
                 return idx + 1;
             }
             return null;
         }).filter(x => x !== null);
 
-        if (invalidForms.length > 0) {
-            alert(`Не заполнены следующие формы: ${invalidForms.join(', ')}`);
-        } else {
+        if (invalidForms.length === 0) {
             const dataToSend = { ...quizData, questions: quizQuestions };
             console.log(dataToSend);
 
@@ -131,9 +149,12 @@ function NewQuizDataset() {
                 })
                 .then(response => {
                     console.log("Сервер ответил:", response.data);
+                    pushStatus("Викторина успешно добавлена", "ok");
+                    setTimeout( navigate('/'),1000);
                 })
                 .catch((error) => {
                     console.error("There was a problem with your fetch operation:", error);
+                    pushStatus(`There was a problem with your fetch operation: ${error.message}`, "error");
                 });
         }
     }

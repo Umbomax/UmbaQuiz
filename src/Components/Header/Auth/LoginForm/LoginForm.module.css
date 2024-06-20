@@ -28,9 +28,8 @@
     width: 100%;
     height: 50px;
     margin-top: 20px;
-    background: -webkit-linear-gradient(left,#757575,#626363,#494949
-    , #313131);
-    color: white;
+    background: var(--button-backgroud-gradient);
+    color: var(--button-text);
     font-size: 17px;
     border-radius: 15px;
   }

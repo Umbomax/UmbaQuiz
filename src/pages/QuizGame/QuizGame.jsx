@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import axios from 'axios';
+import {jwtDecode} from 'jwt-decode';
 import classes from "./QuizGame.module.css";
 import QuizResultsModal from "../../Components/QuizResultsModal/QuizResultsModal";
 import Timer from "../../Components/Timer/Timer";
@@ -19,12 +21,37 @@ function QuizGame(props) {
     useEffect(() => {
         const fetchedQuestions = location.state?.questions || [];
         setQuestions(fetchedQuestions);
-        console.log(location.state)
         const initialAnswersStatus = new Array(fetchedQuestions.length).fill(null);
         setAnswersStatus(initialAnswersStatus);
 
-        const generatedAnswers = fetchedQuestions.map((el) => [...el.wrongAnswers, el.answer].sort(() => Math.random() - 0.5));
+        // Generate answers
+        const generatedAnswers = fetchedQuestions.map((el, index) => {
+            let wrongAnswers = [...el.wrongAnswers];
+            if (location.state.type === "1q1textanswer" || location.state.type === "1q1img") {
+                
+                fetchedQuestions.forEach((question, qIdx) => {
+                    if (qIdx !== index && wrongAnswers.length < 3) {
+                        wrongAnswers.push(question.answer);
+                    }
+                });
+             
+                wrongAnswers = [...new Set(wrongAnswers)].slice(0, 3);
+            }
+            return [...wrongAnswers, el.answer].sort(() => Math.random() - 0.5);
+        });
+
         setAnswers(generatedAnswers);
+
+        // Extract user ID from token and send start time to server
+        const token = localStorage.getItem('token');
+        if (token) {
+            const decoded = jwtDecode(token);
+            const userId = decoded.id;
+            const quizStartTime = new Date().toISOString();
+            console.log({ userId, quizStartTime });
+        
+            // axios.post("https://yourserver.com/api/startQuiz", { userId, quizStartTime });
+        }
     }, [location.state]);
 
     function setCarouserActive() {
@@ -113,7 +140,7 @@ function QuizGame(props) {
                             <h1 className={classes.questionText}>{question.question}</h1>
                             <div className={classes.answersContainer}>
                                 <img 
-                                    src={question.questionImage || noImage} // Используем импортированное изображение
+                                    src={question.questionImage || noImage} 
                                     alt="question" 
                                     className={classes.questionImage} 
                                 />
