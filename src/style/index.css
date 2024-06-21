@@ -29,7 +29,7 @@ body{
 .mainContentBackground{
     padding: 10px;
     background-color: var(--main-background, #227388);
-    min-height: 81vh;
+    min-height: 83vh;
 }
 .my-image-input__Wrapper{
     max-width: 480px;

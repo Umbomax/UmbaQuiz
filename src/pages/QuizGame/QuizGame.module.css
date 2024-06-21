@@ -12,13 +12,12 @@
     box-sizing: border-box;
 }
 .answersContainer {
-    margin: auto;
-    padding: 20px;
-    display: grid;
-    justify-items: center;
-    row-gap: 30px;
-    column-gap: 40px;
-    grid-template-columns: repeat(2, 45%);
+   
+    padding: 20px; 
+    
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
 }
 .answer {
     margin-bottom: 50px;
@@ -110,15 +109,14 @@
 }
 
 .textAnswers {
+    width: 60%;
     display: flex;
     flex-direction: column;
 }
-
-.answersContainer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.answer{
+    border-radius: 15px;
 }
+
 
 @media (max-width: 768px) {
     .questionImage{
