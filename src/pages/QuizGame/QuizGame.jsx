@@ -29,13 +29,11 @@ function QuizGame(props) {
         const generatedAnswers = fetchedQuestions.map((el, index) => {
             let wrongAnswers = [...el.wrongAnswers];
             if (location.state.type === "1q1textanswer" || location.state.type === "1q1img") {
-                
                 fetchedQuestions.forEach((question, qIdx) => {
                     if (qIdx !== index && wrongAnswers.length < 3) {
                         wrongAnswers.push(question.answer);
                     }
                 });
-                
                 wrongAnswers = [...new Set(wrongAnswers)].slice(0, 3);
             }
             return [...wrongAnswers, el.answer].sort(() => Math.random() - 0.5);
@@ -44,18 +42,20 @@ function QuizGame(props) {
         setAnswers(generatedAnswers);
         
         const token = localStorage.getItem('token');
-        const quizID = location.state._id;
+        const quizId = location.state._id;
         const quizStartTime = new Date().toISOString();
         setQuizStartTime(quizStartTime);
 
         if (token && location.state.isPrivate) {    
             const decoded = jwtDecode(token);
             const userId = decoded.id;
-            console.log({ userId, quizStartTime, quizID });
-            axios.post("https://umbaquizserver-production.up.railway.app/api/startQuiz", { userId, quizStartTime, quizID });
+            console.log({ userId, quizStartTime, quizId });
+            axios.post("https://umbaquizserver-production.up.railway.app/api/startQuiz", { userId, quizStartTime, quizId })
+                .catch(error => console.error("Error starting quiz:", error));
         } else {
-            console.log({ quizStartTime, quizID });
-            axios.post("https://umbaquizserver-production.up.railway.app/api/startQuiz", { quizStartTime, quizID });
+            console.log({ quizStartTime, quizId });
+            axios.post("https://umbaquizserver-production.up.railway.app/api/startQuiz", { quizStartTime, quizId })
+                .catch(error => console.error("Error starting quiz:", error));
         }
     }, [location.state]);
 
@@ -119,15 +119,16 @@ function QuizGame(props) {
 
         // Отправка данных на сервер по окончании викторины
         const token = localStorage.getItem('token');
-        const quizID = location.state._id;
+        const quizId = location.state._id;
         const quizEndTime = new Date().toISOString();
         const result = correctCount;
 
         if (token) {
             const decoded = jwtDecode(token);
             const userId = decoded.id;
-            console.log({ userId, quizStartTime, quizEndTime, quizID, result });
-            axios.post("https://umbaquizserver-production.up.railway.app/api/endQuiz", { userId, quizStartTime, quizEndTime, quizID, result });
+            console.log({ userId, quizStartTime, quizEndTime, quizId, result });
+            axios.post("https://umbaquizserver-production.up.railway.app/api/endQuiz", { userId, quizStartTime, quizEndTime, quizId, result })
+                .catch(error => console.error("Error ending quiz:", error));
         }
     }
 
