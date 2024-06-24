@@ -1,19 +1,17 @@
 import React from "react";
 import classes from "./QuizResultsModal.module.css";
-import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import MyImageInput from "../UI/MyImageInput/MyImageInput";
 
-function QuizResultsModal({ visible, setVisible, questionsCount, correctAnsersCount = 0, ...props }) {
+function QuizResultsModal({ visible, setVisible, questionsCount, correctAnswersCount = 0, ...props }) {
     
-    const navigate = useNavigate()
-    const rootClases = [classes.myModal];
+    const navigate = useNavigate();
+    const rootClasses = [classes.myModal];
 
     if (visible) {
-        rootClases.push(classes.active);
+        rootClasses.push(classes.active);
     }
 
-    let percent = (correctAnsersCount / questionsCount) * 100;
+    let percent = (correctAnswersCount / questionsCount) * 100;
     const resultPhrase =
         percent >= 90
             ? "Великолепно! Ты уже на вершине. Продолжай вдохновлять и радовать нас своими достижениями!"
@@ -32,17 +30,16 @@ function QuizResultsModal({ visible, setVisible, questionsCount, correctAnsersCo
             : "Ты можешь лучше! Не сдавайся и продолжай двигаться вперед!";
 
     return (
-        <>
-            <div className={rootClases.join(" ")} onClick={() => setVisible(false)}>
-                <div className={classes.content} onClick={(e) => e.stopPropagation()}>
-                    <h2>{resultPhrase}</h2>
-                    <div className={classes.controlButtonsContainer}>
-                        <button onClick={()=> setVisible(false)}>Просмотреть ответы</button>
-                        <button onClick={()=> navigate("/")}>На главную</button>
-                    </div>
+        <div className={rootClasses.join(" ")} onClick={() => setVisible(false)}>
+            <div className={classes.content} onClick={(e) => e.stopPropagation()}>
+                <h2>{`Вы ответили на ${correctAnswersCount} вопросов из ${questionsCount}.`}</h2>
+                <p>{resultPhrase}</p>
+                <div className={classes.controlButtonsContainer}>
+                    <button onClick={() => setVisible(false)}>Просмотреть ответы</button>
+                    <button onClick={() => navigate("/")}>На главную</button>
                 </div>
             </div>
-        </>
+        </div>
     );
 }
 

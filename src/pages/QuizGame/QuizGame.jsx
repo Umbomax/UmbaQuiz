@@ -17,6 +17,7 @@ function QuizGame(props) {
     const [answers, setAnswers] = useState([]);
     const [gameEnd, setGameEnd] = useState(false);
     const [modal, setModal] = useState(false);
+    const [quizStartTime, setQuizStartTime] = useState(null);
 
     useEffect(() => {
         const fetchedQuestions = location.state?.questions || [];
@@ -34,23 +35,27 @@ function QuizGame(props) {
                         wrongAnswers.push(question.answer);
                     }
                 });
-             
+                
                 wrongAnswers = [...new Set(wrongAnswers)].slice(0, 3);
             }
             return [...wrongAnswers, el.answer].sort(() => Math.random() - 0.5);
         });
 
         setAnswers(generatedAnswers);
-
-        // Extract user ID from token and send start time to server
+        
         const token = localStorage.getItem('token');
-        if (token) {
+        const quizID = location.state._id;
+        const quizStartTime = new Date().toISOString();
+        setQuizStartTime(quizStartTime);
+
+        if (token && location.state.isPrivate) {    
             const decoded = jwtDecode(token);
             const userId = decoded.id;
-            const quizStartTime = new Date().toISOString();
-            console.log({ userId, quizStartTime });
-        
-            // axios.post("https://yourserver.com/api/startQuiz", { userId, quizStartTime });
+            console.log({ userId, quizStartTime, quizID });
+            axios.post("https://umbaquizserver-production.up.railway.app/api/startQuiz", { userId, quizStartTime, quizID });
+        } else {
+            console.log({ quizStartTime, quizID });
+            axios.post("https://umbaquizserver-production.up.railway.app/api/startQuiz", { quizStartTime, quizID });
         }
     }, [location.state]);
 
@@ -106,13 +111,26 @@ function QuizGame(props) {
     function endGame(finalAnswersStatus) {
         setGameEnd(true);
         const filteredStatus = finalAnswersStatus.filter(status => status !== null);
-        setCorrectAnswersCount(
-            filteredStatus.reduce((acc, obj) => {
-                return obj.isCorrect ? acc + 1 : acc;
-            }, 0)
-        );
+        const correctCount = filteredStatus.reduce((acc, obj) => {
+            return obj.isCorrect ? acc + 1 : acc;
+        }, 0);
+        setCorrectAnswersCount(correctCount);
         setTimeout(() => setModal(true), 1000);
+
+        // Отправка данных на сервер по окончании викторины
+        const token = localStorage.getItem('token');
+        const quizID = location.state._id;
+        const quizEndTime = new Date().toISOString();
+        const result = correctCount;
+
+        if (token) {
+            const decoded = jwtDecode(token);
+            const userId = decoded.id;
+            console.log({ userId, quizStartTime, quizEndTime, quizID, result });
+            axios.post("https://umbaquizserver-production.up.railway.app/api/endQuiz", { userId, quizStartTime, quizEndTime, quizID, result });
+        }
     }
+
     function checkValidForm() {
         return true;
     }
