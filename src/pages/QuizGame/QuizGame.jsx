@@ -43,17 +43,20 @@ function QuizGame(props) {
         
         const token = localStorage.getItem('token');
         const quizId = location.state._id;
-        const quizStartTime = new Date().toISOString();
+        const quizStartTime = Date.now();
         setQuizStartTime(quizStartTime);
 
-        if (token && location.state.isPrivate) {    
+        if (token) {    
             const decoded = jwtDecode(token);
             const userId = decoded.id;
+            console.log('Data for sending');
             console.log({ userId, quizStartTime, quizId });
             axios.post("https://umbaquizserver-production.up.railway.app/api/startQuiz", { userId, quizStartTime, quizId })
+            // axios.post("http://localhost:3030/api/startQuiz", { userId, quizStartTime, quizId })
                 .catch(error => console.error("Error starting quiz:", error));
         } else {
             console.log({ quizStartTime, quizId });
+            // axios.post("http://localhost:3030/api/startQuiz", { quizStartTime, quizId })
             axios.post("https://umbaquizserver-production.up.railway.app/api/startQuiz", { quizStartTime, quizId })
                 .catch(error => console.error("Error starting quiz:", error));
         }
@@ -120,13 +123,14 @@ function QuizGame(props) {
         // Отправка данных на сервер по окончании викторины
         const token = localStorage.getItem('token');
         const quizId = location.state._id;
-        const quizEndTime = new Date().toISOString();
+        const quizEndTime = Date.now();
         const result = correctCount;
 
         if (token) {
             const decoded = jwtDecode(token);
             const userId = decoded.id;
             console.log({ userId, quizStartTime, quizEndTime, quizId, result });
+            // axios.post("http://localhost:3030/api/endQuiz", { userId, quizStartTime, quizEndTime, quizId, result })
             axios.post("https://umbaquizserver-production.up.railway.app/api/endQuiz", { userId, quizStartTime, quizEndTime, quizId, result })
                 .catch(error => console.error("Error ending quiz:", error));
         }
