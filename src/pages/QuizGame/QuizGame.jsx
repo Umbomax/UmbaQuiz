@@ -129,7 +129,7 @@ function QuizGame(props) {
         if (token) {
             const decoded = jwtDecode(token);
             const userId = decoded.id;
-            console.log({ userId, quizStartTime, quizEndTime, quizId, result });
+            console.log({ userId, quizStartTime, quizEndTime, quizId, result,});
             // axios.post("http://localhost:3030/api/endQuiz", { userId, quizStartTime, quizEndTime, quizId, result })
             axios.post("https://umbaquizserver-production.up.railway.app/api/endQuiz", { userId, quizStartTime, quizEndTime, quizId, result })
                 .catch(error => console.error("Error ending quiz:", error));

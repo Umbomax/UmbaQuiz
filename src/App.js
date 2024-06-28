@@ -12,6 +12,7 @@ import StatusBox from "./Components/StatusBox/StatusBox";
 
 import UserSettings from "./pages/UserSettings/UserSettings";
 import Footer from "./Components/Footer/Footer.jsx";
+import Support from "./pages/Support/Support.jsx";
 
 function App() {
     const [errors, setErrors] = useState([]);
@@ -40,6 +41,7 @@ function App() {
                 <Route path="/createQuiz" element={<CreateQuizPage createError={createError}></CreateQuizPage>}></Route>
                 <Route path="/newQuizDataset" element={<NewQuizDataset createError={createError}></NewQuizDataset>}></Route>
                 <Route path="/quizGame" element={<QuizGame createError={createError}></QuizGame>}></Route>
+                <Route path="/support" element={<Support createError={createError}></Support>}></Route>
             </Routes>
            </div>
             
