@@ -10,7 +10,7 @@ function Registration({ createError, onRegisterSuccess }) {
         repeatedPassword: "",
         email: "",
     });
-
+    const apiUrl = process.env.REACT_APP_API_URL;
     const [errors, setErrors] = useState([]);
 
     useEffect(() => {
@@ -59,7 +59,7 @@ function Registration({ createError, onRegisterSuccess }) {
         let validationPassed = checkValidationErrors();
         if (validationPassed) {
             try {
-                const response = await fetch("https://umbaquizserver-production.up.railway.app/api/registration", {
+                const response = await fetch(`${apiUrl}/registration`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(formData),

@@ -21,7 +21,7 @@ function UserSettings() {
   const [users, setUsers] = useState([]);
   const [currentTab, setCurrentTab] = useState(TABS.SETTINGS);
   const [currentUser, setCurrentUser] = useState(null);
-
+  const apiUrl = process.env.REACT_APP_API_URL;
   const token = localStorage.getItem('token');
   let userRole, userId;
 
@@ -34,10 +34,10 @@ function UserSettings() {
   useEffect(() => {
     async function fetchUsers() {
       try {
-        const response = await axios.get("https://umbaquizserver-production.up.railway.app/api/users");
+        const response = await axios.get(`${apiUrl}/users`);
         setUsers(response.data);
 
-        const currentUserResponse = await axios.post("https://umbaquizserver-production.up.railway.app/api/getUser", { user_id: userId });
+        const currentUserResponse = await axios.post(`${apiUrl}/getUser`, { user_id: userId });
         setCurrentUser(currentUserResponse.data);
       } catch (error) {
         console.error("Ошибка при получении пользователей или данных текущего пользователя:", error);

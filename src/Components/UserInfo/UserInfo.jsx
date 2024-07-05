@@ -11,6 +11,7 @@ function UserInfo({ user, setUser }) {
     newPassword: '',
     confirmPassword: ''
   });
+  const apiUrl = process.env.REACT_APP_API_URL;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -20,14 +21,14 @@ function UserInfo({ user, setUser }) {
   const handleSave = async () => {
     try {
       // Update user details
-      await axios.put(`https://umbaquizserver-production.up.railway.app/api/users/${user._id}`, {
+      await axios.put(`${apiUrl}/users/${user._id}`, {
         username: formData.username,
         email: formData.email
       });
 
       // If passwords are filled, change password
       if (formData.oldPassword && formData.newPassword && formData.newPassword === formData.confirmPassword) {
-        await axios.put(`https://umbaquizserver-production.up.railway.app/api/users/${user._id}/password`, {
+        await axios.put(`${apiUrl}/users/${user._id}/password`, {
           oldPassword: formData.oldPassword,
           newPassword: formData.newPassword
         });

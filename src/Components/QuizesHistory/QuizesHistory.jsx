@@ -6,6 +6,7 @@ import classes from "./QuizesHistory.module.css";
 function QuizesHistory() {
     const [history, setHistory] = useState([]);
     const [filter, setFilter] = useState('all');
+    const apiUrl = process.env.REACT_APP_API_URL;
 
     useEffect(() => {
         const fetchHistory = async () => {
@@ -15,7 +16,7 @@ function QuizesHistory() {
                 const userId = decoded.id;
 
                 try {
-                    const response = await axios.get(`https://umbaquizserver-production.up.railway.app/api/quizHistory/${userId}`, {
+                    const response = await axios.get(`${apiUrl}/quizHistory/${userId}`, {
                         params: { filter }
                     });
                     setHistory(response.data.history);
@@ -46,7 +47,7 @@ function QuizesHistory() {
             <div className={classes.quizesHistory}>
                 {history.map((attempt, index) => (
                     <div key={index} className={classes.quizCard}>
-                        <img src={attempt.quizHeadImage || 'path/to/default/image.jpg'} alt={attempt.quizName} className={classes.quizImage} />
+                        <img src={attempt.quizHeadImage || ''} alt={attempt.quizName} className={classes.quizImage} />
                         <div className={classes.quizDetails}>
                             <h3 className={classes.quizTitle}>{attempt.quizName}</h3>
                             <div className={classes.attemptDetails}>

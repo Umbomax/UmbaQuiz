@@ -11,7 +11,7 @@ function NewQuizDataset({ createError }) {
     const navigate = useNavigate();
     const [currentSlide, setCurrentSlide] = useState(0);
     const [errors, setErrors] = useState([]);
-    
+    const apiUrl = process.env.REACT_APP_API_URL;
     const [quizData, setQuizData] = useState({
         quizName: location.state.quizName,
         quizesCount: location.state.quizesCount || 0,
@@ -142,7 +142,7 @@ function NewQuizDataset({ createError }) {
             console.log(dataToSend);
 
             axios
-                .post("https://umbaquizserver-production.up.railway.app/api/uploadQuiz", JSON.stringify(dataToSend), {
+                .post(`${apiUrl}/uploadQuiz`, JSON.stringify(dataToSend), {
                     headers: {
                         "Content-Type": "application/json",
                     },

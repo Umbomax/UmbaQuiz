@@ -18,6 +18,7 @@ function QuizGame(props) {
     const [gameEnd, setGameEnd] = useState(false);
     const [modal, setModal] = useState(false);
     const [quizStartTime, setQuizStartTime] = useState(null);
+    const apiUrl = process.env.REACT_APP_API_URL;
 
     useEffect(() => {
         const fetchedQuestions = location.state?.questions || [];
@@ -51,13 +52,13 @@ function QuizGame(props) {
             const userId = decoded.id;
             console.log('Data for sending');
             console.log({ userId, quizStartTime, quizId });
-            axios.post("https://umbaquizserver-production.up.railway.app/api/startQuiz", { userId, quizStartTime, quizId })
+            axios.post(`${apiUrl}/startQuiz`, { userId, quizStartTime, quizId })
             // axios.post("http://localhost:3030/api/startQuiz", { userId, quizStartTime, quizId })
                 .catch(error => console.error("Error starting quiz:", error));
         } else {
             console.log({ quizStartTime, quizId });
             // axios.post("http://localhost:3030/api/startQuiz", { quizStartTime, quizId })
-            axios.post("https://umbaquizserver-production.up.railway.app/api/startQuiz", { quizStartTime, quizId })
+            axios.post(`${apiUrl}/startQuiz`, { quizStartTime, quizId })
                 .catch(error => console.error("Error starting quiz:", error));
         }
     }, [location.state]);
@@ -130,8 +131,7 @@ function QuizGame(props) {
             const decoded = jwtDecode(token);
             const userId = decoded.id;
             console.log({ userId, quizStartTime, quizEndTime, quizId, result,});
-            // axios.post("http://localhost:3030/api/endQuiz", { userId, quizStartTime, quizEndTime, quizId, result })
-            axios.post("https://umbaquizserver-production.up.railway.app/api/endQuiz", { userId, quizStartTime, quizEndTime, quizId, result })
+            axios.post(`${apiUrl}/endQuiz`, { userId, quizStartTime, quizEndTime, quizId, result })
                 .catch(error => console.error("Error ending quiz:", error));
         }
     }

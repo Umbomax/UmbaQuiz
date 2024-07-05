@@ -10,6 +10,7 @@ function LoginForm({ createError, onSuccess }) {
     const [errors, setErrors] = useState([]);
     const { logIn } = useContext(AuthContext);
     const navigate = useNavigate();
+    const apiUrl = process.env.REACT_APP_API_URL;
 
     const pushStatus = (text, status) => {
         const generateUniqueId = () => Date.now() + Math.floor(Math.random() * 1000);
@@ -44,7 +45,7 @@ function LoginForm({ createError, onSuccess }) {
         e.preventDefault();
         if (checkValidationErrors()) {
             try {
-                const response = await fetch("https://umbaquizserver-production.up.railway.app/api/login", {
+                const response = await fetch(`${apiUrl}/login`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(formData)

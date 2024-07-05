@@ -18,7 +18,7 @@ function Quizes() {
     const [selectedQuiz, setSelectedQuiz] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [userId, setUserId] = useState(null);
-
+    const apiUrl = process.env.REACT_APP_API_URL;
     useEffect(() => {
         checkUserAuthentication();
         fetchQuizes();
@@ -49,7 +49,7 @@ function Quizes() {
         try {
             const token = localStorage.getItem('token');
             const headers = token ? { Authorization: `Bearer ${token}` } : {};
-            const response = await axios.get("https://umbaquizserver-production.up.railway.app/api/getQuizes", { headers });
+            const response = await axios.get(`${apiUrl}/getQuizes`, { headers });
             setQuizes(response.data);
             setFilteredQuizes(response.data);
             setIsLoading(false);
@@ -86,7 +86,7 @@ function Quizes() {
 
     const handleStartQuiz = async () => {
         try {
-            const response = await axios.get(`https://umbaquizserver-production.up.railway.app/api/getQuiz/${selectedQuiz._id}`);
+            const response = await axios.get(`${apiUrl}/getQuiz/${selectedQuiz._id}`);
             navigate("/quizGame", { state: response.data.quiz });
         } catch (error) {
             console.error("Error starting quiz:", error);

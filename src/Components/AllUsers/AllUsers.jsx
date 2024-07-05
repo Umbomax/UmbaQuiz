@@ -5,6 +5,7 @@ import classes from "./AllUsers.module.css";
 function AllUsers({ users, setUsers }) {
   const [editingUser, setEditingUser] = useState(null);
   const [editedUser, setEditedUser] = useState({});
+  const apiUrl = process.env.REACT_APP_API_URL;
 
   const handleEdit = (user) => {
     setEditingUser(user._id);
@@ -13,7 +14,7 @@ function AllUsers({ users, setUsers }) {
 
   const handleSave = async (userId) => {
     try {
-      await axios.put(`https://umbaquizserver-production.up.railway.app/api/users/${userId}`, editedUser);
+      await axios.put(`${apiUrl}/users/${userId}`, editedUser);
       setUsers(users.map(user => user._id === userId ? editedUser : user));
       setEditingUser(null);
     } catch (error) {
@@ -23,7 +24,7 @@ function AllUsers({ users, setUsers }) {
 
   const handleDelete = async (userId) => {
     try {
-      await axios.delete(`https://umbaquizserver-production.up.railway.app/api/users/${userId}`);
+      await axios.delete(`${apiUrl}/users/${userId}`);
       setUsers(users.filter(user => user._id !== userId));
     } catch (error) {
       console.error("Error deleting user:", error);
