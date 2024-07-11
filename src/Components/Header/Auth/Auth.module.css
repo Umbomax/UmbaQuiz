@@ -1,0 +1,134 @@
+*{
+    box-sizing: border-box;
+}
+
+.myModal {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    display: none;
+    background-color: rgba(148, 138, 138, 0.15);
+}
+.myModal.active{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.myModalContent{
+    position: relative;
+    overflow: hidden;
+    max-width: 390px;
+    background: var(--modal-background);
+    color: var(--modal-text);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0px 15px 20px rgba(0,0,0,0.1);
+  }
+  .myModalContent .titleText{
+    display: flex;
+    width: 200%;
+    transition: all 0.6s cubic-bezier(0.68,-0.55,0.265,1.55);
+    
+  }
+  .myModalContent .title{
+    width: 50%;
+    font-size: 35px;
+    font-weight: 600;
+    text-align: center;
+    transition: all 0.6s cubic-bezier(0.68,-0.55,0.265,1.55);
+  }
+  .myModalContent .slideControls{
+    position: relative;
+    display: flex;
+    height: 50px;
+    width: 100%;
+    overflow: hidden;
+    margin: 30px 0 10px 0;
+    justify-content: space-between;
+    border: 1px solid lightgrey;
+    border-radius: 15px;
+  }
+  .slideControls .slide{
+    height: 100%;
+    width: 100%;   
+    font-size: 18px;
+    font-weight: 500;
+    text-align: center;
+    line-height: 48px;
+    cursor: pointer;
+    z-index: 1;
+    transition: all 0.6s ease;
+  }
+
+  .slideControls .sliderTab{
+    position: absolute;
+    height: 100%;
+    width: 50%;
+    left: 0;
+    z-index: 0;
+    border-radius: 15px;
+    background: var(--button-backgroud-gradient);
+    transition: all 0.6s cubic-bezier(0.68,-0.55,0.265,1.55);
+  }
+  input[type="radio"]{
+    display: none;
+  }
+  .sliderTab.sliderTabChecked{
+    left: 50%;
+  }
+  .slide.textColorBlack{
+    color: var(--header-background);
+    cursor: default;
+    user-select: none;
+  }
+  .slide.textColorWhite{
+    color: var(--header-text);
+    cursor: default;
+    user-select: none;
+  }
+  .formHeader{
+    margin-left: -100%
+  }
+  .formsContainer{
+    display: flex;
+    width: 200%;
+    transition: all 0.6s cubic-bezier(0.68,-0.55,0.265,1.55);
+  }
+  .form{
+    width: 100%;
+    transition: all 0.6s cubic-bezier(0.68,-0.55,0.265,1.55);
+    display: flex;
+    flex-direction: column;
+    
+  }
+  .formsWrapper{
+    width: 100%;
+    overflow: hidden;
+  }
+  .formInput{
+    width: 100%;
+    height: 100%;
+
+    font-size: 17px;
+    outline: none;
+  padding-left: 15px;
+  border-radius: 15px;
+  border: 1px solid lightgrey;
+  }
+  .inputContainer{
+    height: 50px;
+    width: 100%;
+    margin-top: 20px;
+  }
+  .formBtn{
+    width: 100%;
+    height: 50px;
+    margin-top: 20px;
+    background: -webkit-linear-gradient(left,#757575,#626363,#494949
+    , #313131);
+    color: white;
+    font-size: 17px;
+    border-radius: 15px;
+  }

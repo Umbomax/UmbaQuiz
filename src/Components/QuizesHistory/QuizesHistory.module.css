@@ -1,0 +1,49 @@
+.quizesHistoryContainer {
+    padding: 20px;
+}
+
+.filterContainer {
+    margin-bottom: 20px;
+}
+
+.filterContainer label {
+    margin-right: 10px;
+}
+
+.quizesHistory {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.quizCard {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    width: 300px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.quizImage {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+}
+
+.quizDetails {
+    padding: 15px;
+}
+
+.quizTitle {
+    font-size: 1.5em;
+    margin: 0 0 10px;
+}
+
+.attemptDetails {
+    margin-top: 10px;
+}
+
+.attemptDetails p {
+    margin: 5px 0;
+}
