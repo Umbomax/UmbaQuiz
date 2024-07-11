@@ -1,15 +1,13 @@
+import React, { useState, useContext } from "react";
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import Header from "./Components/Header/Header";
-import { useEffect, useState } from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Quizes from "./pages/Quizes/Quizes";
 import CreateQuizPage from "./pages/CreateQuizPage/CreateQuizPage";
-import { AuthProvider } from './context/AuthContext.jsx';
+import { AuthProvider, AuthContext } from './context/AuthContext.jsx';
 import QuizGame from "./pages/QuizGame/QuizGame.jsx";
 import About from "./pages/About/About.jsx";
-
 import NewQuizDataset from "./pages/NewQuizDataset/NewQuizDataset";
 import StatusBox from "./Components/StatusBox/StatusBox";
-
 import UserSettings from "./pages/UserSettings/UserSettings";
 import Footer from "./Components/Footer/Footer.jsx";
 import Support from "./pages/Support/Support.jsx";
@@ -18,8 +16,8 @@ function App() {
     const [errors, setErrors] = useState([]);
 
     const createError = (newError) => {
-        console.log(newError)
-        setErrors([...errors, ...newError]);
+        console.log(newError);
+        setErrors([...errors, newError]);
     };
 
     const removeError = (error) => {
@@ -27,29 +25,37 @@ function App() {
     };
 
     return (
-        <BrowserRouter>
         <AuthProvider>
-            
-            <div className="App">
-                <Header createError={createError}></Header>
-            </div>
-           <div className="mainContentBackground">
-           <Routes>
-                <Route path="/userSettings" element={<UserSettings createError={createError}></UserSettings>}></Route>
-                <Route path="/" element={<Quizes createError={createError}></Quizes>}></Route>
-                <Route path="/about" element={<About createError={createError}></About>}></Route>
-                <Route path="/createQuiz" element={<CreateQuizPage createError={createError}></CreateQuizPage>}></Route>
-                <Route path="/newQuizDataset" element={<NewQuizDataset createError={createError}></NewQuizDataset>}></Route>
-                <Route path="/quizGame" element={<QuizGame createError={createError}></QuizGame>}></Route>
-                <Route path="/support" element={<Support createError={createError}></Support>}></Route>
-            </Routes>
-           </div>
-            
-            <Footer></Footer>
-            <StatusBox errors={errors} removeError={removeError}></StatusBox>
-            </AuthProvider>
-        </BrowserRouter>
+            <BrowserRouter>
+                <div className="App">
+                    <Header createError={createError} />
+                </div>
+                <div className="mainContentBackground">
+                    <Routes>
+                        <Route path="/" element={<Quizes createError={createError} />} />
+                        <Route path="/quizGame" element={<QuizGame createError={createError} />} />
+                        <Route path="/about" element={<PrivateRoute><About createError={createError} /></PrivateRoute>} />
+                        <Route path="/createQuiz" element={<AdminRoute><CreateQuizPage createError={createError} /></AdminRoute>} />
+                        <Route path="/newQuizDataset" element={<AdminRoute><NewQuizDataset createError={createError} /></AdminRoute>} />
+                        <Route path="/support" element={<PrivateRoute><Support createError={createError} /></PrivateRoute>} />
+                        <Route path="/userSettings" element={<PrivateRoute><UserSettings createError={createError} /></PrivateRoute>} />
+                    </Routes>
+                </div>
+                <Footer />
+                <StatusBox errors={errors} removeError={removeError} />
+            </BrowserRouter>
+        </AuthProvider>
     );
 }
+
+const PrivateRoute = ({ children }) => {
+    const { isLoggedIn } = useContext(AuthContext);
+    return isLoggedIn ? children : <Navigate to="/" />;
+};
+
+const AdminRoute = ({ children }) => {
+    const { isLoggedIn, userRole } = useContext(AuthContext);
+    return (isLoggedIn && (userRole === 'admin' || userRole === 'SAdmin')) ? children : <Navigate to="/" />;
+};
 
 export default App;
