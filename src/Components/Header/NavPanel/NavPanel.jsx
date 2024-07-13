@@ -11,7 +11,6 @@ function NavPanel({ isOpen, toggleNav, closeNav }) {
     if (token) {
         const decoded = jwtDecode(token);
         userRole = decoded.roles[0];
-        console.log(userRole);
     }
 
     const handleNavigate = (path) => {

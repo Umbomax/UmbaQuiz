@@ -1,34 +1,36 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import axios from 'axios';
-import {jwtDecode} from 'jwt-decode';
-import ModalStartQuiz from '../../Components/ModalStartQuiz/ModalStartQuiz';
-import SearchQuizInput from './SearchQuizInput/SearchQuizInput';
-import classes from './Quizes.module.css';
-import { AuthContext } from '../../context/AuthContext';
+import React, { useState, useEffect, useContext } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import axios from "axios";
+import { jwtDecode } from "jwt-decode";
+import ModalStartQuiz from "../../Components/ModalStartQuiz/ModalStartQuiz";
+import SearchQuizInput from "./SearchQuizInput/SearchQuizInput";
+import classes from "./Quizes.module.css";
+import { AuthContext } from "../../context/AuthContext";
+import { FaPlay } from "react-icons/fa";
 
 function Quizes() {
     const navigate = useNavigate();
     const location = useLocation();
     const { isLoggedIn } = useContext(AuthContext);
     const [quizes, setQuizes] = useState([]);
-    const [searchTerm, setSearchTerm] = useState('');
+    const [searchTerm, setSearchTerm] = useState("");
     const [filteredQuizes, setFilteredQuizes] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [selectedQuiz, setSelectedQuiz] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [userId, setUserId] = useState(null);
     const apiUrl = process.env.REACT_APP_API_URL;
+
     useEffect(() => {
         checkUserAuthentication();
         fetchQuizes();
-    }, [isLoggedIn]); 
+    }, [isLoggedIn]);
 
     useEffect(() => {
         const queryParams = new URLSearchParams(location.search);
-        const quizId = queryParams.get('quizId');
+        const quizId = queryParams.get("quizId");
         if (quizId && quizes) {
-            const quiz = quizes.find(quiz => quiz._id === quizId);
+            const quiz = quizes.find((quiz) => quiz._id === quizId);
             if (quiz) {
                 setSelectedQuiz(quiz);
                 setIsModalOpen(true);
@@ -36,9 +38,8 @@ function Quizes() {
         }
     }, [location, quizes]);
 
-
     const checkUserAuthentication = () => {
-        const token = localStorage.getItem('token');
+        const token = localStorage.getItem("token");
         if (token) {
             const decoded = jwtDecode(token);
             setUserId(decoded.id);
@@ -47,7 +48,7 @@ function Quizes() {
 
     const fetchQuizes = async () => {
         try {
-            const token = localStorage.getItem('token');
+            const token = localStorage.getItem("token");
             const headers = token ? { Authorization: `Bearer ${token}` } : {};
             const response = await axios.get(`${apiUrl}/getQuizes`, { headers });
             setQuizes(response.data);
@@ -63,9 +64,7 @@ function Quizes() {
         const term = event.target.value;
         setSearchTerm(term);
         if (term) {
-            const filtered = quizes.filter((quiz) =>
-                quiz.quizName.toLowerCase().includes(term.toLowerCase())
-            );
+            const filtered = quizes.filter((quiz) => quiz.quizName.toLowerCase().includes(term.toLowerCase()));
             setFilteredQuizes(filtered);
         } else {
             setFilteredQuizes(quizes);
@@ -94,42 +93,39 @@ function Quizes() {
     };
 
     return (
-        <div >
-            <div className={classes.root}>
-                <SearchQuizInput value={searchTerm} onChange={handleSearch} />
-                <section className={classes.cardsContainer}>
-                    {isLoading ? (
-                        Array.from({ length: 3 }).map((_, idx) => (
-                            <div key={idx} className={`${classes.quizCard} ${classes.skeletonCard}`}></div>
-                        ))
-                    ) : (
-                        filteredQuizes.length > 0 ? (
-                            filteredQuizes.map((quiz, idx) => (
-                                <div
-                                    key={idx}
-                                    className={classes.quizCard}
-                                    onClick={() => openQuizModal(quiz)}
-                                >
-                                    <h2>{quiz.quizName}</h2>
-                                    <img src={quiz.quizHeadImage} className={classes.quizHeadImg} alt={quiz.quizName} />
+        <div className={classes.root}>
+            <SearchQuizInput value={searchTerm} onChange={handleSearch} />
+            <section className={classes.cardsContainer}>
+                {isLoading ? (
+                    Array.from({ length: 3 }).map((_, idx) => <div key={idx} className={`${classes.quizCard} ${classes.skeletonCard}`}></div>)
+                ) : filteredQuizes.length > 0 ? (
+                    filteredQuizes.map((quiz, idx) => (
+                        <div key={idx} className={classes.quizCard} onClick={() => openQuizModal(quiz)}>
+                            <h2>{quiz.quizName}</h2>
+                            <div className={classes.imageContainer}>
+                                <div className={classes.blurredBackground} style={{ backgroundImage: `url(${quiz.quizHeadImage})` }}></div>
+                                <img src={quiz.quizHeadImage} className={classes.quizHeadImg} alt={quiz.quizName} />
+                            </div>
+                            <div className={classes.countContainer}>
+                                <div>
+                                    <FaPlay /> <span>{quiz.countOfStarts}</span>
                                 </div>
-                            ))
-                        ) : (
-                            <div className={classes.notFound}>No quizzes found.</div>
-                        )
-                    )}
-                   
-                </section>
-                {isModalOpen && (
-                    <ModalStartQuiz onClose={closeQuizModal}>
-                        <h2>{selectedQuiz.quizName}</h2>
-                        <p>{selectedQuiz.quizDescription}</p>
-                        {/* eslint-disable-next-line jsx-a11y/alt-text */}
-                        <img className={classes.quizHeadImg} src={selectedQuiz.quizHeadImage}></img>
-                        <button onClick={handleStartQuiz}>Начать</button>
-                    </ModalStartQuiz>
+                                <span>Ваши попытки: {quiz.userAttemptsCount || 0}</span>
+                            </div>
+                        </div>
+                    ))
+                ) : (
+                    <div className={classes.notFound}>No quizzes found.</div>
                 )}
-            </div>
+            </section>
+            {isModalOpen && (
+                <ModalStartQuiz onClose={closeQuizModal}>
+                    <h2>{selectedQuiz.quizName}</h2>
+                    <p>{selectedQuiz.quizDescription}</p>
+                    <img className={classes.quizHeadImg} src={selectedQuiz.quizHeadImage} alt={selectedQuiz.quizName} />
+                    <button onClick={handleStartQuiz}>Начать</button>
+                </ModalStartQuiz>
+            )}
         </div>
     );
 }

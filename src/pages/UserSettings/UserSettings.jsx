@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
 import ThemeSelection from '../../Components/ThemeSelection/ThemeSelection';
-import MyQuizzes from '../../Components/MyQuizzes/MyQuizzes'; 
-import QuizesHistory from '../../Components/QuizesHistory/QuizesHistory'; 
+import MyQuizzes from '../../Components/MyQuizzes/MyQuizzes';
+import QuizesHistory from '../../Components/QuizesHistory/QuizesHistory';
 import AllUsers from '../../Components/AllUsers/AllUsers';
-import UserInfo from '../../Components/UserInfo/UserInfo'; 
-import { loadThemeFromLocalStorage, applyTheme } from '../../Scripts/themeChanger';
-import { modern, pastel, dark, bright, calm } from '../../assets/themes';
+import UserInfo from '../../Components/UserInfo/UserInfo';
 import classes from "./UserSettings.module.css";
 import {jwtDecode} from 'jwt-decode';
 
@@ -45,30 +43,7 @@ function UserSettings() {
     }
 
     fetchUsers();
-
-    const savedTheme = loadThemeFromLocalStorage();
-    if (savedTheme) {
-      switch (savedTheme) {
-        case 'modern':
-          applyTheme(modern);
-          break;
-        case 'pastel':
-          applyTheme(pastel);
-          break;
-        case 'dark':
-          applyTheme(dark);
-          break;
-        case 'bright':
-          applyTheme(bright);
-          break;
-        case 'calm':
-          applyTheme(calm);
-          break;
-        default:
-          applyTheme(modern);
-      }
-    }
-  }, [userId]);
+  }, [userId, apiUrl]);
 
   const renderTabContent = () => {
     switch (currentTab) {

@@ -1,6 +1,8 @@
 /* Quizes.module.css */
 .root {
-    padding-top: 10px;
+    padding-top: 20px;
+    background-color: var(--main-background);
+    min-height: 100vh;
 }
 
 .cardsContainer {       
@@ -8,68 +10,133 @@
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 30px;
     justify-items: center;
-    padding: 0 10px; /* Добавим отступы слева и справа */
+    padding: 0 10px;
 }
 
 .createQuiz {
-    border: 1px solid #91c7b1;
+    border: 2px dashed #91c7b1;
     width: 300px;
     height: 300px;
     margin: 10px;
     background-color: var(--card-background, #ecf0f1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 15px;
 }
 
 .createQuiz:after {
-    margin-left: 50px;    
     content: "+";
-    font-size: 300px;
-    line-height: 300px;
-    text-align: center;
+    font-size: 120px;
     color: var(--card-header, #3498db);
+    text-align: center;
 }
 
 .notFound {
-    font-size: 43px;
+    font-size: 24px;
     text-align: center;
     margin: auto;
+    color: var(--card-text);
 }
 
 .quizCard {
     width: 100%;
+    min-height: 400px;
     height: auto;
     font-size: 19px;
     text-align: center;
     background-color: var(--card-background, #ffffff);
-    border: 4px solid var(--card-border, #dcdcdc);
+    border: 1px solid var(--card-border, #dcdcdc);
     color: var(--card-text, #2c3e50);
     border-radius: 15px;
-    margin: 0 auto; /* Центрируем карточки */
-}
-
-.quizCard > h2 {
-    margin: 5px;
+    margin: 0 auto;
+    position: relative;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .quizCard:hover {
-    transform: scale(1.03);
-    transition: all 0.2s ease;
-    -webkit-box-shadow: -2px -45px 63px -55px rgba(0, 0, 0, 0.38) inset;
-    -moz-box-shadow: -2px -45px 63px -55px rgba(0, 0, 0, 0.38) inset;
-    box-shadow: -2px -45px 63px -55px rgba(0, 0, 0, 0.38) inset;
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.quizCard > h2 {
+    margin: 10px 0;
+    font-size: 22px;
+    color:  var(--card-text, #2c3e50);
+    font-weight: 600;
 }
 
 .quizHeadImg {
     display: block;
     margin: auto;
     width: 94%;
-    height: 70%;
-    object-fit: cover;
+    height: 320px;
+    object-fit: contain;
+    border-bottom: 1px solid #dcdcdc;
+    border-radius: 15px 15px 0 0;
+}
+
+.countContainer {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    align-items: center;
+    font-size: 16px;
+}
+
+.countContainer svg {
+    margin-right: 5px;
+}
+
+.attemptsCount {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 5px 10px;
+    border-radius: 10px;
+    font-size: 16px;
 }
 
 .skeletonCard {
     background-color: #e0e0e0;
     animation: skeleton-loading 1s infinite linear;
+    border-radius: 15px;
 }
+
+.imageContainer {
+    position: relative;
+    width: 100%;
+    height: 320px;
+    border-bottom: 1px solid #dcdcdc;
+    border-radius: 15px 15px 0 0;
+    overflow: hidden;
+}
+
+.blurredBackground {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    filter: blur(20px);
+    transform: scale(1.1); /* увеличивает изображение, чтобы избежать видимых краев */
+    z-index: 1;
+}
+
+.quizHeadImg {
+    position: relative;
+    display: block;
+    margin: auto;
+    width: 94%;
+    height: 100%;
+    object-fit: contain;
+    z-index: 2;
+}
+
 
 @keyframes skeleton-loading {
     0% {
@@ -96,28 +163,24 @@
     }
 
     .createQuiz:after {
-        font-size: 200px;
-        line-height: 250px;
+        font-size: 100px;
     }
 }
-
-
 
 @media (max-width: 640px) {
     .cardsContainer {
         grid-template-columns: 1fr;
         grid-gap: 10px;
-        padding: 0 15px; /* Увеличим отступы для узких экранов */
+        padding: 0 15px;
     }
 
     .quizCard, .createQuiz {
         width: 100%;
-        max-width: 320px; /* Ограничим максимальную ширину */
+        max-width: 320px;
         height: 280px;
     }
 
     .createQuiz:after {
-        font-size: 120px;
-        line-height: 180px;
+        font-size: 80px;
     }
 }

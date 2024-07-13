@@ -4,6 +4,8 @@ import classes from "./LoginForm.module.css";
 import MyInput from "../../../UI/MyInput/MyInput";
 import { isFill } from "../../../../Scripts/validation";
 import { AuthContext } from '../../../../context/AuthContext';
+import { applyTheme } from '../../../../Scripts/themeChanger';
+import { modern, pastel, dark, bright, calm, yellowBlack } from '../../../../assets/themes';
 
 function LoginForm({ createError, onSuccess }) {
     const [formData, setFormData] = useState({ username: "", password: "" });
@@ -59,6 +61,30 @@ function LoginForm({ createError, onSuccess }) {
                 localStorage.setItem('roles', JSON.stringify(data.roles));
                 createError([{ id: Date.now(), errorText: "Успешный вход", status: "ok" }])
                 logIn(data.username);
+                const savedTheme = data.theme || 'modern';
+                switch (savedTheme) {
+                    case 'modern':
+                        applyTheme(modern);
+                        break;
+                    case 'pastel':
+                        applyTheme(pastel);
+                        break;
+                    case 'dark':
+                        applyTheme(dark);
+                        break;
+                    case 'bright':
+                        applyTheme(bright);
+                        break;
+                    case 'calm':
+                        applyTheme(calm);
+                        break;
+                    case 'yellowBlack':
+                        applyTheme(yellowBlack);
+                        break;
+                    default:
+                        applyTheme(modern);
+                }
+
                 if (onSuccess) {
                     onSuccess(data.username);
                 }

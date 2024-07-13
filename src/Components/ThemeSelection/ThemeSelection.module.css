@@ -53,7 +53,7 @@
   .calmTheme {
     background: linear-gradient(to right, #3b3b3b, #e8e8e8, #ffffff);
   }
-  .yellowBlack{
+  .yellowBlackTheme{
     background: linear-gradient(to right, #ffeb3b, #000000, #ffffff);
   }
   @media (max-width: 768px) {

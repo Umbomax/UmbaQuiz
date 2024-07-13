@@ -3,6 +3,7 @@
 }
 
 .myModal {
+  z-index: 3;
     position: fixed;
     top: 0;
     bottom: 0;

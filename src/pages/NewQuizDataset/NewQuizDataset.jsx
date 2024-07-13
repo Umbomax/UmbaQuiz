@@ -139,7 +139,7 @@ function NewQuizDataset({ createError }) {
 
         if (invalidForms.length === 0) {
             const dataToSend = { ...quizData, questions: quizQuestions };
-            console.log(dataToSend);
+     
 
             axios
                 .post(`${apiUrl}/uploadQuiz`, JSON.stringify(dataToSend), {

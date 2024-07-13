@@ -55,7 +55,7 @@ const PrivateRoute = ({ children }) => {
 
 const AdminRoute = ({ children }) => {
     const { isLoggedIn, userRole } = useContext(AuthContext);
-    return (isLoggedIn && (userRole === 'admin' || userRole === 'SAdmin')) ? children : <Navigate to="/" />;
+    return (isLoggedIn && (userRole === 'ADMIN' || userRole === 'SUPERADMIN')) ? children : <Navigate to="/" />;
 };
 
 export default App;

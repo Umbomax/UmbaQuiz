@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './style/index.css';
 import App from './App';
 import { applyTheme, loadThemeFromLocalStorage } from './Scripts/themeChanger';
-import { modern, pastel, dark, bright, calm } from './assets/themes';
+import  { modern, pastel, dark, bright, calm, yellowBlack } from './assets/themes';
 
 const savedTheme = loadThemeFromLocalStorage();
 if (savedTheme) {
@@ -23,11 +23,14 @@ if (savedTheme) {
     case 'calm':
       applyTheme(calm);
       break;
+    case 'yellowBlack':
+      applyTheme(yellowBlack);
+      break;
     default:
       applyTheme(modern);
   }
 } else {
-  applyTheme(modern); // Default theme
+  applyTheme(modern); 
 }
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
