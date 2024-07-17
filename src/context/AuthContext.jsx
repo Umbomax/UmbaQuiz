@@ -14,13 +14,11 @@ export const AuthProvider = ({ children }) => {
     useEffect(() => {
         const token = localStorage.getItem('token');
         const storedUsername = localStorage.getItem('username');
-        const selectedTheme = localStorage.getItem('selectedTheme');
     
 
         if (token && storedUsername && !isTokenExpired(token)) {
             const decoded = jwtDecode(token);
-            setIsLoggedIn(true);
-            applyTheme(selectedTheme); 
+            setIsLoggedIn(true); 
             setUsername(storedUsername);
             setUserRole(decoded.roles[0]); // Assuming roles is an array
         } else {
