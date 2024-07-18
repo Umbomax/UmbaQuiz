@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import classes from "./CreateQuizPage.module.css";
 import ModalCreateQuiz from "../../Components/ModalCreateQuiz/ModalCreateQuiz";
 import VideoSection from "../../Components/VideoSection/VideoSection";
@@ -8,22 +8,6 @@ function CreateQuizPage({ createError }) {
     const [title, setTitle] = useState("");
     const [quizType, setQuizType] = useState("");
     const [hoveredCard, setHoveredCard] = useState(null);
-
-    useEffect(() => {
-        const savedModalState = localStorage.getItem('modalState');
-        const savedQuizType = localStorage.getItem('quizType');
-        if (savedModalState) {
-            setModal(JSON.parse(savedModalState));
-        }
-        if (savedQuizType) {
-            setQuizType(savedQuizType);
-        }
-    }, []);
-
-    useEffect(() => {
-        localStorage.setItem('modalState', JSON.stringify(modal));
-        localStorage.setItem('quizType', quizType);
-    }, [modal, quizType]);
 
     return (
         <div className={classes.chooseType}>
@@ -90,7 +74,6 @@ function CreateQuizPage({ createError }) {
                 <p className={classes.description}>
                     Создайте вопрос с одним правильным текстовым ответом. Остальные ответы будут взяты из других вопросов.
                 </p>
-                
                 {hoveredCard === "1q1textanswer" && <VideoSection videoId="85pqFHx0FiU" />}
                 <button>Начать</button>
             </div>
