@@ -111,5 +111,42 @@ const yellowBlack = {
   '--popup-background': '#1c1c1c',
   '--popup-text': '#ffc107',
 };
+const highContrast = {
+  '--header-background': '#ff004c',
+  '--header-text': '#090b3f',
+  '--main-background': '#090b3f',
+  '--main-text': '#ff004c',
+  '--card-background': '#ff004c',
+  '--card-border': '#090b3f',
+  '--card-text': '#090b3f',
+  '--card-header': '#ff004c',
+  '--button-background': '#ff004c',
+  '--button-text': '#090b3f',
+  '--button-hover-background': '#e60043',
+  '--button-backgroud-gradient': 'linear-gradient(to left, #ff004c, #e60043, #cc003a, #b30031, #990027)',
+  '--modal-background': '#ff004c',
+  '--modal-text': '#090b3f',
+  '--popup-background': '#090b3f',
+  '--popup-text': '#ff004c',
+};
 
-export { modern, pastel, dark, bright, calm, yellowBlack };
+const gradient = {
+  '--header-background': 'linear-gradient(to right, #ff7e5f, #feb47b)',
+  '--header-text': '#ffffff',
+  '--main-background': 'linear-gradient(to right, #4facfe, #00f2fe)',
+  '--main-text': '#ffffff',
+  '--card-background': 'linear-gradient(to right, #43e97b, #38f9d7)',
+  '--card-border': '#ffffff',
+  '--card-text': '#ffffff',
+  '--card-header': 'linear-gradient(to right, #fa709a, #fee140)',
+  '--button-background': 'linear-gradient(to right, #ff7e5f, #feb47b)',
+  '--button-text': '#ffffff',
+  '--button-hover-background': 'linear-gradient(to right, #ff6a50, #fdab67)',
+  '--button-backgroud-gradient': 'linear-gradient(to left, #ff7e5f, #feb47b, #ff6a50, #fdab67, #fdbb87)',
+  '--modal-background': 'linear-gradient(to right, #4facfe, #00f2fe)',
+  '--modal-text': '#ffffff',
+  '--popup-background': 'linear-gradient(to right, #43e97b, #38f9d7)',
+  '--popup-text': '#ffffff',
+};
+
+export { modern, pastel, dark, bright, calm, yellowBlack, highContrast, gradient };

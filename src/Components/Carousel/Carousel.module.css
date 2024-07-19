@@ -11,7 +11,7 @@
 .carouselItem {
     width: 45px;
     height: 20px;
-    background-color: var(--card-background);
+    background: var(--card-background);
     border: 1px solid var(--card-border);
     display: flex;
     justify-content: center;
@@ -20,11 +20,11 @@
 }
 
 .carouselItem.green {
-    background-color: green;
+    background: green;
 }
 
 .carouselItem.red {
-    background-color: red;
+    background: red;
 }
 
 .activeCarousel {
@@ -32,7 +32,7 @@
     position: absolute;
     width: 55px;
     height: 30px;
-    background-color: var(--card-header);
+    background: var(--card-header);
     transition: transform 0.35s ease;
     opacity: .4;
 }

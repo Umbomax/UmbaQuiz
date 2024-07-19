@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './style/index.css';
 import App from './App';
 import { applyTheme, loadThemeFromLocalStorage } from './Scripts/themeChanger';
-import  { modern, pastel, dark, bright, calm, yellowBlack } from './assets/themes';
+import  { modern, pastel, dark, bright, calm, yellowBlack, highContrast, gradient } from './assets/themes';
 
 const savedTheme = loadThemeFromLocalStorage();
 if (savedTheme) {
@@ -25,6 +25,12 @@ if (savedTheme) {
       break;
     case 'yellowBlack':
       applyTheme(yellowBlack);
+      break;
+    case 'highContrast':
+      applyTheme(highContrast);
+      break;
+    case 'gradient':
+      applyTheme(gradient);
       break;
     default:
       applyTheme(modern);

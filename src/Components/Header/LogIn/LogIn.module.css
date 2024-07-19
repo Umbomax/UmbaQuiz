@@ -33,7 +33,7 @@
 }
 
 .loginButton {
-    background-color: var(--card-background);
+    background: var(--card-background);
     color: var(--card-text);
     border: none;
     padding: 10px 20px;

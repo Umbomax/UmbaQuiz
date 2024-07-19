@@ -21,14 +21,14 @@
 }
 /* TODO вывести 5 вариантов цветовых схем по переменным и добавить возможность выбрать цветовую тему */
 body{
-    background-color: var(--header-background, #2c3e50);
+    background: var(--header-background, #2c3e50);
     
     margin: auto;
 }
 
 .mainContentBackground{
     padding: 10px;
-    background-color: var(--main-background, #227388);
+    background: var(--main-background, #227388);
     min-height: 83vh;
 }
 .my-image-input__Wrapper{
@@ -36,9 +36,9 @@ body{
     min-height: 300px;
 }
 button{
-    background-color: var(--button-background);
+    background: var(--button-background);
     color: var(--button-text);
 }
 button:hover{
-    background-color: var(--button-hover-background);
+    background: var(--button-hover-background);
   }

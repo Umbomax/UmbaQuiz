@@ -8,7 +8,7 @@
 .burgerLine {
     width: 25px;
     height: 3px;
-    background-color: var(--header-text, #ecf0f1);
+    background: var(--header-text, #ecf0f1);
     border-radius: 3px;
 }
 

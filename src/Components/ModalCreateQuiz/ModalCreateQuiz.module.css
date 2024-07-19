@@ -25,7 +25,7 @@
     z-index: 10001;
     width: 90%;
     max-width: 720px;
-    background-color: var(--card-background);
+    background: var(--card-background);
     display: flex;
     flex-direction: column;
     gap: 20px;

@@ -1,6 +1,6 @@
 /* Footer.module.css */
 .footer {
-  background-color: var(--header-background);
+  background: var(--header-background);
   color: var(--header-text, #ecf0f1);
   padding: 10px 0;
   text-align: center;

@@ -5,7 +5,7 @@ import MyInput from "../../../UI/MyInput/MyInput";
 import { isFill } from "../../../../Scripts/validation";
 import { AuthContext } from '../../../../context/AuthContext';
 import { applyTheme } from '../../../../Scripts/themeChanger';
-import { modern, pastel, dark, bright, calm, yellowBlack } from '../../../../assets/themes';
+import { modern, pastel, dark, bright, calm, yellowBlack, highContrast, gradient} from '../../../../assets/themes';
 
 function LoginForm({ createError, onSuccess }) {
     const [formData, setFormData] = useState({ username: "", password: "" });
@@ -80,6 +80,12 @@ function LoginForm({ createError, onSuccess }) {
                         break;
                     case 'yellowBlack':
                         applyTheme(yellowBlack);
+                        break;
+                    case 'highContrast':
+                        applyTheme(highContrast);
+                        break;
+                    case 'gradient':
+                        applyTheme(gradient );
                         break;
                     default:
                         applyTheme(modern);

@@ -1,6 +1,6 @@
 import React from "react";
 import classes from "./ThemeSelection.module.css";
-import { modern, pastel, dark, bright, calm, yellowBlack } from '../../assets/themes';
+import { modern, pastel, dark, bright, calm, yellowBlack, highContrast, gradient } from '../../assets/themes';
 import { applyTheme, saveThemeToLocalStorage } from '../../Scripts/themeChanger';
 import axios from 'axios';
 import {jwtDecode} from 'jwt-decode';
@@ -54,6 +54,14 @@ function ThemeSelection() {
         <div className={classes.theme} onClick={() => handleThemeChange(yellowBlack, 'yellowBlack')}>
           <h4>Желто-черная</h4>
           <div className={`${classes.themeImage} ${classes.yellowBlackTheme}`}></div>
+        </div>
+        <div className={classes.theme} onClick={() => handleThemeChange(highContrast, 'highContrast')}>
+          <h4>Высококонтрастная</h4>
+          <div className={`${classes.themeImage} ${classes.highContrastTheme}`}></div>
+        </div>
+        <div className={classes.theme} onClick={() => handleThemeChange(gradient , 'gradient')}>
+          <h4>Градиентная</h4>
+          <div className={`${classes.themeImage} ${classes.gradientTheme}`}></div>
         </div>
       </div>
     </div>
