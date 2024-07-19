@@ -3,7 +3,7 @@ import Resizer from 'react-image-file-resizer';
 import { FaPencilAlt, FaTrashAlt } from 'react-icons/fa';
 import classes from './MyImageInput.module.css';
 
-function MyImageInput({ setHeadImage, questionIndex, answerIndex, handleImageRemoval }) {
+function MyImageInput({ setHeadImage, questionIndex, answerIndex, handleImageRemoval,}) {
   const [drag, setDrag] = useState(false);
   const [imageSrc, setImageSrc] = useState(null);
   const [imageLink, setImageLink] = useState("");

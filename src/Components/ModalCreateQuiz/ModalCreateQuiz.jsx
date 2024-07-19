@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {jwtDecode} from "jwt-decode"; // Убедитесь, что импортируете jwtDecode корректно
+import {jwtDecode} from "jwt-decode";
 import MyImageInput from "../UI/MyImageInput/MyImageInput";
 import classes from "./ModalCreateQuiz.module.css";
 
-function ModalCreateQuiz({ visible, setVisible, quizType, createError, title }) {
+function ModalCreateQuiz({ visible, setVisible, quizType, createError, title, initialData = {}, isEditing = false, onSubmit }) {
     const navigate = useNavigate();
     const [userId, setUserId] = useState(null);
     const [errors, setErrors] = useState([]);
@@ -37,6 +37,24 @@ function ModalCreateQuiz({ visible, setVisible, quizType, createError, title }) 
         }));
     }, [quizType]);
 
+    useEffect(() => {
+        if (Object.keys(initialData).length) {
+            setQuizSettings({
+                quizName: initialData.quizName || "",
+                quizesCount: initialData.quizesCount || "",
+                type: initialData.type || quizType,
+                quizHeadImage: initialData.quizHeadImage || "",
+                isPrivate: initialData.isPrivate || false,
+                description: initialData.description || "",
+                isTimed: initialData.isTimed || false,
+                quizTime: initialData.quizTime || "0",
+                forRegisteredUsers: initialData.forRegisteredUsers || false,
+                isLimitedAttempts: initialData.isLimitedAttempts || false,
+                attemptsCount: initialData.attemptsCount || ""
+            });
+        }
+    }, [initialData]);
+
     const rootClasses = [classes.myModal];
     if (visible) {
         rootClasses.push(classes.active);
@@ -46,7 +64,7 @@ function ModalCreateQuiz({ visible, setVisible, quizType, createError, title }) 
         setQuizSettings({ ...quizSettings, quizHeadImage: base64string });
     }
 
-    function handleImageRemoval(questionIndex, answerIndex = null) {
+    function handleImageRemoval() {
         setQuizSettings({ ...quizSettings, quizHeadImage: "" });
     }
 
@@ -99,13 +117,23 @@ function ModalCreateQuiz({ visible, setVisible, quizType, createError, title }) 
         }
     }, [errors, createError]);
 
-    const handleSubmit = (e) => {
+    const handleCreate = (e) => {
         e.preventDefault();
         if (checkValidationErrors()) {
             const quizData = { ...quizSettings, userId };
             navigate("/newQuizDataset", { state: quizData });
         }
     };
+
+    const handleUpdate = (e) => {
+        e.preventDefault();
+        if (checkValidationErrors()) {
+            const quizData = { ...quizSettings, userId };
+            onSubmit(quizData); // Вызываем функцию onSubmit, переданную через пропсы
+        }
+    };
+
+    const handleSubmit = isEditing ? handleUpdate : handleCreate;
 
     return (
         <div className={rootClasses.join(" ")} onClick={() => setVisible(false)}>
@@ -213,17 +241,17 @@ function ModalCreateQuiz({ visible, setVisible, quizType, createError, title }) 
                     <h3>Выберите изображение для отображения в списке викторин</h3>
                     <div className="my-image-input__Wrapper">
                         <MyImageInput
-                        className={classes.imageWrapper}
-                        setHeadImage={setHeadImage}
-                        handleImageRemoval={handleImageRemoval}
-                    /></div>
-                    
+                            className={classes.imageWrapper}
+                            setHeadImage={setHeadImage}
+                            handleImageRemoval={handleImageRemoval}
+                        />
+                    </div>
                 </div>
                 <button
                     className={classes.submitBtn}
                     onClick={handleSubmit}
                 >
-                    Создать шаблон
+                    {isEditing ? "Сохранить изменения" : "Создать шаблон"}
                 </button>
             </div>
         </div>

@@ -36,7 +36,7 @@ function App() {
                         <Route path="/quizGame" element={<QuizGame createError={createError} />} />
                         <Route path="/about" element={<PrivateRoute><About createError={createError} /></PrivateRoute>} />
                         <Route path="/createQuiz" element={<CreateQuizPage createError={createError} />} />
-                        <Route path="/newQuizDataset" element={<AdminRoute><NewQuizDataset createError={createError} /></AdminRoute>} />
+                        <Route path="/newQuizDataset" element={<PrivateRoute><NewQuizDataset createError={createError} /></PrivateRoute>} />
                         <Route path="/support" element={<PrivateRoute><Support createError={createError} /></PrivateRoute>} />
                         <Route path="/userSettings" element={<PrivateRoute><UserSettings createError={createError} /></PrivateRoute>} />
                     </Routes>
