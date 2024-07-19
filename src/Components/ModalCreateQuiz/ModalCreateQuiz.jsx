@@ -244,6 +244,7 @@ function ModalCreateQuiz({ visible, setVisible, quizType, createError, title, in
                             className={classes.imageWrapper}
                             setHeadImage={setHeadImage}
                             handleImageRemoval={handleImageRemoval}
+                            initialImage={isEditing ? quizSettings.quizHeadImage : ""}
                         />
                     </div>
                 </div>

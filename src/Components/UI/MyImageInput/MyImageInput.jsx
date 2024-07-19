@@ -1,13 +1,17 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Resizer from 'react-image-file-resizer';
 import { FaPencilAlt, FaTrashAlt } from 'react-icons/fa';
 import classes from './MyImageInput.module.css';
 
-function MyImageInput({ setHeadImage, questionIndex, answerIndex, handleImageRemoval,}) {
+function MyImageInput({ setHeadImage, questionIndex, answerIndex, handleImageRemoval, initialImage }) {
   const [drag, setDrag] = useState(false);
-  const [imageSrc, setImageSrc] = useState(null);
+  const [imageSrc, setImageSrc] = useState(initialImage || null);
   const [imageLink, setImageLink] = useState("");
   const fileInputRef = useRef(null);
+
+  useEffect(() => {
+    setImageSrc(initialImage);
+  }, [initialImage]);
 
   function dragStartHandler(e) {
     e.preventDefault();
@@ -63,7 +67,7 @@ function MyImageInput({ setHeadImage, questionIndex, answerIndex, handleImageRem
   }
 
   function handleImageClick(e) {
-    e.stopPropagation()
+    e.stopPropagation();
     fileInputRef.current.click();
   }
 

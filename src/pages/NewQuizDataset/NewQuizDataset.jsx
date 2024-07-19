@@ -95,15 +95,18 @@ function NewQuizDataset({ createError }) {
             wrongAnswers: updatedWrongAnswers,
         });
     };
-
-    const handleImageRemoval = (questionIndex, answerIndex = null) => {
-        if (answerIndex === null) {
-            updateQuizData(questionIndex, { ...quizQuestions[questionIndex], questionImage: "" });
+    const handleImageRemoval = (questionIndex, answerIndex) => {
+        const updatedQuizQuestions = [...quizQuestions];
+        if (answerIndex === undefined) {
+            updatedQuizQuestions[questionIndex].questionImage = "";
         } else {
-            const updatedWrongAnswers = [...quizQuestions[questionIndex].wrongAnswers];
-            updatedWrongAnswers[answerIndex] = "";
-            updateQuizData(questionIndex, { ...quizQuestions[questionIndex], wrongAnswers: updatedWrongAnswers });
+            if (answerIndex === -1) {
+                updatedQuizQuestions[questionIndex].answer = "";
+            } else {
+                updatedQuizQuestions[questionIndex].wrongAnswers[answerIndex] = "";
+            }
         }
+        setQuizQuestions(updatedQuizQuestions);
     };
 
     const [inlineStyle, setInlineStyle] = useState({
@@ -200,8 +203,24 @@ function NewQuizDataset({ createError }) {
         setQuizQuestions(updatedQuizQuestions);
     };
 
+    const setHeadImage = (imageUri, questionIndex, answerIndex) => {
+        const updatedQuizQuestions = [...quizQuestions];
+        if (answerIndex === undefined) {
+            updatedQuizQuestions[questionIndex].questionImage = imageUri;
+        } else {
+            if (answerIndex === -1) {
+                updatedQuizQuestions[questionIndex].answer = imageUri;
+            } else {
+                updatedQuizQuestions[questionIndex].wrongAnswers[answerIndex] = imageUri;
+            }
+        }
+        setQuizQuestions(updatedQuizQuestions);
+    };
+
+
+
     return (
-        <div>
+<div>
             <Carousel
                 items={quizQuestions}
                 currentSlide={currentSlide}
@@ -255,19 +274,23 @@ function NewQuizDataset({ createError }) {
                                         <p>Загрузите правильный ответ</p>
                                         <MyImageInput
                                             name="answer"
-                                            onChange={(e) => handleCorrectAnswerChange(e.target.value, idx)}
-                                            image={quizQuestions[idx].answer}
-                                            onRemove={() => handleImageRemoval(idx)}
+                                            setHeadImage={setHeadImage}
+                                            questionIndex={idx}
+                                            answerIndex={-1}
+                                            initialImage={quizQuestions[idx].answer}
+                                            handleImageRemoval={handleImageRemoval}
                                         />
                                     </div>
                                     {quizData.type === "1q4img" && quizQuestions[idx].wrongAnswers.map((answer, i) => (
                                         <div key={i} className={classes.inputWrapper}>
                                             <p>{`Загрузите неправильный ответ ${i + 1}`}</p>
                                             <MyImageInput
-                                                name="answer"
-                                                onChange={(e) => handleWrongAnswerChange(e.target.value, idx, i)}
-                                                image={quizQuestions[idx].wrongAnswers[i]}
-                                                onRemove={() => handleImageRemoval(idx, i)}
+                                                name={`wrongAnswer${i}`}
+                                                setHeadImage={setHeadImage}
+                                                questionIndex={idx}
+                                                answerIndex={i}
+                                                initialImage={quizQuestions[idx].wrongAnswers[i]}
+                                                handleImageRemoval={handleImageRemoval}
                                             />
                                         </div>
                                     ))}
@@ -275,12 +298,13 @@ function NewQuizDataset({ createError }) {
                             )}
 
                             <div className={classes.inputWrapper}>
-                                <p>Загрузите изображение к вопросу</p>
+                                <p>Загрузите изображение вопроса</p>
                                 <MyImageInput
                                     name="questionImage"
-                                    onChange={(e) => handleQuestionImageChange(e.target.value, idx)}
-                                    image={quizQuestions[idx].questionImage}
-                                    onRemove={() => handleImageRemoval(idx)}
+                                    setHeadImage={setHeadImage}
+                                    questionIndex={idx}
+                                    initialImage={quizQuestions[idx].questionImage}
+                                    handleImageRemoval={handleImageRemoval}
                                 />
                             </div>
                         </form>
@@ -298,9 +322,8 @@ function NewQuizDataset({ createError }) {
                 <ModalCreateQuiz
                     visible={modalVisible}
                     setVisible={setModalVisible}
-                    // updateData={handleTemplateChange}
                     initialData={quizData}
-                    isEditing={isEditing} 
+                    isEditing={isEditing}
                     onSubmit={handleTemplateChange}
                 />
             )}
