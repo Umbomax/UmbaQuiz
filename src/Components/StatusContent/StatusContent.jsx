@@ -3,7 +3,7 @@ import classes from "./StatusContent.module.css";
 
 function StatusContent({ error, removeError }) {
   
-
+    console.log(error.errorText)
     return (
         <div className={`${classes.container} ${error.status === "ok" ? classes.ok : ""}`}>
             <button

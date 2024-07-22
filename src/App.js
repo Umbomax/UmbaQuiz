@@ -16,8 +16,8 @@ function App() {
     const [errors, setErrors] = useState([]);
 
     const createError = (newError) => {
-        console.log(newError);
-        setErrors([...errors, newError]);
+        console.log(newError)
+        setErrors([...errors, ...newError]);
     };
 
     const removeError = (error) => {
