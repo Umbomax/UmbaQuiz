@@ -22,10 +22,9 @@
 .answer {
     margin-bottom: 50px;
     border: 2px solid black;
-    width: 100%;
-    max-width: 900px;
+    max-width: 16rem;
     
-    height: 100px;
+    max-height: 9rem;
     transition: transform 0.3s ease;
     font-size: 22px;
     align-items: center;
@@ -44,9 +43,10 @@
     transform: scale(1.05);
 }
 .questionText {
-    font-size: 1.5rem;
+    font-size: 2.5rem;
     text-align: center;
     margin: 10px 0;
+    color: var(--main-text);
 }
 .carouser {
     position: relative;
@@ -102,27 +102,24 @@
 .controlsContainer > button:hover {
     background-color: var(--card-border);
 }
-.questionImage {
-    max-width: 50%;
-    height: auto;
-    margin-right: 20px;
-}
 
 .textAnswers {
     width: 60%;
     display: flex;
     flex-direction: column;
+    color: var(--main-text);
 }
 .answer{
     border-radius: 15px;
 }
 
+.questionImageWrapper{
+    max-width: 430px;
+    width: 100%;
+}
 
 @media (max-width: 768px) {
-    .questionImage{
-        
-        height: 180px;
-    }
+
     .answersContainer{
         display: flex;
         flex-direction: column;

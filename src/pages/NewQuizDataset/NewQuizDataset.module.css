@@ -27,6 +27,8 @@
 .quizFormsWrapper{
     width: 1440px;
     overflow: hidden;
+    margin: auto;
+    color: var(--main-text);
 }
 .fileInput{
     display: block;
@@ -58,6 +60,7 @@
 .inputWrapper>input{
     margin: 10px 0;
     height: 40px;
+    padding-left: 20px;
     width: 100%;
 }
 .inputWrapper>p{
@@ -78,6 +81,14 @@
 }
 .questionImage>h3{
     margin: 10px 0;
+}
+.btnWrapper{
+    margin: auto;
+    padding: 15px 0;
+    max-width: 1440px;
+    display: flex;
+    align-items: center;
+    justify-content: left;
 }
 @media (max-width:1440px) {
     .incorrectAnswers{

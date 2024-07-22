@@ -16,7 +16,7 @@
     border: 1px solid var(--card-border);
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease-in-out;
+    transition: transform 0.3s ease-in-out, background 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -29,13 +29,16 @@
 
 .card:hover {
     transform: translateY(-5px);
-    background: var(--card-hover-background);
+    background: var(--card-background-hover);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
 
+
+
 .description {
-    color: var(--main-text);
+    color: var(--card-text);
     margin-top: 10px;
+    transition: color 0.3s ease;
 }
 
 h3 {
@@ -45,9 +48,6 @@ h3 {
     transition: color 0.3s ease;
 }
 
-.card:hover h3 {
-    color: var(--card-hover-header);
-}
 
 .videoWrapper {
     position: absolute;
@@ -57,7 +57,8 @@ h3 {
     height: 100%;
     pointer-events: none;
 }
-.card>button{
+
+.card>button {
     width: 10rem;
     height: 3rem;
     margin: 1rem 0;
@@ -71,6 +72,6 @@ h3 {
     }
 
     .card {
-        width: calc(50% - 20px); /* Два в ряд */
+        width: calc(50% - 20px); 
     }
 }

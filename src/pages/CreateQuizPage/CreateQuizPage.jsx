@@ -9,74 +9,33 @@ function CreateQuizPage({ createError }) {
     const [quizType, setQuizType] = useState("");
     const [hoveredCard, setHoveredCard] = useState(null);
 
+    const quizTypes = [
+        { type: "1q4img", title: "На вопрос 4 изображения", description: "Создайте вопрос с одним правильным и тремя неправильными изображениями.", label: "4 изображения" },
+        { type: "1q1img", title: "На вопрос 1 изображение", description: "Создайте вопрос с одним правильным изображением. Остальные ответы будут взяты из других вопросов.", label: "1 изображение" },
+        { type: "1q4textanswer", title: "На вопрос 4 текстовых ответа", description: "Создайте вопрос с одним правильным и тремя неправильными текстовыми ответами.", label: "4 текста" },
+        { type: "1q1textanswer", title: "На вопрос 1 текстовый ответ", description: "Создайте вопрос с одним правильным текстовым ответом. Остальные ответы будут взяты из других вопросов.", label: "1 текст" },
+    ];
+
     return (
         <div className={classes.chooseType}>
             <ModalCreateQuiz visible={modal} setVisible={setModal} quizType={quizType} createError={createError} title={title} />
-            <div
-                className={classes.card}
-                onMouseEnter={() => setHoveredCard("1q4img")}
-                onMouseLeave={() => setHoveredCard(null)}
-                onClick={() => {
-                    setModal(true);
-                    setQuizType("1q4img");
-                    setTitle('На вопрос 4 изображения');
-                }}
-            >
-                <h3>4 изображения</h3>
-                <p className={classes.description}>
-                    Создайте вопрос с одним правильным и тремя неправильными изображениями.
-                </p>
-                {hoveredCard === "1q4img" && <VideoSection videoId="85pqFHx0FiU" />}
-            </div>
-            <div
-                className={classes.card}
-                onMouseEnter={() => setHoveredCard("1q1img")}
-                onMouseLeave={() => setHoveredCard(null)}
-                onClick={() => {
-                    setModal(true);
-                    setQuizType("1q1img");
-                    setTitle('На вопрос 1 изображение');
-                }}
-            >
-                <h3>1 изображение</h3>
-                <p className={classes.description}>
-                    Создайте вопрос с одним правильным изображением. Остальные ответы будут взяты из других вопросов.
-                </p>
-                {hoveredCard === "1q1img" && <VideoSection videoId="85pqFHx0FiU" />}
-            </div>
-            <div
-                className={classes.card}
-                onMouseEnter={() => setHoveredCard("1q4textanswer")}
-                onMouseLeave={() => setHoveredCard(null)}
-                onClick={() => {
-                    setModal(true);
-                    setQuizType("1q4textanswer");
-                    setTitle('На вопрос 4 текстовых ответа');
-                }}
-            >
-                <h3>4 текста</h3>
-                <p className={classes.description}>
-                    Создайте вопрос с одним правильным и тремя неправильными текстовыми ответами.
-                </p>
-                {hoveredCard === "1q4textanswer" && <VideoSection videoId="85pqFHx0FiU" />}
-            </div>
-            <div
-                className={classes.card}
-                onMouseEnter={() => setHoveredCard("1q1textanswer")}
-                onMouseLeave={() => setHoveredCard(null)}
-                onClick={() => {
-                    setModal(true);
-                    setQuizType("1q1textanswer");
-                    setTitle('На вопрос 1 текстовый ответ');
-                }}
-            >
-                <h3>1 текст</h3>
-                <p className={classes.description}>
-                    Создайте вопрос с одним правильным текстовым ответом. Остальные ответы будут взяты из других вопросов.
-                </p>
-                {hoveredCard === "1q1textanswer" && <VideoSection videoId="85pqFHx0FiU" />}
-                <button>Начать</button>
-            </div>
+            {quizTypes.map(({ type, title, description, label }) => (
+                <div
+                    key={type}
+                    className={classes.card}
+                    onMouseEnter={() => setHoveredCard(type)}
+                    onMouseLeave={() => setHoveredCard(null)}
+                    onClick={() => {
+                        setModal(true);
+                        setQuizType(type);
+                        setTitle(title);
+                    }}
+                >
+                    <h3 className={classes.description}>{label}</h3>
+                    <p className={classes.description}>{description}</p>
+                    {/* {hoveredCard === type && <VideoSection videoId="85pqFHx0FiU" />} */}
+                </div>
+            ))}
         </div>
     );
 }

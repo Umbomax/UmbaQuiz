@@ -65,6 +65,7 @@
 .linkInputWrapper input {
   width: calc(100% - 80px);
   padding: 5px;
+  padding-left: 20px;
 }
 
 .linkInputWrapper button {

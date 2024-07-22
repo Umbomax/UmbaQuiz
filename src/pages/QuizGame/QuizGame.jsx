@@ -4,8 +4,9 @@ import axios from 'axios';
 import {jwtDecode} from 'jwt-decode';
 import classes from "./QuizGame.module.css";
 import QuizResultsModal from "../../Components/QuizResultsModal/QuizResultsModal";
+import ImageContainer from "../../Components/ImageContainer/ImageContainer";
 import Timer from "../../Components/Timer/Timer";
-import noImage from '../../assets/images/no_image.jpg'; 
+
 import Carousel from "../../Components/Carousel/Carousel";
 
 function QuizGame(props) {
@@ -162,11 +163,16 @@ function QuizGame(props) {
                         <div style={activeSlide} key={idx} className={classes.quizItem}>
                             <h1 className={classes.questionText}>{question.question}</h1>
                             <div className={classes.answersContainer}>
-                                <img 
+                                <div className={classes.questionImageWrapper}>
+                                <ImageContainer  src={question.questionImage} altName={"question"}></ImageContainer>
+                                </div>
+                               
+
+                                {/* <img 
                                     src={question.questionImage || noImage} 
                                     alt="question" 
                                     className={classes.questionImage} 
-                                />
+                                /> */}
                                 {location.state.type === "1q4textanswer" || location.state.type === "1q1textanswer" ? (
                                     <div className={classes.textAnswers}>
                                         {answers[idx].map((answer, answerIdx) => (
@@ -202,7 +208,11 @@ function QuizGame(props) {
                                             }`}
                                             onClick={() => checkAnswer(answer, idx, answerIdx)}
                                         >
-                                            <img src={answer} alt="answer" />
+                                            <div className={classes.questionImageWrapper}>
+                                                <ImageContainer src={answer} altName={"answer"}></ImageContainer>
+                                            </div>
+                                            
+                                         
                                         </div>
                                     ))
                                 )}

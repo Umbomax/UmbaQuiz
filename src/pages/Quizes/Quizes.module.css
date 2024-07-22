@@ -105,13 +105,11 @@
     border-radius: 15px;
 }
 
-.imageContainer {
-    position: relative;
+.imageWrapper {
+   
     width: 100%;
     height: 320px;
-    border-bottom: 1px solid #dcdcdc;
-    border-radius: 15px 15px 0 0;
-    overflow: hidden;
+    
 }
 
 .blurredBackground {
@@ -123,7 +121,7 @@
     background-size: cover;
     background-position: center;
     filter: blur(20px);
-    transform: scale(1.1); /* увеличивает изображение, чтобы избежать видимых краев */
+    transform: scale(1.1); 
     z-index: 1;
 }
 
@@ -136,7 +134,13 @@
     object-fit: contain;
     z-index: 2;
 }
-
+.headName{
+    font-size: 32px;
+    margin-bottom: 16px;
+}
+.startQuiz{
+    margin: 15px auto 0
+}
 
 @keyframes skeleton-loading {
     0% {

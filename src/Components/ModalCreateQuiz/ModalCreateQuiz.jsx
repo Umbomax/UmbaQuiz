@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {jwtDecode} from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 import MyImageInput from "../UI/MyImageInput/MyImageInput";
 import classes from "./ModalCreateQuiz.module.css";
 
@@ -19,11 +19,11 @@ function ModalCreateQuiz({ visible, setVisible, quizType, createError, title, in
         quizTime: "0",
         forRegisteredUsers: false,
         isLimitedAttempts: false,
-        attemptsCount: ""
+        attemptsCount: "",
     });
 
     useEffect(() => {
-        const token = localStorage.getItem('token');
+        const token = localStorage.getItem("token");
         if (token) {
             const decoded = jwtDecode(token);
             setUserId(decoded.id);
@@ -31,9 +31,9 @@ function ModalCreateQuiz({ visible, setVisible, quizType, createError, title, in
     }, []);
 
     useEffect(() => {
-        setQuizSettings(prevSettings => ({
+        setQuizSettings((prevSettings) => ({
             ...prevSettings,
-            type: quizType
+            type: quizType,
         }));
     }, [quizType]);
 
@@ -50,7 +50,7 @@ function ModalCreateQuiz({ visible, setVisible, quizType, createError, title, in
                 quizTime: initialData.quizTime || "0",
                 forRegisteredUsers: initialData.forRegisteredUsers || false,
                 isLimitedAttempts: initialData.isLimitedAttempts || false,
-                attemptsCount: initialData.attemptsCount || ""
+                attemptsCount: initialData.attemptsCount || "",
             });
         }
     }, [initialData]);
@@ -73,8 +73,8 @@ function ModalCreateQuiz({ visible, setVisible, quizType, createError, title, in
         let newError;
         do {
             newError = { id: generateUniqueId(), errorText: text, status: status };
-        } while (errors.some(error => error.id === newError.id));
-        setErrors(prevErrors => [...prevErrors, newError]);
+        } while (errors.some((error) => error.id === newError.id));
+        setErrors((prevErrors) => [...prevErrors, newError]);
     };
 
     const checkValidationErrors = () => {
@@ -89,10 +89,10 @@ function ModalCreateQuiz({ visible, setVisible, quizType, createError, title, in
         if (!quizSettings.quizesCount) {
             pushStatus("Поле Количество вопросов не должно быть пустым", "error");
             valid = false;
-        } else if ((quizSettings.type === '1q4img' || quizSettings.type === '1q1img') && parseInt(quizSettings.quizesCount) > 20) {
+        } else if ((quizSettings.type === "1q4img" || quizSettings.type === "1q1img") && parseInt(quizSettings.quizesCount) > 20) {
             pushStatus("Максимальное количество вопросов для данного типа - 20", "error");
             valid = false;
-        } else if ((quizSettings.type === '1q1img' || quizSettings.type === '1q1textanswer') && parseInt(quizSettings.quizesCount) < 4) {
+        } else if ((quizSettings.type === "1q1img" || quizSettings.type === "1q1textanswer") && parseInt(quizSettings.quizesCount) < 4) {
             pushStatus("Минимальное количество вопросов для данного типа - 4", "error");
             valid = false;
         }
@@ -129,7 +129,7 @@ function ModalCreateQuiz({ visible, setVisible, quizType, createError, title, in
         e.preventDefault();
         if (checkValidationErrors()) {
             const quizData = { ...quizSettings, userId };
-            onSubmit(quizData); // Вызываем функцию onSubmit, переданную через пропсы
+            onSubmit(quizData);
         }
     };
 
@@ -140,67 +140,40 @@ function ModalCreateQuiz({ visible, setVisible, quizType, createError, title, in
             <div className={classes.content} onClick={(e) => e.stopPropagation()}>
                 <div className={classes.title}>
                     <h2>{title}</h2>
-                    <button className={classes.closeButton} onClick={() => setVisible(false)}>x</button>
+                    <button className={classes.closeButton} onClick={() => setVisible(false)}>
+                        x
+                    </button>
                 </div>
                 <hr className={classes.separator} />
                 <div className={classes.textInputWrapper}>
                     <div className={classes.quizNameWrapper}>
                         <div>Введите название викторины</div>
-                        <input
-                            className={classes.quizSelectInput}
-                            type="text"
-                            value={quizSettings.quizName}
-                            onChange={(e) => setQuizSettings({ ...quizSettings, quizName: e.target.value })}
-                        />
+                        <input className={classes.quizSelectInput} type="text" value={quizSettings.quizName} onChange={(e) => setQuizSettings({ ...quizSettings, quizName: e.target.value })} />
                     </div>
                     <div>
                         <div>Введите количество вопросов</div>
-                        <input
-                            className={classes.quizSelectInput}
-                            type="number"
-                            value={quizSettings.quizesCount}
-                            onChange={(e) => setQuizSettings({ ...quizSettings, quizesCount: e.target.value })}
-                        />
+                        <input className={classes.quizSelectInput} type="number" value={quizSettings.quizesCount} onChange={(e) => setQuizSettings({ ...quizSettings, quizesCount: e.target.value })} />
                     </div>
                 </div>
                 <div className={classes.textInputWrapper}>
                     <div className={classes.quizDescriptionWrapper}>
                         <div>Введите описание викторины</div>
-                        <textarea
-                            className={classes.quizDescriptionInput}
-                            value={quizSettings.description}
-                            onChange={(e) => setQuizSettings({ ...quizSettings, description: e.target.value })}
-                        />
+                        <textarea className={classes.quizDescriptionInput} value={quizSettings.description} onChange={(e) => setQuizSettings({ ...quizSettings, description: e.target.value })} />
                     </div>
                 </div>
                 <div className={classes.checkboxWrapper}>
-                    <input
-                        type="checkbox"
-                        id="isPrivate"
-                        checked={quizSettings.isPrivate}
-                        onChange={(e) => setQuizSettings({ ...quizSettings, isPrivate: e.target.checked })}
-                    />
+                    <input type="checkbox" id="isPrivate" checked={quizSettings.isPrivate} onChange={(e) => setQuizSettings({ ...quizSettings, isPrivate: e.target.checked })} />
                     <label htmlFor="isPrivate">Сделать викторину приватной</label>
                 </div>
                 <div className={classes.checkboxWrapper}>
-                    <input
-                        type="checkbox"
-                        id="isTimed"
-                        checked={quizSettings.isTimed}
-                        onChange={(e) => setQuizSettings({ ...quizSettings, isTimed: e.target.checked })}
-                    />
+                    <input type="checkbox" id="isTimed" checked={quizSettings.isTimed} onChange={(e) => setQuizSettings({ ...quizSettings, isTimed: e.target.checked })} />
                     <label htmlFor="isTimed">Викторина по времени</label>
                 </div>
                 {quizSettings.isTimed && (
                     <div className={classes.textInputWrapper}>
                         <div>
                             <div>Введите время на викторину в секундах</div>
-                            <input
-                                className={classes.quizSelectInput}
-                                type="number"
-                                value={quizSettings.quizTime}
-                                onChange={(e) => setQuizSettings({ ...quizSettings, quizTime: e.target.value })}
-                            />
+                            <input className={classes.quizSelectInput} type="number" value={quizSettings.quizTime} onChange={(e) => setQuizSettings({ ...quizSettings, quizTime: e.target.value })} />
                         </div>
                     </div>
                 )}
@@ -240,18 +213,10 @@ function ModalCreateQuiz({ visible, setVisible, quizType, createError, title, in
                 <div className={classes.headImage}>
                     <h3>Выберите изображение для отображения в списке викторин</h3>
                     <div className="my-image-input__Wrapper">
-                        <MyImageInput
-                            className={classes.imageWrapper}
-                            setHeadImage={setHeadImage}
-                            handleImageRemoval={handleImageRemoval}
-                            initialImage={isEditing ? quizSettings.quizHeadImage : ""}
-                        />
+                        <MyImageInput className={classes.imageWrapper} setHeadImage={setHeadImage} handleImageRemoval={handleImageRemoval} initialImage={isEditing ? quizSettings.quizHeadImage : ""} />
                     </div>
                 </div>
-                <button
-                    className={classes.submitBtn}
-                    onClick={handleSubmit}
-                >
+                <button className={classes.submitBtn} onClick={handleSubmit}>
                     {isEditing ? "Сохранить изменения" : "Создать шаблон"}
                 </button>
             </div>

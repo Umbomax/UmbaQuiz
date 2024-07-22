@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 import ModalStartQuiz from "../../Components/ModalStartQuiz/ModalStartQuiz";
+import ImageContainer from "../../Components/ImageContainer/ImageContainer";
 import SearchQuizInput from "./SearchQuizInput/SearchQuizInput";
 import classes from "./Quizes.module.css";
 import { AuthContext } from "../../context/AuthContext";
@@ -102,10 +103,14 @@ function Quizes() {
                     filteredQuizes.map((quiz, idx) => (
                         <div key={idx} className={classes.quizCard} onClick={() => openQuizModal(quiz)}>
                             <h2>{quiz.quizName}</h2>
-                            <div className={classes.imageContainer}>
+                            <div className={classes.imageWrapper}>
+                            <ImageContainer src={quiz.quizHeadImage} altName={quiz.quizName}></ImageContainer>
+                            </div>
+                            
+                            {/* <div className={classes.imageContainer}>
                                 <div className={classes.blurredBackground} style={{ backgroundImage: `url(${quiz.quizHeadImage})` }}></div>
                                 <img src={quiz.quizHeadImage} className={classes.quizHeadImg} alt={quiz.quizName} />
-                            </div>
+                            </div> */}
                             <div className={classes.countContainer}>
                                 <div>
                                     <FaPlay /> <span>{quiz.countOfStarts}</span>
@@ -120,10 +125,10 @@ function Quizes() {
             </section>
             {isModalOpen && (
                 <ModalStartQuiz onClose={closeQuizModal}>
-                    <h2>{selectedQuiz.quizName}</h2>
+                    <h2 className={classes.headName}>{selectedQuiz.quizName}</h2>    
                     <p>{selectedQuiz.quizDescription}</p>
-                    <img className={classes.quizHeadImg} src={selectedQuiz.quizHeadImage} alt={selectedQuiz.quizName} />
-                    <button onClick={handleStartQuiz}>Начать</button>
+                    <ImageContainer src={selectedQuiz.quizHeadImage} altName={selectedQuiz.quizName}></ImageContainer>
+                    <button className={classes.startQuiz} onClick={handleStartQuiz}>Начать</button>
                 </ModalStartQuiz>
             )}
         </div>
