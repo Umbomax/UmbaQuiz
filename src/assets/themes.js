@@ -17,6 +17,8 @@ const modern = {
   '--modal-text': '#2c3e50',
   '--popup-background': '#ecf0f1',
   '--popup-text': '#2c3e50',
+  '--overlay-background': 'rgba(44, 62, 80, 0.7)',  
+  '--nav-background-mobile': 'rgba(44, 62, 80, 0.8)' 
 };
 
 const pastel = {
@@ -38,6 +40,8 @@ const pastel = {
   '--modal-text': '#2c3e50',
   '--popup-background': '#f7f9fc',
   '--popup-text': '#2c3e50',
+  '--overlay-background': 'rgba(179, 205, 224, 0.7)', 
+  '--nav-background-mobile': 'rgba(179, 205, 224, 0.8)' 
 };
 
 const dark = {
@@ -59,6 +63,8 @@ const dark = {
   '--modal-text': '#ecf0f1',
   '--popup-background': '#333333',
   '--popup-text': '#f5f5f5',
+  '--overlay-background': 'rgba(26, 26, 26, 0.7)', 
+  '--nav-background-mobile': 'rgba(26, 26, 26, 0.8)' 
 };
 
 const bright = {
@@ -80,6 +86,8 @@ const bright = {
   '--modal-text': '#333333',
   '--popup-background': '#f0f0f0',
   '--popup-text': '#333333',
+  '--overlay-background': 'rgba(255, 87, 51, 0.7)',  
+  '--nav-background-mobile': 'rgba(255, 87, 51, 0.8)' 
 };
 
 const calm = {
@@ -101,6 +109,8 @@ const calm = {
   '--modal-text': '#3b3b3b',
   '--popup-background': '#e8e8e8',
   '--popup-text': '#3b3b3b',
+  '--overlay-background': 'rgba(59, 59, 59, 0.7)',  
+  '--nav-background-mobile': 'rgba(59, 59, 59, 0.8)' 
 };
 
 const yellowBlack = {
@@ -122,6 +132,8 @@ const yellowBlack = {
   '--modal-text': '#ffc107',
   '--popup-background': '#1c1c1c',
   '--popup-text': '#ffc107',
+  '--overlay-background': 'rgba(255, 202, 40, 0.7)',  
+  '--nav-background-mobile': 'rgba(255, 202, 40, 0.8)' 
 };
 
 const highContrast = {
@@ -143,6 +155,8 @@ const highContrast = {
   '--modal-text': '#090b3f',
   '--popup-background': '#090b3f',
   '--popup-text': '#ff004c',
+  '--overlay-background': 'rgba(255, 0, 76, 0.7)',  
+  '--nav-background-mobile': 'rgba(255, 0, 76, 0.8)'
 };
 
 const gradient = {
@@ -164,6 +178,8 @@ const gradient = {
   '--modal-text': '#ffffff',
   '--popup-background': 'linear-gradient(to right, #43e97b, #38f9d7)',
   '--popup-text': '#ffffff',
+  '--overlay-background': 'rgba(255, 126, 95, 0.7)', 
+  '--nav-background-mobile': 'rgba(255, 126, 95, 0.8)'
 };
 
 export { modern, pastel, dark, bright, calm, yellowBlack, highContrast, gradient };

@@ -174,7 +174,7 @@ function QuizGame(props) {
                                     className={classes.questionImage} 
                                 /> */}
 
-                                <div className={classes.answersWrapper}>
+                                <div className={`${classes.answersWrapper} ${location.state.type === "1q4textanswer" || location.state.type === "1q1textanswer" ? classes.notGrid:""}`}>
                                 {location.state.type === "1q4textanswer" || location.state.type === "1q1textanswer" ? (
                                     <div className={classes.textAnswers}>
                                         {answers[idx].map((answer, answerIdx) => (

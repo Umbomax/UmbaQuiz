@@ -104,7 +104,9 @@
 }
 
 .textAnswers {
-    width: 60%;
+    padding: 15px;
+    width: 100%;
+    min-width: 24rem;
     display: flex;
     flex-direction: column;
     color: var(--main-text);
@@ -112,31 +114,46 @@
 .answer{
     border-radius: 15px;
     width: 100%;
+    padding: 25px;
+    background-color: var(--card-background);
+    color: var(--card-text);
+    /* border-color: var(); */
 }
 
 .questionImageWrapper{
-    max-width: 16rem;
+    max-width: 24rem;
     width: 9rem;
 }
 .questionForQuiz{
-    max-width: 24rem;
-    
+    max-width: 16rem;
+    width: 100%;
     
 }
 .answersWrapper{
     max-width: 24rem;
     margin: auto;
 }
-@media (max-width: 768px) {
 
+@media (max-width: 768px) {
+    .questionForQuiz{
+        margin-bottom: 15px;
+    }
+    
+    .answersWrapper{
+        max-width: 24rem;
+        margin: auto;
+    }
     .answersContainer{
         display: flex;
         flex-direction: column;
 
     }
     .textAnswers{
+        margin: auto;
         align-items: center;
         justify-content: center;
+        min-width:9rem;
+        
     }
     .textAnswers>div.answer{  
         border-radius: 8px;      
@@ -150,6 +167,25 @@
     }
     .controlsContainer {
         margin: 0;
+        gap: 10px;
+    }
+    .answersWrapper{
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+    .answer{
+        margin: 0;
+    }
+    .notGrid{
+        display: block;
+    }
+}
+@media (max-width: 490px){
+    .questionImageWrapper{
+        width: 7rem;
+    }
+    .answersWrapper{
         gap: 10px;
     }
 }

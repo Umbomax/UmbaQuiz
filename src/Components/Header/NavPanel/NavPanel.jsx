@@ -1,7 +1,7 @@
 import React from "react";
 import classes from "./NavPanel.module.css";
 import { useNavigate } from "react-router-dom";
-import {jwtDecode} from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 
 function NavPanel({ isOpen, toggleNav, closeNav }) {
     const navigate = useNavigate();
@@ -20,8 +20,15 @@ function NavPanel({ isOpen, toggleNav, closeNav }) {
 
     return (
         <>
-            {isOpen && window.innerWidth < 768 && <div className={classes.overlay} onClick={closeNav}></div>}
+            {isOpen && window.innerWidth < 768 && (
+                <div className={classes.overlay} onTouchStart={closeNav} onMouseDown={closeNav}></div>
+            )}
             <nav className={`${classes.navContainer} ${isOpen ? classes.active : ""}`}>
+                {window.innerWidth < 768 && (
+                    <div className={classes.closeButton} onClick={closeNav}>
+                        &times;
+                    </div>
+                )}
                 <div className={classes.navItem} onClick={() => handleNavigate("/")}>Главная</div>
                 <div className={classes.navItem} onClick={() => handleNavigate("/about")}>О проекте</div>
                 {userRole && (

@@ -8,7 +8,10 @@
     color: var(--header-text, #ecf0f1);
     padding: 0 20px;
 }
-
+.notVisible{
+    visibility: hidden;
+    display: none;
+}
 @media (max-width: 768px) {
     .header {
         display: flex;
@@ -19,4 +22,5 @@
     .burgerMenu{
         order: 1;       
     }
+   
 }

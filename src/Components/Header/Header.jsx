@@ -36,7 +36,9 @@ function Header({ createError }) {
 
     return (
         <header className={classNames.header}>
-            <BurgerMenu className={classNames.burgerMenu} onClick={toggleNav} />
+      
+            <BurgerMenu onClick={toggleNav} isNavOpen={isNavOpen} />
+            
             <Logo className={classNames.logo}/>
             <NavPanel isOpen={isNavOpen} toggleNav={toggleNav} closeNav={closeNav} />
             <LogIn 
