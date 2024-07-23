@@ -163,7 +163,7 @@ function QuizGame(props) {
                         <div style={activeSlide} key={idx} className={classes.quizItem}>
                             <h1 className={classes.questionText}>{question.question}</h1>
                             <div className={classes.answersContainer}>
-                                <div className={classes.questionImageWrapper}>
+                                <div className={classes.questionForQuiz}>
                                 <ImageContainer  src={question.questionImage} altName={"question"}></ImageContainer>
                                 </div>
                                
@@ -173,6 +173,8 @@ function QuizGame(props) {
                                     alt="question" 
                                     className={classes.questionImage} 
                                 /> */}
+
+                                <div className={classes.answersWrapper}>
                                 {location.state.type === "1q4textanswer" || location.state.type === "1q1textanswer" ? (
                                     <div className={classes.textAnswers}>
                                         {answers[idx].map((answer, answerIdx) => (
@@ -216,6 +218,8 @@ function QuizGame(props) {
                                         </div>
                                     ))
                                 )}
+                            </div>
+
                             </div>
                         </div>
                     ))}

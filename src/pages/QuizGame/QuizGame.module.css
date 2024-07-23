@@ -111,13 +111,22 @@
 }
 .answer{
     border-radius: 15px;
-}
-
-.questionImageWrapper{
-    max-width: 430px;
     width: 100%;
 }
 
+.questionImageWrapper{
+    max-width: 16rem;
+    width: 9rem;
+}
+.questionForQuiz{
+    max-width: 24rem;
+    
+    
+}
+.answersWrapper{
+    max-width: 24rem;
+    margin: auto;
+}
 @media (max-width: 768px) {
 
     .answersContainer{
