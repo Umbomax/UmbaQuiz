@@ -6,7 +6,6 @@ import classes from "./QuizGame.module.css";
 import QuizResultsModal from "../../Components/QuizResultsModal/QuizResultsModal";
 import ImageContainer from "../../Components/ImageContainer/ImageContainer";
 import Timer from "../../Components/Timer/Timer";
-
 import Carousel from "../../Components/Carousel/Carousel";
 
 function QuizGame(props) {
@@ -54,25 +53,14 @@ function QuizGame(props) {
             console.log('Data for sending');
             console.log({ userId, quizStartTime, quizId });
             axios.post(`${apiUrl}/startQuiz`, { userId, quizStartTime, quizId })
-            // axios.post("http://localhost:3030/api/startQuiz", { userId, quizStartTime, quizId })
                 .catch(error => console.error("Error starting quiz:", error));
         } else {
             console.log({ quizStartTime, quizId });
-            // axios.post("http://localhost:3030/api/startQuiz", { quizStartTime, quizId })
             axios.post(`${apiUrl}/startQuiz`, { quizStartTime, quizId })
                 .catch(error => console.error("Error starting quiz:", error));
         }
     }, [location.state]);
 
-    function setCarouserActive() {
-        const STEP_LENGTH = 55; // Ширина блока + gap
-        const startPos = -STEP_LENGTH * Math.floor(questions.length / 2);
-        return startPos + STEP_LENGTH * currentSlide;
-    }
-
-    const activeCarouselBlock = {
-        transform: `translateX(${setCarouserActive()}px)`,
-    };
 
     const inlineStyle = {
         width: `${100 * location.state.quizesCount}%`,
@@ -167,12 +155,6 @@ function QuizGame(props) {
                                 <ImageContainer  src={question.questionImage} altName={"question"}></ImageContainer>
                                 </div>
                                
-
-                                {/* <img 
-                                    src={question.questionImage || noImage} 
-                                    alt="question" 
-                                    className={classes.questionImage} 
-                                /> */}
 
                                 <div className={`${classes.answersWrapper} ${location.state.type === "1q4textanswer" || location.state.type === "1q1textanswer" ? classes.notGrid:""}`}>
                                 {location.state.type === "1q4textanswer" || location.state.type === "1q1textanswer" ? (
