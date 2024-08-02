@@ -1,6 +1,7 @@
 .quizItem {
     width: 100%;
     overflow: hidden;
+    transition: all 0.3s linear;
 }
 .quizItemsContainer {
     display: flex;
