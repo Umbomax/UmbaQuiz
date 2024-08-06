@@ -6,7 +6,7 @@ import classes from "./QuizGame.module.css";
 import QuizResultsModal from "../../Components/QuizResultsModal/QuizResultsModal";
 import ImageContainer from "../../Components/ImageContainer/ImageContainer";
 import Timer from "../../Components/Timer/Timer";
-
+import { useSwipeable } from 'react-swipeable';
 import Carousel from "../../Components/Carousel/Carousel";
 
 function QuizGame(props) {
@@ -76,15 +76,20 @@ function QuizGame(props) {
         transition: transitioning ? `transform ${animationTime}s cubic-bezier(0.5, 0, 0.5, 1)` : 'none',
     };
 
+    const swipeHandlers = useSwipeable({
+        onSwipedLeft: () => nextSlide(),
+        onSwipedRight: () => prevSlide(),
+        preventDefaultTouchmoveEvent: true,
+        preventScrollOnSwipe: true,
+        trackMouse: true
+    });
     function nextSlide(e) {
-        e.preventDefault();
         if (transitioning) return;
         setTransitioning(true);
         setCurrentSlide((prev) => prev + 1);
     }
 
     function prevSlide(e) {
-        e.preventDefault();
         if (transitioning) return;
         setTransitioning(true);
         setCurrentSlide((prev) => prev - 1);
@@ -185,70 +190,80 @@ function QuizGame(props) {
             <Carousel
                 items={questions}
                 currentSlide={currentSlide}
-                setCurrentSlide={setCurrentSlide}
+                setCurrentSlide={(idx) => {
+                    if (!transitioning) {
+                        setTransitioning(true);
+                        setCurrentSlide(idx + 1); // Смещение для учета дополнительного слайда
+                    }
+                }}
                 checkValidForm={checkValidForm}
                 isQuizGame={true}
                 answersStatus={answersStatus}
+                setTransitioning={setTransitioning}
             />
 
-            <div className={classes.quizItemsWrapper}>
-                <div style={inlineStyle} className={classes.quizItemsContainer}>
-                    {slides.map((question, idx) => (
-                        <div style={activeSlide} key={idx} className={`${classes.quizItem} ${classes.carousel_item}`}>
-                            {idx > 0 && idx < slides.length - 1 && (
-                                <>
-                                    <h1 className={classes.questionText}>{question.question}</h1>
-                                    <div className={classes.answersContainer}>
-                                        <div className={classes.questionForQuiz}>
-                                            <ImageContainer src={question.questionImage} altName={"question"}></ImageContainer>
-                                        </div>
+<div className={classes.quizItemsWrapper} {...swipeHandlers}>
+    <div style={inlineStyle} className={classes.quizItemsContainer}>
+        {slides.map((question, idx) => (
+            <div style={activeSlide} key={idx} className={`${classes.quizItem} ${classes.carousel_item}`}>
+                {idx > 0 && idx < slides.length - 1 && (
+                    <>
+                        <h1 className={classes.questionText}>{question.question}</h1>
+                        <div className={classes.answersContainer}>
+                            <div className={classes.questionForQuiz}>
+                                <ImageContainer src={question.questionImage} altName={"question"}></ImageContainer>
+                            </div>
 
-                                        <div className={`${classes.answersWrapper} ${location.state.type === "1q4textanswer" || location.state.type === "1q1textanswer" ? classes.notGrid:""}`}>
-                                            {location.state.type === "1q4textanswer" || location.state.type === "1q1textanswer" ? (
-                                                <div className={classes.textAnswers}>
-                                                    {answers[idx - 1].map((answer, answerIdx) => (
-                                                        <div
-                                                            key={answerIdx}
-                                                            onClick={() => checkAnswer(answer, idx - 1, answerIdx)}
-                                                            className={`${classes.textAnswer} ${
-                                                                answersStatus[idx - 1]?.selectedAnswerIdx === answerIdx
-                                                                    ? answersStatus[idx - 1]?.isCorrect
-                                                                        ? classes.correctAnswer
-                                                                        : classes.incorrectAnswer
-                                                                    : ""
-                                                            }`}
-                                                        >
-                                                            {answer}
-                                                        </div>
-                                                    ))}
-                                                </div>
-                                            ) : (
-                                                <div className={classes.answersGrid}>
-                                                    {answers[idx - 1].map((answer, answerIdx) => (
-                                                        <div
-                                                            key={answerIdx}
-                                                            onClick={() => checkAnswer(answer, idx - 1, answerIdx)}
-                                                            className={`${classes.answer} ${
-                                                                answersStatus[idx - 1]?.selectedAnswerIdx === answerIdx
-                                                                    ? answersStatus[idx - 1]?.isCorrect
-                                                                        ? classes.correctAnswer
-                                                                        : classes.incorrectAnswer
-                                                                    : ""
-                                                            }`}
-                                                        >
-                                                            <ImageContainer src={answer} altName={"answer"}></ImageContainer>
-                                                        </div>
-                                                    ))}
-                                                </div>
-                                            )}
-                                        </div>
+                            <div className={`${classes.answersWrapper} ${location.state.type === "1q4textanswer" || location.state.type === "1q1textanswer" ? classes.notGrid : ""}`}>
+                                {location.state.type === "1q4textanswer" || location.state.type === "1q1textanswer" ? (
+                                    <div className={classes.textAnswers}>
+                                        {answers[idx - 1].map((answer, answerIdx) => (
+                                            <div
+                                                key={answerIdx}
+                                                onClick={() => checkAnswer(answer, idx - 1, answerIdx)}
+                                                className={`${classes.answer} ${
+                                                    answersStatus[idx - 1]?.selectedAnswerIdx === answerIdx
+                                                        ? answersStatus[idx - 1]?.isCorrect
+                                                            ? classes.correctAnswer
+                                                            : classes.incorrectAnswer
+                                                        : ""
+                                                }`}
+                                            >
+                                                {answer}
+                                            </div>
+                                        ))}
                                     </div>
-                                </>
-                            )}
+                                ) : (
+                                    answers[idx - 1].map((answer, answerIdx) => (
+                                        <div
+                                            key={answerIdx}
+                                            onClick={() => checkAnswer(answer, idx - 1, answerIdx)}
+                                            className={`${classes.answer} ${
+                                                answersStatus[idx - 1]?.selectedAnswerIdx === answerIdx
+                                                    ? answersStatus[idx - 1]?.isCorrect
+                                                        ? classes.correctAnswer
+                                                        : classes.incorrectAnswer
+                                                    : ""
+                                            }`}
+                                        >
+                                            <div className={classes.questionImageWrapper}>
+                                                <ImageContainer src={answer} altName={"answer"}></ImageContainer>
+                                            </div>
+                                        </div>
+                                    ))
+                                )}
+                            </div>
+
                         </div>
-                    ))}
-                </div>
+                    </>
+                )}
             </div>
+        ))}
+    </div>
+</div>
+
+
+
             
             <div className={classes.controlsContainer}>
                 <button onClick={prevSlide}>Previous</button>
