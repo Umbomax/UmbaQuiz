@@ -1,11 +1,10 @@
 .quizItem {
     width: 100%;
     overflow: hidden;
-    transition: all 0.3s linear;
 }
 .quizItemsContainer {
     display: flex;
-    transition: transform 0.3s ease;
+  
 }
 .quizItemsWrapper {
     width: 100%;
@@ -26,7 +25,7 @@
     max-width: 16rem;
     
     max-height: 9rem;
-    transition: transform 0.3s ease;
+  
     font-size: 22px;
     align-items: center;
     justify-content: center;
