@@ -5,6 +5,7 @@ import MyImageInput from "../../Components/UI/MyImageInput/MyImageInput";
 import axios from "axios";
 import Carousel from "../../Components/Carousel/Carousel";
 import ModalCreateQuiz from "../../Components/ModalCreateQuiz/ModalCreateQuiz";
+import { useSwipeable } from "react-swipeable";
 
 function NewQuizDataset({ createError }) {
     const location = useLocation();
@@ -12,8 +13,8 @@ function NewQuizDataset({ createError }) {
     const navigate = useNavigate();
     const [currentSlide, setCurrentSlide] = useState(0);
     const [errors, setErrors] = useState([]);
-    const [isEditing, setIsEditing] = useState(false); 
-    const [modalVisible, setModalVisible] = useState(false); 
+    const [isEditing, setIsEditing] = useState(false);
+    const [modalVisible, setModalVisible] = useState(false);
     const apiUrl = process.env.REACT_APP_API_URL;
     const [quizData, setQuizData] = useState({
         quizName: location.state.quizName,
@@ -26,7 +27,7 @@ function NewQuizDataset({ createError }) {
         quizTime: location.state.quizTime || 0,
         forRegisteredUsers: location.state.forRegisteredUsers || false,
         isLimitedAttempts: location.state.isLimitedAttempts || false,
-        attemptsCount: location.state.attemptsCount || 0
+        attemptsCount: location.state.attemptsCount || 0,
     });
 
     const [quizQuestions, setQuizQuestions] = useState([]);
@@ -37,14 +38,14 @@ function NewQuizDataset({ createError }) {
                 return {
                     question: "",
                     answer: "",
-                    questionImage: ""
+                    questionImage: "",
                 };
             } else {
                 return {
                     question: "",
                     answer: "",
                     wrongAnswers: ["", "", ""],
-                    questionImage: ""
+                    questionImage: "",
                 };
             }
         });
@@ -63,8 +64,8 @@ function NewQuizDataset({ createError }) {
         let newError;
         do {
             newError = { id: generateUniqueId(), errorText: text, status: status };
-        } while (errors.some(error => error.id === newError.id));
-        setErrors(prevErrors => [...prevErrors, newError]);
+        } while (errors.some((error) => error.id === newError.id));
+        setErrors((prevErrors) => [...prevErrors, newError]);
     };
 
     const updateQuizData = (index, updatedItem) => {
@@ -129,24 +130,26 @@ function NewQuizDataset({ createError }) {
             return false;
         }
         if (quizData.type === "1q4img" || quizData.type === "1q4textanswer") {
-            return q.wrongAnswers.every(wrongAnswer => wrongAnswer.trim());
+            return q.wrongAnswers.every((wrongAnswer) => wrongAnswer.trim());
         }
         return true;
     }
 
     function sendFormData(e) {
         e.preventDefault();
-        const invalidForms = quizQuestions.map((q, idx) => {
-            if (!q.question.trim() || !q.answer.trim()) {
-                pushStatus(`Форма номер ${idx + 1} не заполнена`, "error");
-                return idx + 1;
-            }
-            if ((quizData.type === "1q4img" || quizData.type === "1q4textanswer") && !q.wrongAnswers.every(wrongAnswer => wrongAnswer.trim())) {
-                pushStatus(`Форма номер ${idx + 1} не заполнена`, "error");
-                return idx + 1;
-            }
-            return null;
-        }).filter(x => x !== null);
+        const invalidForms = quizQuestions
+            .map((q, idx) => {
+                if (!q.question.trim() || !q.answer.trim()) {
+                    pushStatus(`Форма номер ${idx + 1} не заполнена`, "error");
+                    return idx + 1;
+                }
+                if ((quizData.type === "1q4img" || quizData.type === "1q4textanswer") && !q.wrongAnswers.every((wrongAnswer) => wrongAnswer.trim())) {
+                    pushStatus(`Форма номер ${idx + 1} не заполнена`, "error");
+                    return idx + 1;
+                }
+                return null;
+            })
+            .filter((x) => x !== null);
 
         if (invalidForms.length === 0) {
             const dataToSend = { ...quizData, questions: quizQuestions };
@@ -157,10 +160,10 @@ function NewQuizDataset({ createError }) {
                         "Content-Type": "application/json",
                     },
                 })
-                .then(response => {
+                .then((response) => {
                     console.log("Сервер ответил:", response.data);
                     pushStatus("Викторина успешно добавлена", "ok");
-                    setTimeout(() => navigate('/'), 1000);
+                    setTimeout(() => navigate("/"), 1000);
                 })
                 .catch((error) => {
                     console.error("There was a problem with your fetch operation:", error);
@@ -185,14 +188,14 @@ function NewQuizDataset({ createError }) {
                     updatedQuizQuestions.push({
                         question: "",
                         answer: "",
-                        questionImage: ""
+                        questionImage: "",
                     });
                 } else {
                     updatedQuizQuestions.push({
                         question: "",
                         answer: "",
                         wrongAnswers: ["", "", ""],
-                        questionImage: ""
+                        questionImage: "",
                     });
                 }
             }
@@ -217,54 +220,65 @@ function NewQuizDataset({ createError }) {
         setQuizQuestions(updatedQuizQuestions);
     };
 
+    const nextSlide = () => {
+        if (currentSlide < quizQuestions.length - 1) {
+            setCurrentSlide((prev) => prev + 1);
+        }
+    };
 
+    const prevSlide = () => {
+        if (currentSlide > 0) {
+            setCurrentSlide((prev) => prev - 1);
+        }
+    };
+
+    const swipeHandlers = useSwipeable({
+        onSwipedLeft: () => nextSlide(),
+        onSwipedRight: () => prevSlide(),
+        preventDefaultTouchmoveEvent: true,
+        trackMouse: true,
+    });
 
     return (
-<div>
+        <div>
             <Carousel
                 items={quizQuestions}
                 currentSlide={currentSlide}
                 setCurrentSlide={setCurrentSlide}
                 checkValidForm={checkValidForm}
+                setTransitioning={() => {}}
+                isQuizGame={false}
+                answersStatus={[]}
             />
 
             <div className={classes.quizFormsWrapper}>
                 <div style={inlineStyle} className={classes.quizFormsContainer}>
                     {quizQuestions.map((el, idx) => (
-                        <form style={activeSlide} key={idx} className={classes.quizForm}>
+                        <form style={activeSlide} key={idx} className={classes.quizForm} {...swipeHandlers}>
                             <h2>{`Форма номер ${idx + 1}`}</h2>
                             <div className={classes.inputWrapper}>
                                 <p>Введите текст вопроса</p>
-                                <input
-                                    type="text"
-                                    placeholder="Введите вопрос"
-                                    onChange={(e) => handleQuestionChange(e.target.value, idx)}
-                                    value={quizQuestions[idx].question}
-                                />
+                                <input type="text" placeholder="Введите вопрос" onChange={(e) => handleQuestionChange(e.target.value, idx)} value={quizQuestions[idx].question} />
                             </div>
 
                             {(quizData.type === "1q4textanswer" || quizData.type === "1q1textanswer") && (
                                 <>
                                     <div className={classes.inputWrapper}>
                                         <p>Введите правильный ответ</p>
-                                        <input
-                                            type="text"
-                                            placeholder="Введите правильный ответ"
-                                            onChange={(e) => handleCorrectAnswerChange(e.target.value, idx)}
-                                            value={quizQuestions[idx].answer}
-                                        />
+                                        <input type="text" placeholder="Введите правильный ответ" onChange={(e) => handleCorrectAnswerChange(e.target.value, idx)} value={quizQuestions[idx].answer} />
                                     </div>
-                                    {quizData.type === "1q4textanswer" && quizQuestions[idx].wrongAnswers.map((answer, i) => (
-                                        <div key={i} className={classes.inputWrapper}>
-                                            <p>{`Введите неправильный ответ ${i + 1}`}</p>
-                                            <input
-                                                type="text"
-                                                placeholder={`Введите неправильный ответ ${i + 1}`}
-                                                onChange={(e) => handleWrongAnswerChange(e.target.value, idx, i)}
-                                                value={quizQuestions[idx].wrongAnswers[i]}
-                                            />
-                                        </div>
-                                    ))}
+                                    {quizData.type === "1q4textanswer" &&
+                                        quizQuestions[idx].wrongAnswers.map((answer, i) => (
+                                            <div key={i} className={classes.inputWrapper}>
+                                                <p>{`Введите неправильный ответ ${i + 1}`}</p>
+                                                <input
+                                                    type="text"
+                                                    placeholder={`Введите неправильный ответ ${i + 1}`}
+                                                    onChange={(e) => handleWrongAnswerChange(e.target.value, idx, i)}
+                                                    value={quizQuestions[idx].wrongAnswers[i]}
+                                                />
+                                            </div>
+                                        ))}
                                 </>
                             )}
 
@@ -281,19 +295,20 @@ function NewQuizDataset({ createError }) {
                                             handleImageRemoval={handleImageRemoval}
                                         />
                                     </div>
-                                    {quizData.type === "1q4img" && quizQuestions[idx].wrongAnswers.map((answer, i) => (
-                                        <div key={i} className={classes.inputWrapper}>
-                                            <p>{`Загрузите неправильный ответ ${i + 1}`}</p>
-                                            <MyImageInput
-                                                name={`wrongAnswer${i}`}
-                                                setHeadImage={setHeadImage}
-                                                questionIndex={idx}
-                                                answerIndex={i}
-                                                initialImage={quizQuestions[idx].wrongAnswers[i]}
-                                                handleImageRemoval={handleImageRemoval}
-                                            />
-                                        </div>
-                                    ))}
+                                    {quizData.type === "1q4img" &&
+                                        quizQuestions[idx].wrongAnswers.map((answer, i) => (
+                                            <div key={i} className={classes.inputWrapper}>
+                                                <p>{`Загрузите неправильный ответ ${i + 1}`}</p>
+                                                <MyImageInput
+                                                    name={`wrongAnswer${i}`}
+                                                    setHeadImage={setHeadImage}
+                                                    questionIndex={idx}
+                                                    answerIndex={i}
+                                                    initialImage={quizQuestions[idx].wrongAnswers[i]}
+                                                    handleImageRemoval={handleImageRemoval}
+                                                />
+                                            </div>
+                                        ))}
                                 </>
                             )}
 
@@ -313,20 +328,21 @@ function NewQuizDataset({ createError }) {
             </div>
 
             <div className={classes.btnWrapper}>
-                <button className={classes.actionBtn} onClick={() => navigate(-1)}>Назад</button>
-                <button className={classes.actionBtn} onClick={sendFormData}>Создать</button>
-                <button className={classes.actionBtn} onClick={handleEditTemplate}>Изменить шаблон</button>
+                <button className={classes.actionBtn} onClick={prevSlide} disabled={currentSlide === 0}>
+                    Назад
+                </button>
+                <button className={classes.actionBtn} onClick={nextSlide} disabled={currentSlide === quizQuestions.length - 1}>
+                    Вперед
+                </button>
+                <button className={classes.actionBtn} onClick={sendFormData}>
+                    Создать
+                </button>
+                <button className={classes.actionBtn} onClick={handleEditTemplate}>
+                    Изменить шаблон
+                </button>
             </div>
 
-            {modalVisible && (
-                <ModalCreateQuiz
-                    visible={modalVisible}
-                    setVisible={setModalVisible}
-                    initialData={quizData}
-                    isEditing={isEditing}
-                    onSubmit={handleTemplateChange}
-                />
-            )}
+            {modalVisible && <ModalCreateQuiz visible={modalVisible} setVisible={setModalVisible} initialData={quizData} isEditing={isEditing} onSubmit={handleTemplateChange} />}
         </div>
     );
 }

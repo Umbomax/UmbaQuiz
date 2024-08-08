@@ -20,7 +20,7 @@ function QuizGame(props) {
     const [modal, setModal] = useState(false);
     const [quizStartTime, setQuizStartTime] = useState(null);
     const [slides, setSlides] = useState([]);
-    const [transitioning, setTransitioning] = useState(false); // Added for animation
+    const [transitioning, setTransitioning] = useState(false); 
     const [animationTime, setAnimationTime] = useState(0.6);
     const apiUrl = process.env.REACT_APP_API_URL;
 
@@ -182,19 +182,20 @@ function QuizGame(props) {
         <>
             <QuizResultsModal visible={modal} setVisible={setModal} questionsCount={questions.length} correctAnswersCount={correctAnswersCount}></QuizResultsModal>
             <Carousel
-                items={questions}
-                currentSlide={currentSlide}
-                setCurrentSlide={(idx) => {
-                    if (!transitioning) {
-                        setTransitioning(true);
-                        setCurrentSlide(idx + 1); // Смещение для учета дополнительного слайда
-                    }
-                }}
-                checkValidForm={checkValidForm}
-                isQuizGame={true}
-                answersStatus={answersStatus}
-                setTransitioning={setTransitioning}
-            />
+  items={questions}
+  currentSlide={currentSlide - 1} // Учитываем, что currentSlide начинается с 1, а в Carousel с 0
+  setCurrentSlide={(idx) => {
+    if (!transitioning) {
+      setTransitioning(true);
+      setCurrentSlide(idx + 1); // Учитываем только смещение на один индекс
+    }
+  }}
+  checkValidForm={checkValidForm}
+  isQuizGame={true}
+  answersStatus={answersStatus}
+  setTransitioning={setTransitioning}
+/>
+
 
             <div className={classes.quizItemsWrapper} {...swipeHandlers}>
                 <div style={inlineStyle} className={classes.quizItemsContainer}>

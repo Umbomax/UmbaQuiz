@@ -11,7 +11,7 @@ function Carousel({ items, currentSlide, setCurrentSlide, checkValidForm, isQuiz
         } else {
             startPos = -STEP_LENGTH * Math.floor(items.length / 2);
         }
-        return startPos + STEP_LENGTH * (currentSlide - 1); // Учитываем невидимый слайд
+        return startPos + STEP_LENGTH * currentSlide; 
     }
 
     const activeCarouselBlock = {
@@ -20,25 +20,25 @@ function Carousel({ items, currentSlide, setCurrentSlide, checkValidForm, isQuiz
 
     return (
         <div className={classes.carousel}>
-        {items.map((el, idx) => (
-            <div
-                key={idx}
-                className={`${classes.carouselItem} ${
-                    isQuizGame ? 
-                    (answersStatus[idx]?.isCorrect ? classes.green : answersStatus[idx]?.isCorrect === false ? classes.red : '') :
-                    (checkValidForm(idx) ? classes.green : classes.red)
-                }`}
-                onClick={() => {
-                    setTransitioning(true);
-                    setCurrentSlide(idx);
-                }}
-            >
-                {idx + 1}
-            </div>
-        ))}
-        <div style={activeCarouselBlock} className={classes.activeCarousel}></div>
-    </div>
-);
+            {items.map((el, idx) => (
+                <div
+                    key={idx}
+                    className={`${classes.carouselItem} ${
+                        isQuizGame ? 
+                        (answersStatus[idx]?.isCorrect ? classes.green : answersStatus[idx]?.isCorrect === false ? classes.red : '') :
+                        (checkValidForm(idx) ? classes.green : classes.red)
+                    }`}
+                    onClick={() => {
+                        setTransitioning(true);
+                        setCurrentSlide(idx);
+                    }}
+                >
+                    {idx + 1}
+                </div>
+            ))}
+            <div style={activeCarouselBlock} className={classes.activeCarousel}></div>
+        </div>
+    );
 }
 
 export default Carousel;
