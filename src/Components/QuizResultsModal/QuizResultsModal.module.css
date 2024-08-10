@@ -1,0 +1,30 @@
+*{
+    box-sizing: border-box;
+}
+
+.myModal {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    display: none;
+    background-color: rgba(148, 138, 138, 0.15);
+}
+.myModal.active{
+    z-index: 1000;  
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.content{
+    z-index: 10001;
+    width: 1440px;
+    height: 600px;
+    background-color: antiquewhite;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}

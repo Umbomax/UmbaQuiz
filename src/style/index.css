@@ -1,0 +1,44 @@
+@font-face {
+    font-family: 'Fontatica';
+    src: url('../fonts/Fontatica/Fontatica4F.woff2') format('woff2'), 
+         url('../fonts/Fontatica/Fontatica4F.woff') format('woff'), 
+         url('../fonts/Fontatica/Fontatica4F.ttf') format('truetype'),
+         url('../fonts/Fontatica/Fontatica4F.eot');        
+         
+  }
+:root{
+    --header-background: '#2c3e50';
+    --header-text: '#ecf0f1';
+    --main-background: '#ecf0f1';
+    --main-text: '#2c3e50';
+    --card-background: '#ffffff';
+    --card-border: '#dcdcdc';
+    --card-text: '#2c3e50';
+    --card-header: '#3498db';
+    --button-background: '#3498db';
+    --button-text: '#ffffff';
+    --button-hover-background: '#2980b9';
+}
+/* TODO вывести 5 вариантов цветовых схем по переменным и добавить возможность выбрать цветовую тему */
+body{
+    background: var(--header-background, #2c3e50);
+    
+    margin: auto;
+}
+
+.mainContentBackground{
+    padding: 10px;
+    background: var(--main-background, #227388);
+    min-height: 83vh;
+}
+.my-image-input__Wrapper{
+    max-width: 480px;
+    min-height: 300px;
+}
+button{
+    background: var(--button-background);
+    color: var(--button-text);
+}
+button:hover{
+    background: var(--button-hover-background);
+  }

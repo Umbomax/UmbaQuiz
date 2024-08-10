@@ -1,0 +1,22 @@
+.burgerMenu {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    gap: 5px;
+    visibility: visible;
+}
+
+.burgerLine {
+    width: 25px;
+    height: 3px;
+    background: var(--header-text, #ecf0f1);
+    border-radius: 3px;
+}
+.notVisible{
+    visibility: hidden;
+}
+@media (max-width: 768px) {
+    .burgerMenu {
+        display: flex;
+    }
+}

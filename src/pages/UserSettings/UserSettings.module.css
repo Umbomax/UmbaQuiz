@@ -1,0 +1,70 @@
+
+.test{
+    background-color: wheat;
+    width: 300px;
+    height: 300px;
+    color: blueviolet;
+}
+.userInfo{
+    display: flex;
+}
+.userInfo>div{
+    border: 1px solid violet;
+}
+.theme{
+    color: var(--main-text);
+    width: 200px;
+    height: 70px;
+    margin: 20px;
+    }
+.themeImage{
+    width: 200px;
+    height: 50px;
+}
+    .modernTheme{
+        background: -webkit-linear-gradient(left, #2c3e50, #ecf0f1, #ffffff);;
+    }
+    .pastelTheme{
+        background: -webkit-linear-gradient(left, #35495e, #f7f9fc, #ffffff);;
+    }
+    .darkTheme{
+        background: -webkit-linear-gradient(left, #1a1a1a, #333333, #2c3e50);;
+    }
+    .brightTheme{
+        background: -webkit-linear-gradient(left, #ff5733, #f0f0f0, #ffffff);;
+    }
+    .calmTheme{
+        background: -webkit-linear-gradient(left, #3b3b3b, #e8e8e8, #ffffff);;
+    }
+    .nav {
+        display: flex;
+        
+        gap: 10px;
+        margin-bottom: 20px;
+      }
+      
+      .nav>button {
+        padding: 10px 20px;
+        border: none;
+        background-color: var(--button-background);
+        color: var(--button-text);
+        cursor: pointer;
+      }
+      
+      .nav>button:hover {
+        background-color: var(--button-hover-background);
+      }
+      
+      @media  (max-width: 600px) {
+        .nav{
+            justify-content: space-between;
+        }
+        .nav>button{
+            width: 22%;
+            min-height: 30px;
+            font-size: 10px;
+            padding: 5px;
+            margin: 0;
+
+        }
+      }

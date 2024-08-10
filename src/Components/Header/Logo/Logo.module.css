@@ -1,0 +1,40 @@
+/* Logo.module.css */
+.logoContainer {
+    color: var(--header-text, #ecf0f1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-size: 28px;
+    font-family: "Fontatica";
+    width: 150px;
+    height: 60px;
+    user-select: none;
+}
+
+.logoIcon {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 2px solid var(--header-text, #ecf0f1);
+    color: var(--header-text, #ecf0f1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 21px;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+@media (max-width: 768px) {
+    .logoContainer {
+        font-size: 24px;
+        width: 120px;
+        height: 50px;
+    }
+
+    .logoIcon {
+        width: 28px;
+        height: 28px;
+        font-size: 18px;
+    }
+}

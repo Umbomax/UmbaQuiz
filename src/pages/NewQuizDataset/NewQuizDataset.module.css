@@ -1,0 +1,110 @@
+.carouser{
+    width: 1440px;
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    height: 48px; 
+
+}
+.carouserItem{
+    display: block;
+    width: 44px;
+    height: 18px;
+    
+}
+.carouserItem.green {
+    background-color: green;
+}
+.quizFormsContainer{
+    width: 1440px;
+    display: flex;
+}
+.quizForm{
+    width: 100%;
+    transition: all 0.6s ease-in-out;
+}
+
+.quizFormsWrapper{
+    width: 1440px;
+    overflow: hidden;
+    margin: auto;
+    color: var(--main-text);
+}
+.fileInput{
+    display: block;
+    width: 480px;
+    height: 330px;
+}
+.correctAnswer{
+    margin: 10px 0;
+    display: flex;
+    width: 100%;
+    height: auto;
+    align-items: center;
+    justify-content: center;    
+}
+.incorrectAnswers{
+    margin: 10px 0;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+}
+.correctAnswer>h3, .incorrectAnswers>h3{
+    margin: 10px 0;
+}
+.inputWrapper{
+    margin: auto;
+    width: 100%;    
+}
+.inputWrapper>input{
+    margin: 10px 0;
+    height: 40px;
+    padding-left: 20px;
+    width: 100%;
+}
+.inputWrapper>p{
+    margin: 10px 0;
+    font-size: 18px;
+    font-weight: 700;
+}
+.myImageInputWrapper{
+    max-width: 480px;
+}
+.textAnswerInput{
+    margin: 10px 0;
+    width: 100%;
+    height: 50px;
+}
+.questionImage{
+    margin: 10px 0;
+}
+.questionImage>h3{
+    margin: 10px 0;
+}
+.btnWrapper{
+    margin: auto;
+    padding: 15px 0;
+    max-width: 1440px;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+}
+@media (max-width:1440px) {
+    .incorrectAnswers{
+        flex-direction: column;
+    }
+    .quizFormsWrapper{
+        width: 100%;
+    }
+    .carouser{
+        width: 100%;
+    }
+    .quizForm{
+        padding: 5px;
+    }
+    .correctAnswer{
+        flex-direction: column;
+    }
+}
